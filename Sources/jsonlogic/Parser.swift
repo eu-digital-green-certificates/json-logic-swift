@@ -610,13 +610,14 @@ struct extractFromUVCI: Expression {
     let expression: Expression
     
     func evalWithData(_ data: JSON?) throws -> JSON {
+      guard let data = data else { return JSON.Null }
         let result = try expression.evalWithData(data)
         if let arr = result.array,
-           let uvci = arr[0].string,
+           let uvci = arr[0]["data"].string,
            let index = arr[1].int
            {
           guard let extractedUVCI = fromUVCI(uvci: uvci, index: Int(index)) else { return JSON.Null}
-          return JSON(string: extractedUVCI) ?? JSON.Null
+          return JSON(extractedUVCI)
         }
         return JSON.Null
     }
@@ -628,10 +629,10 @@ struct extractFromUVCI: Expression {
   *  or `null` when that fragment doesn't exist.
   */
 func fromUVCI(uvci: String?, index: Int) -> String? {
-     guard let uvci = uvci, index > 0 else  {
+     guard let uvci = uvci, index >= 0 else  {
          return nil
      }
-    let prefixlessUvci = uvci.starts(with: optionalPrefix) ? String(uvci.prefix(optionalPrefix.count)) : uvci
+  let prefixlessUvci = uvci.starts(with: optionalPrefix) ? uvci.substring(from: optionalPrefix.count) : uvci
     let separators = CharacterSet(charactersIn: "/#:")
     let fragments = prefixlessUvci.components(separatedBy: separators)
     return index < fragments.count ? fragments[index] : nil
