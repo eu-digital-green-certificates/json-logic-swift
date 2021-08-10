@@ -606,11 +606,12 @@ struct Log: Expression {
     }
 }
 
-struct extractFromUVCI: Expression {
+struct ExtractFromUVCI: Expression {
     let expression: Expression
     
     func evalWithData(_ data: JSON?) throws -> JSON {
       guard let data = data else { return JSON.Null }
+      
         let result = try expression.evalWithData(data)
         if let arr = result.array,
            let uvci = arr[0]["data"].string,
@@ -619,8 +620,28 @@ struct extractFromUVCI: Expression {
           guard let extractedUVCI = fromUVCI(uvci: uvci, index: Int(index)) else { return JSON.Null}
           return JSON(extractedUVCI)
         }
+        if let arr = result.array,
+         let uvci = arr[0].string,
+         let index = arr[1].int
+         {
+        guard let extractedUVCI = fromUVCI(uvci: uvci, index: Int(index)) else { return JSON.Null}
+        return JSON(extractedUVCI)
+      }
         return JSON.Null
     }
+  
+  func evaluateVarPathFromData(_ data: JSON) throws -> String? {
+      let variablePathAsJSON = try self.expression.evalWithData(data)
+
+      switch variablePathAsJSON {
+      case let .String(string):
+          return string
+      case let .Array(array):
+          return array.first?.string
+      default:
+          return nil
+      }
+  }
 }
 
 /**
@@ -871,7 +892,7 @@ class Parser {
         case "minusTime":
             return MinusTime(expression: try self.parse(json: value))
         case "extractFromUVCI":
-            return extractFromUVCI(expression: try self.parse(json: value))
+            return ExtractFromUVCI(expression: try self.parse(json: value))
         default:
             if let customOperation = self.customOperators[key] {
                 return CustomExpression(expression: try self.parse(json: value),
