@@ -11,7 +11,7 @@ import XCTest
 
 @testable import jsonlogic
 
-final class CertLogic: XCTestCase {
+final class CertLogicTests: XCTestCase {
 
     func testEmptyData() {
         XCTAssertFalse(try applyRule("{}"))
