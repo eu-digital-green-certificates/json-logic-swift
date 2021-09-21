@@ -577,6 +577,8 @@ extension Date {
         // Since we use a DateFormatter with a fixed format we only need
         // to attempt parsing a date when we have a string with the exact length
         guard string.count == 10 else { return nil }
+        // and additionally if the fifth character is a dash
+        guard string[string.index(string.startIndex, offsetBy: 4)] == "-" else { return nil }
 
         return shortFormatter.date(from: string)
     }
