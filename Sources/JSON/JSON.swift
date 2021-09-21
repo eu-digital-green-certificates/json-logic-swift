@@ -573,6 +573,14 @@ extension JSON {
 
 extension Date {
 
+    static func dateFromShortFormatString(_ string: String) -> Date? {
+        // Since we use a DateFormatter with a fixed format we only need
+        // to attempt parsing a date when we have a string with the exact length
+        guard string.count == 10 else { return nil }
+
+        return shortFormatter.date(from: string)
+    }
+    
     static var shortFormatter: DateFormatter = {
         let formatter = DateFormatter()
         formatter.calendar = Calendar(identifier: .iso8601)
@@ -608,7 +616,7 @@ extension Date {
 
 extension String {
     var date: Date? {
-        if let date = Date.shortFormatter.date(from:self) {
+        if let date = Date.dateFromShortFormatString(self) {
             return date
         }
         if let date = Date.fromISO8601(self) {
