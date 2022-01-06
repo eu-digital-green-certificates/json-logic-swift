@@ -38,6 +38,7 @@ let package = Package(
         .testTarget(
             name: "jsonlogicTests",
             dependencies: ["jsonlogic", "AnyCodable"],
+            resources: [.process("jfn-common-test-cases.json")]),
         .testTarget(
             name: "JSONTests",
             dependencies: ["JSON"])
