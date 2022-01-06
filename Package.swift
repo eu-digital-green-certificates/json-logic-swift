@@ -19,6 +19,12 @@ let package = Package(
             name: "jsonlogic-cli",
             targets: ["jsonlogic-cli"]),
     ],
+    dependencies: [
+        .package(
+            url: "https://github.com/Flight-School/AnyCodable",
+            from: "0.6.0"
+        ),
+    ],
     targets: [
         .target(
             name: "jsonlogic-cli",
@@ -31,7 +37,7 @@ let package = Package(
             dependencies: []),
         .testTarget(
             name: "jsonlogicTests",
-            dependencies: ["jsonlogic"]),
+            dependencies: ["jsonlogic", "AnyCodable"],
         .testTarget(
             name: "JSONTests",
             dependencies: ["JSON"])
