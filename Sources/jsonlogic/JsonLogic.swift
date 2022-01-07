@@ -3,7 +3,7 @@
 //  jsonlogic
 //
 //  Created by Christos Koninis on 06/06/2018.
-//  Licensed under LGPL
+//  Licensed under MIT
 //
 
 import Foundation
@@ -147,7 +147,6 @@ public final class JsonLogic {
     }
     
     public func applyRuleInternal<T>(to jsonData: JSON? = nil) throws -> T {
-
         let result = try parsedRule.evalWithData(jsonData)
 
         let convertedToSwiftStandardType = try result.convertToSwiftTypes()

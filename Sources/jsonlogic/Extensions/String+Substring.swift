@@ -1,5 +1,5 @@
 //
-//  File.swift
+//  String+Substring.swift
 //  
 //
 //  Created by Alexandr Chernyy on 03.08.2021.
@@ -8,6 +8,7 @@
 import Foundation
 
 extension String {
+    
     func index(from: Int) -> Index {
         return self.index(startIndex, offsetBy: from)
     }
@@ -27,4 +28,5 @@ extension String {
         let endIndex = index(from: r.upperBound)
         return String(self[startIndex..<endIndex])
     }
+
 }
