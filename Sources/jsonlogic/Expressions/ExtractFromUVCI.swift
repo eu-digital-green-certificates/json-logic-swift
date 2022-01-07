@@ -19,11 +19,15 @@ struct ExtractFromUVCI: Expression {
         guard let data = data else { return JSON.Null }
 
         let result = try expression.evalWithData(data)
+
         if let arr = result.array,
            let uvci = arr[0]["data"].string,
            let index = arr[1].int
         {
-            guard let extractedUVCI = fromUVCI(uvci: uvci, index: Int(index)) else { return JSON.Null}
+            guard let extractedUVCI = fromUVCI(uvci: uvci, index: Int(index)) else {
+                return .Null
+            }
+
             return JSON(extractedUVCI)
         }
 
@@ -31,7 +35,10 @@ struct ExtractFromUVCI: Expression {
            let uvci = arr[0].string,
            let index = arr[1].int
         {
-            guard let extractedUVCI = fromUVCI(uvci: uvci, index: Int(index)) else { return JSON.Null}
+            guard let extractedUVCI = fromUVCI(uvci: uvci, index: Int(index)) else {
+                return .Null
+            }
+
             return JSON(extractedUVCI)
         }
         

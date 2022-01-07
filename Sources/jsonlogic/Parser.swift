@@ -156,6 +156,18 @@ class Parser {
             return MinusTime(expression: try self.parse(json: value))
         case "extractFromUVCI":
             return ExtractFromUVCI(expression: try self.parse(json: value))
+        case "concatenate":
+            return Concatenate(expression: try self.parse(json: value))
+        case "replaceAll":
+            return ReplaceAll(expression: try self.parse(json: value))
+        case "split":
+            return Split(expression: try self.parse(json: value))
+        case "toLowerCase":
+            return ToLowerCase(expression: try self.parse(json: value))
+        case "toUpperCase":
+            return ToUpperCase(expression: try self.parse(json: value))
+        case "trim":
+            return Trim(expression: try self.parse(json: value))
         default:
             if let customOperation = self.customOperators[key] {
                 return CustomExpression(expression: try self.parse(json: value),
