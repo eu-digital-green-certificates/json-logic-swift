@@ -21,25 +21,25 @@ class AllTests: XCTestCase {
                 """
                 {"integers":[1,2,3]}
                 """
-        XCTAssertTrue(try applyRule(rule, to: data))
+        XCTAssertTrue(try JsonFunctions().applyRule(rule, to: data))
 
         rule =
                 """
                 {"all":[{"var":"integers"}, {"==":[{"var":""}, 1]}]}
                 """
-        XCTAssertFalse(try applyRule(rule, to: data))
+        XCTAssertFalse(try JsonFunctions().applyRule(rule, to: data))
 
         rule =
                 """
                 {"all":[{"var":"integers"}, {"<":[{"var":""}, 1]}]}
                 """
-        XCTAssertFalse(try applyRule(rule, to: data))
+        XCTAssertFalse(try JsonFunctions().applyRule(rule, to: data))
 
         rule =
                 """
                 {"all":[{"var":"integers"}, {"<=":[{"var":""}, 1]}]}
                 """
-        XCTAssertFalse(try applyRule(rule, to: data))
+        XCTAssertFalse(try JsonFunctions().applyRule(rule, to: data))
 
         rule =
                 """
@@ -49,7 +49,7 @@ class AllTests: XCTestCase {
                 """
                 {"integers":[]}
                 """
-        XCTAssertFalse(try applyRule(rule, to: data))
+        XCTAssertFalse(try JsonFunctions().applyRule(rule, to: data))
     }
 
     func testAll_withNestedArrayElement() {
@@ -61,7 +61,7 @@ class AllTests: XCTestCase {
                 """
                 {"items":[{"qty":1,"sku":"apple"},{"qty":2,"sku":"banana"}]}
                 """
-        XCTAssertTrue(try applyRule(rule, to: data))
+        XCTAssertTrue(try JsonFunctions().applyRule(rule, to: data))
 
         rule =
                 """
@@ -71,7 +71,7 @@ class AllTests: XCTestCase {
                 """
                 {"items":[{"qty":1,"sku":"apple"},{"qty":2,"sku":"banana"}]}
                 """
-        XCTAssertFalse(try applyRule(rule, to: data))
+        XCTAssertFalse(try JsonFunctions().applyRule(rule, to: data))
 
         rule =
                 """
@@ -81,7 +81,7 @@ class AllTests: XCTestCase {
                 """
                 {"items":[{"qty":1,"sku":"apple"},{"qty":2,"sku":"banana"}]}
                 """
-        XCTAssertFalse(try applyRule(rule, to: data))
+        XCTAssertFalse(try JsonFunctions().applyRule(rule, to: data))
     }
 
     func testAll_withEmptyDataArray() {
@@ -93,7 +93,7 @@ class AllTests: XCTestCase {
                 """
                 {"items":[]}
                 """
-        XCTAssertFalse(try applyRule(rule, to: data))
+        XCTAssertFalse(try JsonFunctions().applyRule(rule, to: data))
     }
 
     func testAll_withMissingArguments() {
@@ -101,6 +101,6 @@ class AllTests: XCTestCase {
                 """
                  {"all":[]}
                 """
-        XCTAssertNil(try applyRule(rule))
+        XCTAssertNil(try JsonFunctions().applyRule(rule))
     }
 }

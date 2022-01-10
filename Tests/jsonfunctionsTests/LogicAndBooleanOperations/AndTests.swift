@@ -13,36 +13,36 @@ class AndTests: XCTestCase {
 
     func testAnd_twoBooleans() {
         
-        XCTAssertNil(try applyRule("""
+        XCTAssertNil(try JsonFunctions().applyRule("""
                                                   {"and": [null, true]}
                                                   """, to: nil))
         
-        XCTAssertEqual(true, try applyRule("""
+        XCTAssertEqual(true, try JsonFunctions().applyRule("""
                                                   {"and": [true, true]}
                                                   """, to: nil))
 
-        XCTAssertEqual(false, try applyRule("""
+        XCTAssertEqual(false, try JsonFunctions().applyRule("""
                                                     { "and" : [true, false] }
                                                     """, to: nil))
 
-        XCTAssertEqual(true, try applyRule("""
+        XCTAssertEqual(true, try JsonFunctions().applyRule("""
                                                    { "and" : [true] }
                                                    """, to: nil))
-        XCTAssertEqual(false, try applyRule("""
+        XCTAssertEqual(false, try JsonFunctions().applyRule("""
                                                       { "and" : [false] }
                                                      """, to: nil))
     }
 
     func testAnd_mixedArguments() {
-        XCTAssertEqual(3, try applyRule("""
+        XCTAssertEqual(3, try JsonFunctions().applyRule("""
                 { "and": [1, 3] }
                 """, to: nil))
 
-        XCTAssertEqual("a", try applyRule("""
+        XCTAssertEqual("a", try JsonFunctions().applyRule("""
                 { "and": ["a"] }
                 """, to: nil))
 
-        XCTAssertEqual("", try applyRule("""
+        XCTAssertEqual("", try JsonFunctions().applyRule("""
                 { "and": [true,"",3] }
                 """, to: nil))
     }

@@ -16,7 +16,7 @@ final class DateTests:XCTestCase
         let rule = """
         {"before": ["2019-05-22T21:11:28.970Z", "2019-05-25T21:11:28.970Z"]}
         """
-        XCTAssertTrue(try applyRule(rule, to: nil))
+        XCTAssertTrue(try JsonFunctions().applyRule(rule, to: nil))
     }
     
     func testAfter()
@@ -24,7 +24,7 @@ final class DateTests:XCTestCase
         let rule = """
         {"after": ["2019-05-25T21:11:28.970Z", "2019-05-22T21:11:28.970Z"]}
         """
-        XCTAssertTrue(try applyRule(rule, to: nil))
+        XCTAssertTrue(try JsonFunctions().applyRule(rule, to: nil))
     }
     
     func testNotAfter()
@@ -32,7 +32,7 @@ final class DateTests:XCTestCase
         let rule = """
         {"not-after": ["2019-05-22T21:11:28.970Z", "2019-05-25T21:11:28.970Z"]}
         """
-        XCTAssertTrue(try applyRule(rule, to: nil))
+        XCTAssertTrue(try JsonFunctions().applyRule(rule, to: nil))
     }
     
     func testNotBefore()
@@ -40,7 +40,7 @@ final class DateTests:XCTestCase
         let rule = """
         {"not-before": ["2019-05-22T21:11:29.970Z", "2019-05-22T21:11:28.970Z"]}
         """
-        XCTAssertTrue(try applyRule(rule, to: nil))
+        XCTAssertTrue(try JsonFunctions().applyRule(rule, to: nil))
     }
     
 }

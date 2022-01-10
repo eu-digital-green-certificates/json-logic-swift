@@ -16,19 +16,19 @@ class IfTests: XCTestCase {
                 """
                 { "if":[ [], "apple", "banana"] }
                 """
-        XCTAssertEqual("banana", try applyRule(rule, to: nil))
+        XCTAssertEqual("banana", try JsonFunctions().applyRule(rule, to: nil))
 
         rule =
                 """
                 { "if":[ [1], "apple", "banana"] }
                 """
-        XCTAssertEqual("apple", try applyRule(rule, to: nil))
+        XCTAssertEqual("apple", try JsonFunctions().applyRule(rule, to: nil))
 
         rule =
                 """
                 { "if":[ [1,2,3,4], "apple", "banana"] }
                 """
-        XCTAssertEqual("apple", try applyRule(rule, to: nil))
+        XCTAssertEqual("apple", try JsonFunctions().applyRule(rule, to: nil))
     }
 
     func testIf_SimpleCases() {
@@ -36,25 +36,25 @@ class IfTests: XCTestCase {
                 """
                     {"if":[ {">":[2,1]}, "apple", "banana"]}
                 """
-        XCTAssertEqual("apple", try applyRule(rule, to: nil))
+        XCTAssertEqual("apple", try JsonFunctions().applyRule(rule, to: nil))
 
         rule =
                 """
                    {"if":[ {">":[1,2]}, "apple", "banana"]}
                 """
-        XCTAssertEqual("banana", try applyRule(rule, to: nil))
+        XCTAssertEqual("banana", try JsonFunctions().applyRule(rule, to: nil))
 
         rule =
                 """
                 {"if":[false, "apple", true, "banana", "carrot"]}
                 """
-        XCTAssertEqual("banana", try applyRule(rule, to: nil))
+        XCTAssertEqual("banana", try JsonFunctions().applyRule(rule, to: nil))
 
         rule =
                 """
                 {"if":[true, "apple", true, "banana", true, "carrot", "date"]}
                 """
-        XCTAssertEqual("apple", try applyRule(rule, to: nil))
+        XCTAssertEqual("apple", try JsonFunctions().applyRule(rule, to: nil))
     }
 
     func testIf_EmptyArraysAreFalsey() {
@@ -62,25 +62,25 @@ class IfTests: XCTestCase {
                 """
                 { "if" : [] }
                 """
-        XCTAssertNil(try applyRule(rule, to: nil))
+        XCTAssertNil(try JsonFunctions().applyRule(rule, to: nil))
 
         rule =
                 """
                 { "if" : [true] }
                 """
-        XCTAssertEqual(true, try applyRule(rule, to: nil))
+        XCTAssertEqual(true, try JsonFunctions().applyRule(rule, to: nil))
 
         rule =
                 """
                 { "if" : [false] }
                 """
-        XCTAssertEqual(false, try applyRule(rule, to: nil))
+        XCTAssertEqual(false, try JsonFunctions().applyRule(rule, to: nil))
 
         rule =
                 """
                 { "if" : ["apple"] }
                 """
-        XCTAssertEqual("apple", try applyRule(rule, to: nil))
+        XCTAssertEqual("apple", try JsonFunctions().applyRule(rule, to: nil))
     }
 
     func testIf_NonEmptyOtherStringsAreTruthy() {
@@ -88,19 +88,19 @@ class IfTests: XCTestCase {
                 """
                 {"if":[ "", "apple", "banana"]}
                 """
-        XCTAssertEqual("banana", try applyRule(rule, to: nil))
+        XCTAssertEqual("banana", try JsonFunctions().applyRule(rule, to: nil))
 
         rule =
                 """
                 {"if":[ "zucchini", "apple", "banana"]}
                 """
-        XCTAssertEqual("apple", try applyRule(rule, to: nil))
+        XCTAssertEqual("apple", try JsonFunctions().applyRule(rule, to: nil))
 
         rule =
                 """
                 {"if":[ "0", "apple", "banana"]}
                 """
-        XCTAssertEqual("apple", try applyRule(rule, to: nil))
+        XCTAssertEqual("apple", try JsonFunctions().applyRule(rule, to: nil))
     }
 
     func testIf_IfThenElseIfThenCases() {
@@ -108,91 +108,91 @@ class IfTests: XCTestCase {
                 """
                 {"if":[true, "apple", true, "banana"]}
                 """
-        XCTAssertEqual("apple", try applyRule(rule, to: nil))
+        XCTAssertEqual("apple", try JsonFunctions().applyRule(rule, to: nil))
 
         rule =
                 """
                 {"if":[true, "apple", false, "banana"]}
                 """
-        XCTAssertEqual("apple", try applyRule(rule, to: nil))
+        XCTAssertEqual("apple", try JsonFunctions().applyRule(rule, to: nil))
 
         rule =
                 """
                 {"if":[false, "apple", true, "banana"]}
                 """
-        XCTAssertEqual("banana", try applyRule(rule, to: nil))
+        XCTAssertEqual("banana", try JsonFunctions().applyRule(rule, to: nil))
 
         rule =
                 """
                 {"if":[false, "apple", false, "banana"]}
                 """
-        XCTAssertNil(try applyRule(rule, to: nil))
+        XCTAssertNil(try JsonFunctions().applyRule(rule, to: nil))
 
         rule =
                 """
                 {"if":[true, "apple", true, "banana", "carrot"]}
                 """
-        XCTAssertEqual("apple", try applyRule(rule, to: nil))
+        XCTAssertEqual("apple", try JsonFunctions().applyRule(rule, to: nil))
 
         rule =
                 """
                 {"if":[true, "apple", false, "banana", "carrot"]}
                 """
-        XCTAssertEqual("apple", try applyRule(rule, to: nil))
+        XCTAssertEqual("apple", try JsonFunctions().applyRule(rule, to: nil))
 
         rule =
                 """
                 {"if":[false, "apple", true, "banana", "carrot"]}
                 """
-        XCTAssertEqual("banana", try applyRule(rule, to: nil))
+        XCTAssertEqual("banana", try JsonFunctions().applyRule(rule, to: nil))
 
         rule =
                 """
                 {"if":[false, "apple", false, "banana", "carrot"]}
                 """
-        XCTAssertEqual("carrot", try applyRule(rule, to: nil))
+        XCTAssertEqual("carrot", try JsonFunctions().applyRule(rule, to: nil))
 
         rule =
                 """
                 {"if":[false, "apple", false, "banana", false, "carrot"]}
                 """
-        XCTAssertNil(try applyRule(rule, to: nil))
+        XCTAssertNil(try JsonFunctions().applyRule(rule, to: nil))
 
         rule =
                 """
                 {"if":[false, "apple", false, "banana", false, "carrot", "date"]}
                 """
-        XCTAssertEqual("date", try applyRule(rule, to: nil))
+        XCTAssertEqual("date", try JsonFunctions().applyRule(rule, to: nil))
 
         rule =
                 """
                 {"if":[false, "apple", true, "banana", false, "carrot", "date"]}
                 """
-        XCTAssertEqual("banana", try applyRule(rule, to: nil))
+        XCTAssertEqual("banana", try JsonFunctions().applyRule(rule, to: nil))
 
         rule =
                 """
                 {"if":[true, "apple", false, "banana", false, "carrot", "date"]}
                 """
-        XCTAssertEqual("apple", try applyRule(rule, to: nil))
+        XCTAssertEqual("apple", try JsonFunctions().applyRule(rule, to: nil))
 
         rule =
                 """
                 {"if":[true, "apple", false, "banana", true, "carrot", "date"]}
                 """
-        XCTAssertEqual("apple", try applyRule(rule, to: nil))
+        XCTAssertEqual("apple", try JsonFunctions().applyRule(rule, to: nil))
 
         rule =
                 """
                 {"if":[true, "apple", true, "banana", false, "carrot", "date"]}
                 """
-        XCTAssertEqual("apple", try applyRule(rule, to: nil))
+        XCTAssertEqual("apple", try JsonFunctions().applyRule(rule, to: nil))
 
         rule =
                 """
                 {"if":[true, "apple", true, "banana", true, "carrot", "date"]}
                 """
-        XCTAssertEqual("apple", try applyRule(rule, to: nil))
+        XCTAssertEqual("apple", try JsonFunctions().applyRule(rule, to: nil))
     }
 
     func testIf_FizzBuzz() {
@@ -214,12 +214,12 @@ class IfTests: XCTestCase {
                 }
                 """
 
-        XCTAssertEqual("fizzbuzz", try applyRule(rule, to: "{\"i\" : 0}"))
-        XCTAssertEqual(1, try applyRule(rule, to: "{\"i\" : 1}"))
-        XCTAssertEqual(2, try applyRule(rule, to: "{\"i\" : 2}"))
-        XCTAssertEqual("fizz", try applyRule(rule, to: "{\"i\" : 3}"))
-        XCTAssertEqual("buzz", try applyRule(rule, to: "{\"i\" : 5}"))
-        XCTAssertEqual("fizzbuzz", try applyRule(rule, to: "{\"i\" : 15}"))
-        XCTAssertEqual("fizzbuzz", try applyRule(rule, to: "{\"i\" : 45}"))
+        XCTAssertEqual("fizzbuzz", try JsonFunctions().applyRule(rule, to: "{\"i\" : 0}"))
+        XCTAssertEqual(1, try JsonFunctions().applyRule(rule, to: "{\"i\" : 1}"))
+        XCTAssertEqual(2, try JsonFunctions().applyRule(rule, to: "{\"i\" : 2}"))
+        XCTAssertEqual("fizz", try JsonFunctions().applyRule(rule, to: "{\"i\" : 3}"))
+        XCTAssertEqual("buzz", try JsonFunctions().applyRule(rule, to: "{\"i\" : 5}"))
+        XCTAssertEqual("fizzbuzz", try JsonFunctions().applyRule(rule, to: "{\"i\" : 15}"))
+        XCTAssertEqual("fizzbuzz", try JsonFunctions().applyRule(rule, to: "{\"i\" : 45}"))
     }
 }

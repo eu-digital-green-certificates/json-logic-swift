@@ -19,7 +19,7 @@ final class LegacyJsonFunctionsTests: XCTestCase {
                    """
        
         
-        XCTAssertEqual(try applyRule(rule, to: data),[ "foo": "bar"])
+        XCTAssertEqual(try JsonFunctions().applyRule(rule, to: data),[ "foo": "bar"])
     }
     
     
@@ -33,7 +33,7 @@ final class LegacyJsonFunctionsTests: XCTestCase {
                         {}
                    """
         
-        XCTAssertEqual(try applyRule(rule, to: data),["a","b"])
+        XCTAssertEqual(try JsonFunctions().applyRule(rule, to: data),["a","b"])
     }
     
     func testEqualsWithTwoSameConstants() {
@@ -42,7 +42,7 @@ final class LegacyJsonFunctionsTests: XCTestCase {
             { "===" : [1, 1] }
         """
 
-        XCTAssertTrue(try applyRule(rule, to: nil))
+        XCTAssertTrue(try JsonFunctions().applyRule(rule, to: nil))
     }
 
     func testEqualsWithDifferentSameConstants() {
@@ -51,7 +51,7 @@ final class LegacyJsonFunctionsTests: XCTestCase {
             { "===" : [1, 2] }
         """
 
-        XCTAssertFalse(try applyRule(rule, to: nil))
+        XCTAssertFalse(try JsonFunctions().applyRule(rule, to: nil))
     }
 
     func testSetOneStringVariableFromData() {
@@ -64,7 +64,7 @@ final class LegacyJsonFunctionsTests: XCTestCase {
             { "a" : "1" }
         """
 
-        XCTAssertEqual("1", try applyRule(rule, to: data))
+        XCTAssertEqual("1", try JsonFunctions().applyRule(rule, to: data))
     }
 
     func testSetOneIntegerVariableFromData() {
@@ -77,7 +77,7 @@ final class LegacyJsonFunctionsTests: XCTestCase {
             { "a" : 1 }
         """
 
-        XCTAssertEqual(1, try applyRule(rule, to: data))
+        XCTAssertEqual(1, try JsonFunctions().applyRule(rule, to: data))
     }
 
     func testSetOneBoolVariableFromData() {
@@ -90,7 +90,7 @@ final class LegacyJsonFunctionsTests: XCTestCase {
             { "a" : true }
         """
 
-        XCTAssertTrue(try applyRule(rule, to: data))
+        XCTAssertTrue(try JsonFunctions().applyRule(rule, to: data))
     }
 
     func testSetTwoStringVariablesFromData() {
@@ -103,7 +103,7 @@ final class LegacyJsonFunctionsTests: XCTestCase {
             { "a" : true }
         """
 
-        XCTAssertTrue(try applyRule(rule, to: data))
+        XCTAssertTrue(try JsonFunctions().applyRule(rule, to: data))
     }
 
     func testSetOneStringNestedVariableFromData() {
@@ -116,7 +116,7 @@ final class LegacyJsonFunctionsTests: XCTestCase {
             { "person" : { "name" : "Jon" } }
         """
 
-        XCTAssertEqual("Jon", try applyRule(rule, to: data))
+        XCTAssertEqual("Jon", try JsonFunctions().applyRule(rule, to: data))
     }
 
     func testSetOneStringArrayVariableFromData() {
@@ -129,7 +129,7 @@ final class LegacyJsonFunctionsTests: XCTestCase {
             { "a" : "1" }
         """
 
-        XCTAssertEqual("1", try applyRule(rule, to: data))
+        XCTAssertEqual("1", try JsonFunctions().applyRule(rule, to: data))
     }
 
     func testAddTwoIntsFromVariables() {
@@ -142,7 +142,7 @@ final class LegacyJsonFunctionsTests: XCTestCase {
             { "a" : "1" }
         """
 
-        XCTAssertTrue(try applyRule(rule, to: data))
+        XCTAssertTrue(try JsonFunctions().applyRule(rule, to: data))
     }
 
     func testNestedVar() {
@@ -155,7 +155,7 @@ final class LegacyJsonFunctionsTests: XCTestCase {
             { "a" : "b", "b" : "1" }
         """
 
-        XCTAssertEqual("1", try applyRule(rule, to: data))
+        XCTAssertEqual("1", try JsonFunctions().applyRule(rule, to: data))
     }
 
     func testNestedVarWithStrictEquals() {
@@ -168,7 +168,7 @@ final class LegacyJsonFunctionsTests: XCTestCase {
             { "a" : "b", "b" : "1", "oneNest" : {"one" : "1"} }
         """
 
-        XCTAssertTrue(try applyRule(rule, to: data))
+        XCTAssertTrue(try JsonFunctions().applyRule(rule, to: data))
     }
 
     func testNestedStrictEqualsWithVar() {
@@ -181,7 +181,7 @@ final class LegacyJsonFunctionsTests: XCTestCase {
             { "a" : "b", "b" : "oneNest.one", "oneNest" : {"one" : "10"} }
         """
 
-        XCTAssertEqual("10", try applyRule(rule, to: data))
+        XCTAssertEqual("10", try JsonFunctions().applyRule(rule, to: data))
     }
 
     func testNotSupportedResultType() {
@@ -192,7 +192,7 @@ final class LegacyJsonFunctionsTests: XCTestCase {
 
         class SomeType {}
 
-        XCTAssertThrowsError(try { try applyRule(rule) as SomeType }(), "") {
+        XCTAssertThrowsError(try { try JsonFunctions().applyRule(rule) as SomeType }(), "") {
             //swiftlint:disable:next force_cast
             XCTAssertEqual($0 as! JsonFunctionsError, .canNotConvertResultToType(SomeType.self))
         }

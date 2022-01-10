@@ -38,7 +38,7 @@ class CustomOperatorTests: XCTestCase {
         let customOperatorWrapper = CustomOperatorWrapper()
         let customOperators = ["plus": customOperatorWrapper.customOperator]
 
-        XCTAssertEqual(3, try JsonFunctions(rule, customOperators: customOperators).applyRule())
+        XCTAssertEqual(3, try JsonFunctions().applyRule(rule, customOperators: customOperators))
         XCTAssertTrue(customOperatorWrapper.isCustomOperatorCalled)
     }
 
@@ -51,7 +51,7 @@ class CustomOperatorTests: XCTestCase {
         let customOperatorWrapper = CustomOperatorWrapper()
 
         let block = {
-            try JsonFunctions(rule, customOperators: [:]).applyRule() as Int
+            try JsonFunctions().applyRule(rule, customOperators: [:]) as Int
         }
 
         try _XCTAssertThrowsError(try block(), "") {
@@ -70,7 +70,7 @@ class CustomOperatorTests: XCTestCase {
         let customOperatorWrapper = CustomOperatorWrapper()
         let customOperators = ["*": customOperatorWrapper.customOperator]
 
-        XCTAssertEqual(2, try JsonFunctions(rule, customOperators: customOperators).applyRule())
+        XCTAssertEqual(2, try JsonFunctions().applyRule(rule, customOperators: customOperators))
         XCTAssertFalse(customOperatorWrapper.isCustomOperatorCalled,
                        "the custom operator should not override the internal")
     }
@@ -91,7 +91,7 @@ class CustomOperatorTests: XCTestCase {
         let customOperatorWrapper = CustomOperatorWrapper()
         let customOperators = ["plus": customOperatorWrapper.customOperator]
 
-        let result: Int = try JsonFunctions(rule, customOperators: customOperators).applyRule(to: data)
+        let result: Int = try JsonFunctions().applyRule(rule, to: data, customOperators: customOperators)
         XCTAssertEqual(4, result)
         XCTAssertEqual(expectedJSONInput, customOperatorWrapper.evalutedJSONInput)
     }

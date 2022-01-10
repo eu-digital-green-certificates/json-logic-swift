@@ -15,7 +15,7 @@ class LogTests: XCTestCase {
         """
         {"log":"apple"}
         """
-        XCTAssertEqual("apple", try applyRule(rule, to: nil))
+        XCTAssertEqual("apple", try JsonFunctions().applyRule(rule, to: nil))
     }
 
     func testLog_withComplexExpression() {
@@ -23,7 +23,7 @@ class LogTests: XCTestCase {
                 """
                 {"log":{"cat":[1,[2,3]]}}
                 """
-        XCTAssertEqual("12,3", try applyRule(rule, to: nil))
+        XCTAssertEqual("12,3", try JsonFunctions().applyRule(rule, to: nil))
     }
 
 //swiftlint:disable:next function_body_length
@@ -64,12 +64,12 @@ class LogTests: XCTestCase {
         }
 """
 
-        XCTAssertEqual("fizzbuzz", try applyRule(rule, to: "{\"i\" : 0}"))
-        XCTAssertEqual(1, try applyRule(rule, to: "{\"i\" : 1}"))
-        XCTAssertEqual(2, try applyRule(rule, to: "{\"i\" : 2}"))
-        XCTAssertEqual("fizz", try applyRule(rule, to: "{\"i\" : 3}"))
-        XCTAssertEqual("buzz", try applyRule(rule, to: "{\"i\" : 5}"))
-        XCTAssertEqual("fizzbuzz", try applyRule(rule, to: "{\"i\" : 15}"))
-        XCTAssertEqual("fizzbuzz", try applyRule(rule, to: "{\"i\" : 45}"))
+        XCTAssertEqual("fizzbuzz", try JsonFunctions().applyRule(rule, to: "{\"i\" : 0}"))
+        XCTAssertEqual(1, try JsonFunctions().applyRule(rule, to: "{\"i\" : 1}"))
+        XCTAssertEqual(2, try JsonFunctions().applyRule(rule, to: "{\"i\" : 2}"))
+        XCTAssertEqual("fizz", try JsonFunctions().applyRule(rule, to: "{\"i\" : 3}"))
+        XCTAssertEqual("buzz", try JsonFunctions().applyRule(rule, to: "{\"i\" : 5}"))
+        XCTAssertEqual("fizzbuzz", try JsonFunctions().applyRule(rule, to: "{\"i\" : 15}"))
+        XCTAssertEqual("fizzbuzz", try JsonFunctions().applyRule(rule, to: "{\"i\" : 45}"))
     }
 }

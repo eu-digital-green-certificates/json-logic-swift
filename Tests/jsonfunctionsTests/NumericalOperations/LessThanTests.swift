@@ -15,19 +15,19 @@ class LessThanTests: XCTestCase {
                 """
                 { "<" : [1, 3] }
                 """
-        XCTAssertEqual(true, try applyRule(rule, to: nil))
+        XCTAssertEqual(true, try JsonFunctions().applyRule(rule, to: nil))
 
         rule =
                 """
                 { "<" : [1, 1] }
                 """
-        XCTAssertEqual(false, try applyRule(rule, to: nil))
+        XCTAssertEqual(false, try JsonFunctions().applyRule(rule, to: nil))
 
         rule =
                 """
                 { "<" : [3, 1] }
                 """
-        XCTAssertEqual(false, try applyRule(rule, to: nil))
+        XCTAssertEqual(false, try JsonFunctions().applyRule(rule, to: nil))
     }
 
     func testLessThan_withNonNumbericConstants() {
@@ -35,25 +35,25 @@ class LessThanTests: XCTestCase {
                 """
                 { "<" : ["2", "1111"] }
                 """
-        XCTAssertEqual(false, try applyRule(rule, to: nil))
+        XCTAssertEqual(false, try JsonFunctions().applyRule(rule, to: nil))
 
         rule =
                 """
                 { "<" : [null, null] }
                 """
-        XCTAssertEqual(false, try applyRule(rule, to: nil))
+        XCTAssertEqual(false, try JsonFunctions().applyRule(rule, to: nil))
 
         rule =
                 """
                 { "<" : [null, []] }
                 """
-        XCTAssertEqual(false, try applyRule(rule, to: nil))
+        XCTAssertEqual(false, try JsonFunctions().applyRule(rule, to: nil))
 
         rule =
                 """
                 { "<" : ["1", ""] }
                 """
-        XCTAssertEqual(false, try applyRule(rule, to: nil))
+        XCTAssertEqual(false, try JsonFunctions().applyRule(rule, to: nil))
     }
 
     func testLessThan_withMixedArgumentsTypes() {
@@ -62,38 +62,38 @@ class LessThanTests: XCTestCase {
                 { "<" : ["2", 1111] }
                 """
         //When one is numeric then the other is converted to numberic
-        XCTAssertEqual(true, try applyRule(rule, to: nil))
+        XCTAssertEqual(true, try JsonFunctions().applyRule(rule, to: nil))
 
         rule =
                 """
                 { "<" : ["2222", 1111] }
                 """
-        XCTAssertEqual(false, try applyRule(rule, to: nil))
+        XCTAssertEqual(false, try JsonFunctions().applyRule(rule, to: nil))
 
         rule =
                 """
                 { "<" : ["b", 1111] }
                 """
         //Anything but null when compared with null is greater
-        XCTAssertEqual(false, try applyRule(rule, to: nil))
+        XCTAssertEqual(false, try JsonFunctions().applyRule(rule, to: nil))
 
         rule =
                 """
                 { "<" : [1, null] }
                 """
-        XCTAssertEqual(false, try applyRule(rule, to: nil))
+        XCTAssertEqual(false, try JsonFunctions().applyRule(rule, to: nil))
 
         rule =
                 """
                 { "<" : [1, []] }
                 """
-        XCTAssertEqual(false, try applyRule(rule, to: nil))
+        XCTAssertEqual(false, try JsonFunctions().applyRule(rule, to: nil))
 
         rule =
                 """
                 { "<" : [[[]], 0] }
                 """
-        XCTAssertEqual(false, try applyRule(rule, to: nil))
+        XCTAssertEqual(false, try JsonFunctions().applyRule(rule, to: nil))
     }
 
     func testLessThan_withVariables() {
@@ -101,24 +101,24 @@ class LessThanTests: XCTestCase {
                 """
                 { "<" : [3, {"var" : ["oneNest.one"]}] }
                 """
-        XCTAssertEqual(false, try applyRule(rule, to: nil))
+        XCTAssertEqual(false, try JsonFunctions().applyRule(rule, to: nil))
 
         rule =
                 """
                 { "<" : [1, {"var" : ["a"] }] }
                 """
-        XCTAssertEqual(false, try applyRule(rule, to: nil))
+        XCTAssertEqual(false, try JsonFunctions().applyRule(rule, to: nil))
 
         rule =
                 """
                 { "<" : [1, ["nonExistant"]] }
                 """
-        XCTAssertEqual(false, try applyRule(rule, to: nil))
+        XCTAssertEqual(false, try JsonFunctions().applyRule(rule, to: nil))
 
         rule =
                 """
                 { "<" : [0, ["b"]] }
                 """
-        XCTAssertEqual(false, try applyRule(rule, to: nil))
+        XCTAssertEqual(false, try JsonFunctions().applyRule(rule, to: nil))
     }
 }

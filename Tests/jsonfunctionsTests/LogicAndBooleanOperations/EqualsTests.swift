@@ -16,13 +16,13 @@ class EqualsTests: XCTestCase {
         """
         {"==":[1,1]}
         """
-        XCTAssertEqual(true, try applyRule(rule, to: nil))
+        XCTAssertEqual(true, try JsonFunctions().applyRule(rule, to: nil))
 
         rule =
         """
         {"==":[1,2]}
         """
-        XCTAssertEqual(false, try applyRule(rule, to: nil))
+        XCTAssertEqual(false, try JsonFunctions().applyRule(rule, to: nil))
     }
 
     func testEquals_WithTypeCoercion() {
@@ -30,38 +30,38 @@ class EqualsTests: XCTestCase {
         """
         {"==":[1,"1"]}
         """
-        XCTAssertEqual(true, try applyRule(rule, to: nil))
+        XCTAssertEqual(true, try JsonFunctions().applyRule(rule, to: nil))
 
         rule =
         """
         {"==":[1,"2"]}
         """
-        XCTAssertEqual(false, try applyRule(rule, to: nil))
+        XCTAssertEqual(false, try JsonFunctions().applyRule(rule, to: nil))
 
         rule =
         """
         {"==":[1,"1.0"]}
         """
-        XCTAssertEqual(true, try applyRule(rule, to: nil))
+        XCTAssertEqual(true, try JsonFunctions().applyRule(rule, to: nil))
 
         rule =
         """
         {"==":[null,1]}
         """
-        XCTAssertEqual(false, try applyRule(rule, to: nil))
+        XCTAssertEqual(false, try JsonFunctions().applyRule(rule, to: nil))
 
         rule =
         """
         {"==":[0,false]}
         """
-        XCTAssertEqual(true, try applyRule(rule, to: nil))
+        XCTAssertEqual(true, try JsonFunctions().applyRule(rule, to: nil))
 
         rule =
         """
         {"==":[[1],[1]]}
         """
         //http://jsonfunctions.com/play.html returns false here
-        XCTAssertEqual(true, try applyRule(rule, to: nil))
+        XCTAssertEqual(true, try JsonFunctions().applyRule(rule, to: nil))
     }
 
     func testNotEquals() {
@@ -69,19 +69,19 @@ class EqualsTests: XCTestCase {
         """
         {"!=":[1,2]}
         """
-        XCTAssertEqual(true, try applyRule(rule, to: nil))
+        XCTAssertEqual(true, try JsonFunctions().applyRule(rule, to: nil))
 
         rule =
         """
         {"!=":[1,1]}
         """
-        XCTAssertEqual(false, try applyRule(rule, to: nil))
+        XCTAssertEqual(false, try JsonFunctions().applyRule(rule, to: nil))
 
         rule =
         """
         {"!=":[1,"1"]}
         """
-        XCTAssertEqual(false, try applyRule(rule, to: nil))
+        XCTAssertEqual(false, try JsonFunctions().applyRule(rule, to: nil))
     }
 
     func testNotEquals_WithTypeCoersion() {
@@ -89,18 +89,18 @@ class EqualsTests: XCTestCase {
         """
         {"!=":[1,"1"]}
         """
-        XCTAssertEqual(false, try applyRule(rule, to: nil))
+        XCTAssertEqual(false, try JsonFunctions().applyRule(rule, to: nil))
 
         rule =
         """
         {"!=":[1,"1.0"]}
         """
-        XCTAssertEqual(false, try applyRule(rule, to: nil))
+        XCTAssertEqual(false, try JsonFunctions().applyRule(rule, to: nil))
 
         rule =
         """
         {"!=":[0,true]}
         """
-        XCTAssertEqual(true, try applyRule(rule, to: nil))
+        XCTAssertEqual(true, try JsonFunctions().applyRule(rule, to: nil))
     }
 }

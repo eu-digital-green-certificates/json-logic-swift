@@ -14,7 +14,7 @@ struct ArrayNone: Expression {
             array.expressions.count >= 2,
             case let .Array(dataArray) = try array.expressions[0].evalWithData(data)
             else {
-                return .Null
+                return true
         }
         let operation = array.expressions[1]
 

@@ -85,7 +85,7 @@ let rule = """
 { "==" : [1, 1] }
 """
 
-let result: Bool = try applyRule(rule)
+let result: Bool = try JsonFunctions().applyRule(rule)
 //evaluates to true
 ```
 
@@ -105,7 +105,7 @@ let rule = """
     { "<" : [1,3] }
   ] }
 """
-let result: Bool = try applyRule(rule)
+let result: Bool = try JsonFunctions().applyRule(rule)
 //evaluates to true
 ```
 
@@ -128,7 +128,7 @@ let rule = """
 let data = """
   { a : 1, b : 2 }
 """
-let result: Int = try applyRule(rule, to: data)
+let result: Int = try JsonFunctions().applyRule(rule, to: data)
 //evaluates to 1
 ```
 
@@ -141,7 +141,7 @@ let rule = """
 let data = """
   { a : 1, b : 2 }
 """
-let result: Int = try applyRule(rule, to: data)
+let result: Int = try JsonFunctions().applyRule(rule, to: data)
 //evaluates to 1
 ```
 
@@ -168,7 +168,7 @@ let data = """
   { "temp" : 100, "pie" : { "filling" : "apple" } }
 """
 
-let result: Bool = try applyRule(rule, to: data)
+let result: Bool = try JsonFunctions().applyRule(rule, to: data)
 //evaluates to true
 ```
 

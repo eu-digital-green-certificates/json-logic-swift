@@ -19,25 +19,25 @@ class NoneTests: XCTestCase {
                 """
                 {"integers":[1,2,3]}
                 """
-        XCTAssertEqual(false, try applyRule(rule, to: data))
+        XCTAssertEqual(false, try JsonFunctions().applyRule(rule, to: data))
 
         rule =
                 """
                 {"none":[{"var":"integers"}, {"==":[{"var":""}, 1]}]}
                 """
-        XCTAssertEqual(false, try applyRule(rule, to: data))
+        XCTAssertEqual(false, try JsonFunctions().applyRule(rule, to: data))
 
         rule =
                 """
                 {"none":[{"var":"integers"}, {"<":[{"var":""}, 1]}]}
                 """
-        XCTAssertEqual(true, try applyRule(rule, to: data))
+        XCTAssertEqual(true, try JsonFunctions().applyRule(rule, to: data))
 
         rule =
                 """
                 {"none":[{"var":"integers"}, {"<=":[{"var":""}, 1]}]}
                 """
-        XCTAssertEqual(false, try applyRule(rule, to: data))
+        XCTAssertEqual(false, try JsonFunctions().applyRule(rule, to: data))
     }
 
     func testNone_WithEmptyDataArray() {
@@ -49,7 +49,7 @@ class NoneTests: XCTestCase {
         """
                 {"integers":[]}
                 """
-        XCTAssertEqual(true, try applyRule(rule, to: data))
+        XCTAssertEqual(true, try JsonFunctions().applyRule(rule, to: data))
 
         rule =
         """
@@ -59,7 +59,7 @@ class NoneTests: XCTestCase {
         """
         {"items":[]}
         """
-        XCTAssertEqual(true, try applyRule(rule, to: data))
+        XCTAssertEqual(true, try JsonFunctions().applyRule(rule, to: data))
 
         rule =
         """
@@ -69,7 +69,7 @@ class NoneTests: XCTestCase {
         """
         {"items":[]}
         """
-        XCTAssertEqual(true, try applyRule(rule, to: data))
+        XCTAssertEqual(true, try JsonFunctions().applyRule(rule, to: data))
     }
 
     func testNone_WithNestedDataItems() {
@@ -81,7 +81,7 @@ class NoneTests: XCTestCase {
         """
                 {"items":[{"qty":1,"sku":"apple"},{"qty":2,"sku":"banana"}]}
                 """
-        XCTAssertEqual(false, try applyRule(rule, to: data))
+        XCTAssertEqual(false, try JsonFunctions().applyRule(rule, to: data))
 
         rule =
         """
@@ -91,7 +91,7 @@ class NoneTests: XCTestCase {
         """
         {"items":[{"qty":1,"sku":"apple"},{"qty":2,"sku":"banana"}]}
         """
-        XCTAssertEqual(false, try applyRule(rule, to: data))
+        XCTAssertEqual(false, try JsonFunctions().applyRule(rule, to: data))
 
         rule =
         """
@@ -101,7 +101,7 @@ class NoneTests: XCTestCase {
         """
         {"items":[{"qty":1,"sku":"apple"},{"qty":2,"sku":"banana"}]}
         """
-        XCTAssertEqual(true, try applyRule(rule, to: data))
+        XCTAssertEqual(true, try JsonFunctions().applyRule(rule, to: data))
     }
 
     func testNone_WithMissingArguments() {
@@ -109,12 +109,12 @@ class NoneTests: XCTestCase {
                 """
                 {"none":[{"var":"integers"}]}
                 """
-        XCTAssertNil(try applyRule(rule))
+        XCTAssertNil(try JsonFunctions().applyRule(rule))
 
         rule =
                 """
                 {"none":[]}
                 """
-        XCTAssertNil(try applyRule(rule))
+        XCTAssertNil(try JsonFunctions().applyRule(rule))
     }
 }

@@ -15,37 +15,37 @@ class BetweenTests: XCTestCase {
         """
         { "<" : [1, 2, 3] }
         """
-        XCTAssertEqual(true, try applyRule(rule, to: nil))
+        XCTAssertEqual(true, try JsonFunctions().applyRule(rule, to: nil))
 
         rule =
         """
         { "<" : [1, 1, 3] }
         """
-        XCTAssertEqual(false, try applyRule(rule, to: nil))
+        XCTAssertEqual(false, try JsonFunctions().applyRule(rule, to: nil))
 
         rule =
         """
         { "<" : [1, 3, 3] }
         """
-        XCTAssertEqual(false, try applyRule(rule, to: nil))
+        XCTAssertEqual(false, try JsonFunctions().applyRule(rule, to: nil))
 
         rule =
         """
         { "<=" : [1, 3, 3] }
         """
-        XCTAssertEqual(true, try applyRule(rule, to: nil))
+        XCTAssertEqual(true, try JsonFunctions().applyRule(rule, to: nil))
 
         rule =
         """
         { "<=" : [2, 2, 3] }
         """
-        XCTAssertEqual(true, try applyRule(rule, to: nil))
+        XCTAssertEqual(true, try JsonFunctions().applyRule(rule, to: nil))
 
         rule =
         """
          { "<=" : [1, 4, 3] }
         """
-        XCTAssertEqual(false, try applyRule(rule, to: nil))
+        XCTAssertEqual(false, try JsonFunctions().applyRule(rule, to: nil))
     }
 
 //    func testBetween_withNonNumbericConstants() {
@@ -69,7 +69,7 @@ class BetweenTests: XCTestCase {
 //        ]
 //
 //        for (rule, result) in rulesAndResults {
-//            XCTAssertEqual(result, try applyRule(rule, to: nil))
+//            XCTAssertEqual(result, try JsonFunctions().applyRule(rule, to: nil))
 //        }
 //    }
 
@@ -110,7 +110,7 @@ class BetweenTests: XCTestCase {
 //        ]
 //
 //        for (rule, result) in rulesAndResults {
-//            XCTAssertEqual(result, try applyRule(rule, to: nil))
+//            XCTAssertEqual(result, try JsonFunctions().applyRule(rule, to: nil))
 //        }
 //    }
 
@@ -119,24 +119,24 @@ class BetweenTests: XCTestCase {
         """
         { "<=" : [3, {"var" : ["b"]}, 9] }
         """
-        XCTAssertEqual(false, try applyRule(rule, to: nil))
+        XCTAssertEqual(false, try JsonFunctions().applyRule(rule, to: nil))
 
         rule =
         """
         { "<=" : [0, {"var" : ["b"] }, 2] }
         """
-        XCTAssertEqual(true, try applyRule(rule, to: nil))
+        XCTAssertEqual(true, try JsonFunctions().applyRule(rule, to: nil))
 
         rule =
         """
         { "<=" : [1, {"var" : ["a"] }, 9] }
         """
-        XCTAssertEqual(false, try applyRule(rule, to: nil))
+        XCTAssertEqual(false, try JsonFunctions().applyRule(rule, to: nil))
 
         rule =
         """
         { "<=" : [1, 3, 3] }
         """
-        XCTAssertEqual(true, try applyRule(rule, to: nil))
+        XCTAssertEqual(true, try JsonFunctions().applyRule(rule, to: nil))
     }
 }

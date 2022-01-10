@@ -15,13 +15,13 @@ class SubstringTests: XCTestCase {
                 """
                 {"substr":["jsonfunctions", 4]}
                 """
-        XCTAssertEqual("logic", try applyRule(rule, to: nil))
+        XCTAssertEqual("logic", try JsonFunctions().applyRule(rule, to: nil))
 
         rule =
                 """
                 {"substr":["jsonfunctions", -5]}
                 """
-        XCTAssertEqual("logic", try applyRule(rule, to: nil))
+        XCTAssertEqual("logic", try JsonFunctions().applyRule(rule, to: nil))
     }
 
     func testSubstring_withRange() {
@@ -29,37 +29,37 @@ class SubstringTests: XCTestCase {
                 """
                 {"substr":["jsonfunctions", 0, 1]}
                 """
-        XCTAssertEqual("j", try applyRule(rule, to: nil))
+        XCTAssertEqual("j", try JsonFunctions().applyRule(rule, to: nil))
 
         rule =
                 """
                 {"substr":["jsonfunctions", -1, 1]}
                 """
-        XCTAssertEqual("c", try applyRule(rule, to: nil))
+        XCTAssertEqual("c", try JsonFunctions().applyRule(rule, to: nil))
 
         rule =
                 """
                 {"substr":["jsonfunctions", 4, 5]}
                 """
-        XCTAssertEqual("logic", try applyRule(rule, to: nil))
+        XCTAssertEqual("logic", try JsonFunctions().applyRule(rule, to: nil))
 
         rule =
                 """
                 {"substr":["jsonfunctions", -5, 5]}
                 """
-        XCTAssertEqual("logic", try applyRule(rule, to: nil))
+        XCTAssertEqual("logic", try JsonFunctions().applyRule(rule, to: nil))
 
         rule =
                 """
                 {"substr":["jsonfunctions", -5, -2]}
                 """
-        XCTAssertEqual("log", try applyRule(rule, to: nil))
+        XCTAssertEqual("log", try JsonFunctions().applyRule(rule, to: nil))
 
         rule =
                 """
                 {"substr":["jsonfunctions", 1, -5]}
                 """
-        XCTAssertEqual("son", try applyRule(rule, to: nil))
+        XCTAssertEqual("son", try JsonFunctions().applyRule(rule, to: nil))
     }
 
     func testSunString_withInvalidLength() {
@@ -67,7 +67,7 @@ class SubstringTests: XCTestCase {
                 """
                 {"substr":["jsonfunctions", 1, null]}
                 """
-        XCTAssertNil(try applyRule(rule, to: nil))
+        XCTAssertNil(try JsonFunctions().applyRule(rule, to: nil))
     }
 
     func testSunString_withInvalidStart() {
@@ -75,12 +75,12 @@ class SubstringTests: XCTestCase {
                 """
                 {"substr":["jsonfunctions", null, 1]}
                 """
-        XCTAssertNil(try applyRule(rule, to: nil))
+        XCTAssertNil(try JsonFunctions().applyRule(rule, to: nil))
 
         rule =
                 """
                 {"substr":["jsonfunctions", null]}
                 """
-        XCTAssertNil(try applyRule(rule, to: nil))
+        XCTAssertNil(try JsonFunctions().applyRule(rule, to: nil))
     }
 }

@@ -13,6 +13,8 @@ final class JsonFunctionsTests: XCTestCase {
         var throwsUnexpectedly = 0
 
         for (index, testCase) in testCases.enumerated() {
+//            let jsonFunctions = JsonFunctions()
+
             if let functions = testCase.functions {
                 // TODO: register functions
             }
@@ -24,11 +26,11 @@ final class JsonFunctionsTests: XCTestCase {
                     print("*** ❓ test case \(index) misses implementation - \(testCase.title)")
                     missingImplementation += 1
                 } else if let logic = testCase.logic, let data = testCase.data {
-                    if index == 161 { // 725
+                    if index == 182 {
                         print("")
                     }
 
-                    result = try applyRule(JSON(logic.value), to: JSON(data.value))
+                    result = try JsonFunctions().applyRule(JSON(logic.value), to: JSON(data.value))
 
                     if let exp = testCase.exp {
                         XCTAssert(JSON(result) === JSON(exp.value))

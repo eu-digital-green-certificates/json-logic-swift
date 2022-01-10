@@ -22,7 +22,7 @@ class MissingTests: XCTestCase {
                 """
                 [1, 2, 3]
                 """
-        XCTAssertEqual([1, 2, 3], try applyRule(rule, to: data))
+        XCTAssertEqual([1, 2, 3], try JsonFunctions().applyRule(rule, to: data))
     }
 
     func testMissing() {
@@ -34,7 +34,7 @@ class MissingTests: XCTestCase {
         """
         {"a":"apple", "c":"carrot"}
         """
-        XCTAssertEqual(["b"], try applyRule(rule, to: data))
+        XCTAssertEqual(["b"], try JsonFunctions().applyRule(rule, to: data))
 
         rule =
         """
@@ -44,25 +44,25 @@ class MissingTests: XCTestCase {
         """
         {"a":"apple", "b":"banana"}
         """
-        XCTAssertEqual(emptyStringArray, try applyRule(rule, to: data))
+        XCTAssertEqual(emptyStringArray, try JsonFunctions().applyRule(rule, to: data))
 
         rule =
         """
         {"missing":[]}
         """
-        XCTAssertEqual(emptyStringArray, try applyRule(rule, to: nil))
+        XCTAssertEqual(emptyStringArray, try JsonFunctions().applyRule(rule, to: nil))
 
         rule =
         """
         {"missing":["a"]}
         """
-        XCTAssertEqual(["a"], try applyRule(rule, to: nil))
+        XCTAssertEqual(["a"], try JsonFunctions().applyRule(rule, to: nil))
 
         rule =
         """
         {"missing":"a"}
         """
-        XCTAssertEqual(["a"], try applyRule(rule, to: nil))
+        XCTAssertEqual(["a"], try JsonFunctions().applyRule(rule, to: nil))
 
         rule =
         """
@@ -72,7 +72,7 @@ class MissingTests: XCTestCase {
         """
         {"a":"apple"}
         """
-        XCTAssertEqual(emptyStringArray, try applyRule(rule, to: data))
+        XCTAssertEqual(emptyStringArray, try JsonFunctions().applyRule(rule, to: data))
 
         rule =
         """
@@ -82,7 +82,7 @@ class MissingTests: XCTestCase {
         """
         {"a":"apple"}
         """
-        XCTAssertEqual(emptyStringArray, try applyRule(rule, to: data))
+        XCTAssertEqual(emptyStringArray, try JsonFunctions().applyRule(rule, to: data))
 
         rule =
         """
@@ -92,7 +92,7 @@ class MissingTests: XCTestCase {
         """
         {"a":"apple"}
         """
-        XCTAssertEqual(["b"], try applyRule(rule, to: data))
+        XCTAssertEqual(["b"], try JsonFunctions().applyRule(rule, to: data))
 
         rule =
         """
@@ -102,7 +102,7 @@ class MissingTests: XCTestCase {
         """
         {"b":"banana"}
         """
-        XCTAssertEqual(["a"], try applyRule(rule, to: data))
+        XCTAssertEqual(["a"], try JsonFunctions().applyRule(rule, to: data))
 
         rule =
         """
@@ -112,7 +112,7 @@ class MissingTests: XCTestCase {
         """
         {"a":"apple", "b":"banana"}
         """
-        XCTAssertEqual(emptyStringArray, try applyRule(rule, to: data))
+        XCTAssertEqual(emptyStringArray, try JsonFunctions().applyRule(rule, to: data))
 
         rule =
         """
@@ -122,13 +122,13 @@ class MissingTests: XCTestCase {
         """
         {}
         """
-        XCTAssertEqual(["a", "b"], try applyRule(rule, to: data))
+        XCTAssertEqual(["a", "b"], try JsonFunctions().applyRule(rule, to: data))
 
         rule =
         """
         {"missing":["a","b"]}
         """
-        XCTAssertEqual(["a", "b"], try applyRule(rule, to: nil))
+        XCTAssertEqual(["a", "b"], try JsonFunctions().applyRule(rule, to: nil))
     }
 
     func testMissing_NestedKeys() {
@@ -140,13 +140,13 @@ class MissingTests: XCTestCase {
         """
         {"a":"apple"}
         """
-        XCTAssertEqual(["a.b"], try applyRule(rule, to: data))
+        XCTAssertEqual(["a.b"], try JsonFunctions().applyRule(rule, to: data))
 
         rule =
         """
         {"missing":["a.b"]}
         """
-        XCTAssertEqual(["a.b"], try applyRule(rule, to: nil))
+        XCTAssertEqual(["a.b"], try JsonFunctions().applyRule(rule, to: nil))
 
         rule =
         """
@@ -156,7 +156,7 @@ class MissingTests: XCTestCase {
         """
         {"a":{"c":"apple cake"}}
         """
-        XCTAssertEqual(["a.b"], try applyRule(rule, to: data))
+        XCTAssertEqual(["a.b"], try JsonFunctions().applyRule(rule, to: data))
 
         rule =
         """
@@ -166,7 +166,7 @@ class MissingTests: XCTestCase {
         """
         {"a":{"b":"apple brownie"}}
         """
-        XCTAssertEqual(emptyStringArray, try applyRule(rule, to: data))
+        XCTAssertEqual(emptyStringArray, try JsonFunctions().applyRule(rule, to: data))
 
         rule =
         """
@@ -176,7 +176,7 @@ class MissingTests: XCTestCase {
         """
         {"a":{"b":"apple brownie"}}
         """
-        XCTAssertEqual(["a.c"], try applyRule(rule, to: data))
+        XCTAssertEqual(["a.c"], try JsonFunctions().applyRule(rule, to: data))
     }
 
     func testMissing_some() {
@@ -188,7 +188,7 @@ class MissingTests: XCTestCase {
         """
         {"a":"apple"}
         """
-        XCTAssertEqual(emptyStringArray, try applyRule(rule, to: data))
+        XCTAssertEqual(emptyStringArray, try JsonFunctions().applyRule(rule, to: data))
 
         rule =
         """
@@ -198,7 +198,7 @@ class MissingTests: XCTestCase {
         """
         {"b":"banana"}
         """
-        XCTAssertEqual(emptyStringArray, try applyRule(rule, to: data))
+        XCTAssertEqual(emptyStringArray, try JsonFunctions().applyRule(rule, to: data))
 
         rule =
         """
@@ -208,7 +208,7 @@ class MissingTests: XCTestCase {
         """
         {"b":"banana"}
         """
-        XCTAssertEqual(emptyStringArray, try applyRule(rule, to: data))
+        XCTAssertEqual(emptyStringArray, try JsonFunctions().applyRule(rule, to: data))
 
         rule =
         """
@@ -218,7 +218,7 @@ class MissingTests: XCTestCase {
         """
         {"a":"apple"}
         """
-        XCTAssertEqual(["b", "c"], try applyRule(rule, to: data))
+        XCTAssertEqual(["b", "c"], try JsonFunctions().applyRule(rule, to: data))
 
         //Following the rules for var for . notation
         rule =
@@ -229,7 +229,7 @@ class MissingTests: XCTestCase {
         """
         {"a":"apple", "person": {"name": "Bruce"} }
         """
-        XCTAssertEqual(["b", "c"], try applyRule(rule, to: data))
+        XCTAssertEqual(["b", "c"], try JsonFunctions().applyRule(rule, to: data))
 
         rule =
         """
@@ -239,7 +239,7 @@ class MissingTests: XCTestCase {
         """
         {"a":"apple", "person": {"name": "Bruce"} }
         """
-        XCTAssertEqual(emptyStringArray, try applyRule(rule, to: data))
+        XCTAssertEqual(emptyStringArray, try JsonFunctions().applyRule(rule, to: data))
 
         //with wrong arguments
         rule =
@@ -250,7 +250,7 @@ class MissingTests: XCTestCase {
         """
         {"b":"banana"}
         """
-        XCTAssertNil(try applyRule(rule, to: data))
+        XCTAssertNil(try JsonFunctions().applyRule(rule, to: data))
 
         rule =
         """
@@ -268,6 +268,6 @@ class MissingTests: XCTestCase {
         """
         {"first_name":"Bruce", "last_name":"Wayne"}
         """
-        XCTAssertEqual("We require first name, last name, and one phone number.", try applyRule(rule, to: data))
+        XCTAssertEqual("We require first name, last name, and one phone number.", try JsonFunctions().applyRule(rule, to: data))
     }
 }

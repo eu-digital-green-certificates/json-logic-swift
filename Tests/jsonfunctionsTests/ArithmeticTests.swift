@@ -15,25 +15,25 @@ class Arithmetic: XCTestCase {
         """
         { "+" : [4, 2] }
         """
-        XCTAssertEqual(6, try applyRule(rule, to: nil))
+        XCTAssertEqual(6, try JsonFunctions().applyRule(rule, to: nil))
 
         rule =
         """
         { "+" : [4, "2"] }
         """
-        XCTAssertEqual(6, try applyRule(rule, to: nil))
+        XCTAssertEqual(6, try JsonFunctions().applyRule(rule, to: nil))
 
         rule =
         """
         { "+" : [2, 2, 2, 2, 2]}
         """
-        XCTAssertEqual(10, try applyRule(rule, to: nil))
+        XCTAssertEqual(10, try JsonFunctions().applyRule(rule, to: nil))
 
         rule =
         """
         { "+" : "3.14"}
         """
-        XCTAssertEqual(3.14, try applyRule(rule, to: nil))
+        XCTAssertEqual(3.14, try JsonFunctions().applyRule(rule, to: nil))
     }
 
     func testSubtraction() {
@@ -41,25 +41,25 @@ class Arithmetic: XCTestCase {
                 """
                 { "-" : [4, 2] }
                 """
-        XCTAssertEqual(2, try applyRule(rule, to: nil))
+        XCTAssertEqual(2, try JsonFunctions().applyRule(rule, to: nil))
 
         rule =
                 """
                 { "-" : [2, 3] }
                 """
-        XCTAssertEqual(-1, try applyRule(rule, to: nil))
+        XCTAssertEqual(-1, try JsonFunctions().applyRule(rule, to: nil))
 
         rule =
                 """
                 { "-" : [3] }
                 """
-        XCTAssertEqual(-3, try applyRule(rule, to: nil))
+        XCTAssertEqual(-3, try JsonFunctions().applyRule(rule, to: nil))
 
         rule =
                 """
                  { "-" : [1, "1"] }
                 """
-        XCTAssertEqual(0, try applyRule(rule, to: nil))
+        XCTAssertEqual(0, try JsonFunctions().applyRule(rule, to: nil))
     }
 
     func testMultiplication() {
@@ -67,31 +67,31 @@ class Arithmetic: XCTestCase {
                 """
                 { "*" : [4, 2] }
                 """
-        XCTAssertEqual(8, try applyRule(rule, to: nil))
+        XCTAssertEqual(8, try JsonFunctions().applyRule(rule, to: nil))
 
         rule =
                 """
                 { "*" : [2, 2, 2, 2, 2]}
                 """
-        XCTAssertEqual(32, try applyRule(rule, to: nil))
+        XCTAssertEqual(32, try JsonFunctions().applyRule(rule, to: nil))
 
         rule =
                 """
                 { "*" : [3, 2] }
                 """
-        XCTAssertEqual(6, try applyRule(rule, to: nil))
+        XCTAssertEqual(6, try JsonFunctions().applyRule(rule, to: nil))
 
         rule =
                 """
                 { "*" : [1]}
                 """
-        XCTAssertEqual(1, try applyRule(rule, to: nil))
+        XCTAssertEqual(1, try JsonFunctions().applyRule(rule, to: nil))
 
         rule =
                 """
                 { "*" : ["1", 1]}
                 """
-        XCTAssertEqual(1, try applyRule(rule, to: nil))
+        XCTAssertEqual(1, try JsonFunctions().applyRule(rule, to: nil))
     }
 
     func testMultiplication_TypeCoercion() {
@@ -99,13 +99,13 @@ class Arithmetic: XCTestCase {
         """
         {"*":["2","2"]}
         """
-        XCTAssertEqual(4, try applyRule(rule, to: nil))
+        XCTAssertEqual(4, try JsonFunctions().applyRule(rule, to: nil))
 
         rule =
         """
         {"*":["2"]}
         """
-        XCTAssertEqual(2, try applyRule(rule, to: nil))
+        XCTAssertEqual(2, try JsonFunctions().applyRule(rule, to: nil))
     }
 
     func testDivision() {
@@ -113,25 +113,25 @@ class Arithmetic: XCTestCase {
         """
         { "/" : [4, 2]}
         """
-        XCTAssertEqual(2, try applyRule(rule, to: nil))
+        XCTAssertEqual(2, try JsonFunctions().applyRule(rule, to: nil))
 
         rule =
         """
         { "/" : [2, 4]}
         """
-        XCTAssertEqual(0.5, try applyRule(rule, to: nil))
+        XCTAssertEqual(0.5, try JsonFunctions().applyRule(rule, to: nil))
 
         rule =
         """
         { "+" : [2, 2, 2, 2, 2]}
         """
-        XCTAssertEqual(10, try applyRule(rule, to: nil))
+        XCTAssertEqual(10, try JsonFunctions().applyRule(rule, to: nil))
 
         rule =
         """
         { "/" : ["1", 1]}
         """
-        XCTAssertEqual(1, try applyRule(rule, to: nil))
+        XCTAssertEqual(1, try JsonFunctions().applyRule(rule, to: nil))
     }
 
     func testModulo() {
@@ -139,19 +139,19 @@ class Arithmetic: XCTestCase {
                 """
                 { "%" : [1, 2]}
                 """
-        XCTAssertEqual(1, try applyRule(rule, to: nil))
+        XCTAssertEqual(1, try JsonFunctions().applyRule(rule, to: nil))
 
         rule =
                 """
                 { "%" : [2, 2]}
                 """
-        XCTAssertEqual(0, try applyRule(rule, to: nil))
+        XCTAssertEqual(0, try JsonFunctions().applyRule(rule, to: nil))
 
         rule =
                 """
                 { "%" : [3, 2]}
                 """
-        XCTAssertEqual(1, try applyRule(rule, to: nil))
+        XCTAssertEqual(1, try JsonFunctions().applyRule(rule, to: nil))
     }
 
     func testUnaryMinus() {
@@ -159,12 +159,12 @@ class Arithmetic: XCTestCase {
                 """
                 { "-" : [2] }
                 """
-        XCTAssertEqual(-2, try applyRule(rule, to: nil))
+        XCTAssertEqual(-2, try JsonFunctions().applyRule(rule, to: nil))
 
         rule =
                 """
                 { "-" : [-2] }
                 """
-        XCTAssertEqual(2, try applyRule(rule, to: nil))
+        XCTAssertEqual(2, try JsonFunctions().applyRule(rule, to: nil))
     }
 }

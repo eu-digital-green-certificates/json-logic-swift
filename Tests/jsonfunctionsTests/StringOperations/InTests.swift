@@ -15,19 +15,19 @@ class InTests: XCTestCase {
         """
         { "in" : ["Spring", "Springfield"] }
         """
-        XCTAssertEqual(true, try applyRule(rule, to: nil))
+        XCTAssertEqual(true, try JsonFunctions().applyRule(rule, to: nil))
 
         rule =
         """
         {"in":["Spring","Springfield"]}
         """
-        XCTAssertEqual(true, try applyRule(rule, to: nil))
+        XCTAssertEqual(true, try JsonFunctions().applyRule(rule, to: nil))
 
         rule =
         """
         {"in":["i","team"]}
         """
-        XCTAssertEqual(false, try applyRule(rule, to: nil))
+        XCTAssertEqual(false, try JsonFunctions().applyRule(rule, to: nil))
     }
 
     func testIn_ArrayArgument() {
@@ -35,12 +35,12 @@ class InTests: XCTestCase {
         """
         {"in":["Bart",["Bart","Homer","Lisa","Marge","Maggie"]]}
         """
-        XCTAssertEqual(true, try applyRule(rule, to: nil))
+        XCTAssertEqual(true, try JsonFunctions().applyRule(rule, to: nil))
 
         rule =
         """
         {"in":["Milhouse",["Bart","Homer","Lisa","Marge","Maggie"]]}
         """
-        XCTAssertEqual(false, try applyRule(rule, to: nil))
+        XCTAssertEqual(false, try JsonFunctions().applyRule(rule, to: nil))
     }
 }

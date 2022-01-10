@@ -22,13 +22,13 @@ class ArrayMapTests: XCTestCase {
                 """
                 {"integers":[1,2,3]}
                 """
-        XCTAssertEqual([2, 4, 6], try applyRule(rule, to: data))
+        XCTAssertEqual([2, 4, 6], try JsonFunctions().applyRule(rule, to: data))
 
         rule =
                 """
                 {"map":[{"var":"integers"}, {"*":[{"var":""},2]}]}
                 """
-        XCTAssertEqual(emptyIntArray, try applyRule(rule, to: nil))
+        XCTAssertEqual(emptyIntArray, try JsonFunctions().applyRule(rule, to: nil))
 
         rule =
                 """
@@ -42,13 +42,13 @@ class ArrayMapTests: XCTestCase {
                 {"name":"cupcake","qty":3}
                 ]}
                 """
-        XCTAssertEqual([1, 2, 3], try applyRule(rule, to: data))
+        XCTAssertEqual([1, 2, 3], try JsonFunctions().applyRule(rule, to: data))
 
         rule =
                 """
                 {"map":[{"var":"desserts"}]}
                 """
-        XCTAssertEqual(emptyIntArray, try applyRule(rule))
+        XCTAssertEqual(emptyIntArray, try JsonFunctions().applyRule(rule))
     }
 
     func testReduce() {
@@ -64,7 +64,7 @@ class ArrayMapTests: XCTestCase {
                 """
                 {"integers":[1,2,3,4]}
                 """
-          XCTAssertEqual(10, try applyRule(rule, to: data))
+          XCTAssertEqual(10, try JsonFunctions().applyRule(rule, to: data))
 
         rule =
                 """
@@ -74,7 +74,7 @@ class ArrayMapTests: XCTestCase {
                 0
                 ]}
                 """
-          XCTAssertEqual(0, try applyRule(rule, to: nil))
+          XCTAssertEqual(0, try JsonFunctions().applyRule(rule, to: nil))
 
         rule =
                 """
@@ -88,7 +88,7 @@ class ArrayMapTests: XCTestCase {
                 """
                 {"integers":[1,2,3,4]}
                 """
-        XCTAssertEqual(24, try applyRule(rule, to: data))
+        XCTAssertEqual(24, try JsonFunctions().applyRule(rule, to: data))
 
         rule =
                 """
@@ -102,7 +102,7 @@ class ArrayMapTests: XCTestCase {
                 """
                 {"integers":[1,2,3,4]}
                 """
-        XCTAssertEqual(0, try applyRule(rule, to: data))
+        XCTAssertEqual(0, try JsonFunctions().applyRule(rule, to: data))
 
         rule =
                 """
@@ -120,7 +120,7 @@ class ArrayMapTests: XCTestCase {
                 {"name":"cupcake","qty":3}
                 ]}
                 """
-        XCTAssertEqual(6, try applyRule(rule, to: data))
+        XCTAssertEqual(6, try JsonFunctions().applyRule(rule, to: data))
     }
 
     func testFilter() {
@@ -132,7 +132,7 @@ class ArrayMapTests: XCTestCase {
                 """
                 {"integers":[1,2,3]}
                 """
-        XCTAssertEqual([1, 2, 3], try applyRule(rule, to: data))
+        XCTAssertEqual([1, 2, 3], try JsonFunctions().applyRule(rule, to: data))
 
         rule =
                 """
@@ -142,7 +142,7 @@ class ArrayMapTests: XCTestCase {
                 """
                 {"integers":[1,2,3]}
                 """
-        XCTAssertEqual(emptyIntArray, try applyRule(rule, to: data))
+        XCTAssertEqual(emptyIntArray, try JsonFunctions().applyRule(rule, to: data))
 
         rule =
                 """
@@ -152,7 +152,7 @@ class ArrayMapTests: XCTestCase {
                 """
                 {"integers":[1,2,3]}
                 """
-        XCTAssertEqual([2, 3], try applyRule(rule, to: data))
+        XCTAssertEqual([2, 3], try JsonFunctions().applyRule(rule, to: data))
 
         rule =
             """
@@ -162,13 +162,13 @@ class ArrayMapTests: XCTestCase {
             """
             {"integers":[1,2,3]}
             """
-        XCTAssertEqual([1, 3], try applyRule(rule, to: data))
+        XCTAssertEqual([1, 3], try JsonFunctions().applyRule(rule, to: data))
 
         rule =
             """
             {"filter":[{"var":"integers"}]}
             """
-        XCTAssertEqual(emptyIntArray, try applyRule(rule, to: data))
+        XCTAssertEqual(emptyIntArray, try JsonFunctions().applyRule(rule, to: data))
     }
 
     func testFilter_withMissingArguments() {
@@ -176,7 +176,7 @@ class ArrayMapTests: XCTestCase {
                 """
                  {"filter":[]}
                 """
-        XCTAssertEqual(emptyIntArray, try applyRule(rule))
+        XCTAssertEqual(emptyIntArray, try JsonFunctions().applyRule(rule))
     }
 
     func testReduce_withMissingArguments() {
@@ -184,7 +184,7 @@ class ArrayMapTests: XCTestCase {
                 """
                  {"reduce":[]}
                 """
-        XCTAssertNil(try applyRule(rule))
+        XCTAssertNil(try JsonFunctions().applyRule(rule))
     }
 
     func testMap_withMissingArguments() {
@@ -192,7 +192,7 @@ class ArrayMapTests: XCTestCase {
                 """
                  {"map":[]}
                 """
-        XCTAssertEqual(emptyIntArray, try applyRule(rule))
+        XCTAssertEqual(emptyIntArray, try JsonFunctions().applyRule(rule))
     }
   
     func testAccessingVariableWithArrayIndexPath() {
@@ -204,6 +204,6 @@ class ArrayMapTests: XCTestCase {
         """
         { "person" : { "name" : ["John", "Green"] } }
         """
-        XCTAssertEqual("John", try applyRule(rule, to: data))
+        XCTAssertEqual("John", try JsonFunctions().applyRule(rule, to: data))
     }
 }

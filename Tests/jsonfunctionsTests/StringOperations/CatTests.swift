@@ -16,43 +16,43 @@ class CatTests: XCTestCase {
         """
         {"cat":"ice"}
         """
-        XCTAssertEqual("ice", try applyRule(rule, to: nil))
+        XCTAssertEqual("ice", try JsonFunctions().applyRule(rule, to: nil))
 
         rule =
         """
         {"cat":["ice"]}
         """
-        XCTAssertEqual("ice", try applyRule(rule, to: nil))
+        XCTAssertEqual("ice", try JsonFunctions().applyRule(rule, to: nil))
 
         rule =
         """
         {"cat":["ice","cream"]}
         """
-        XCTAssertEqual("icecream", try applyRule(rule, to: nil))
+        XCTAssertEqual("icecream", try JsonFunctions().applyRule(rule, to: nil))
 
         rule =
         """
         {"cat":[1,2]}
         """
-        XCTAssertEqual("12", try applyRule(rule, to: nil))
+        XCTAssertEqual("12", try JsonFunctions().applyRule(rule, to: nil))
 
         rule =
         """
         {"cat":[221.1,2.122]}
         """
-        XCTAssertEqual("221.12.122", try applyRule(rule, to: nil))
+        XCTAssertEqual("221.12.122", try JsonFunctions().applyRule(rule, to: nil))
 
         rule =
         """
         {"cat":["Robocop",2]}
         """
-        XCTAssertEqual("Robocop2", try applyRule(rule, to: nil))
+        XCTAssertEqual("Robocop2", try JsonFunctions().applyRule(rule, to: nil))
 
         rule =
         """
         {"cat":["we all scream for ","ice","cream"]}
         """
-        XCTAssertEqual("we all scream for icecream", try applyRule(rule, to: nil))
+        XCTAssertEqual("we all scream for icecream", try JsonFunctions().applyRule(rule, to: nil))
     }
 
     func testCat_WithNullOrEmpty() {
@@ -60,19 +60,19 @@ class CatTests: XCTestCase {
         """
         {"cat":[1,null]}
         """
-        XCTAssertEqual("1", try applyRule(rule, to: nil))
+        XCTAssertEqual("1", try JsonFunctions().applyRule(rule, to: nil))
 
         rule =
         """
         {"cat":[1,[]]}
         """
-        XCTAssertEqual("1", try applyRule(rule, to: nil))
+        XCTAssertEqual("1", try JsonFunctions().applyRule(rule, to: nil))
 
         rule =
         """
         {"cat":[1,""]}
         """
-        XCTAssertEqual("1", try applyRule(rule, to: nil))
+        XCTAssertEqual("1", try JsonFunctions().applyRule(rule, to: nil))
     }
 
     func testCat_WithBoolean() {
@@ -80,13 +80,13 @@ class CatTests: XCTestCase {
         """
         {"cat":["jsonfunctions", true]}
         """
-        XCTAssertEqual("jsonfunctionstrue", try applyRule(rule, to: nil))
+        XCTAssertEqual("jsonfunctionstrue", try JsonFunctions().applyRule(rule, to: nil))
 
         rule =
         """
         {"cat":[false, true]}
         """
-        XCTAssertEqual("falsetrue", try applyRule(rule, to: nil))
+        XCTAssertEqual("falsetrue", try JsonFunctions().applyRule(rule, to: nil))
     }
 
     func testCat_WithArrays() {
@@ -94,18 +94,18 @@ class CatTests: XCTestCase {
         """
         {"cat":[1,[2,3]]}
         """
-        XCTAssertEqual("12,3", try applyRule(rule, to: nil))
+        XCTAssertEqual("12,3", try JsonFunctions().applyRule(rule, to: nil))
 
         rule =
         """
         {"cat":[[1]]}
         """
-        XCTAssertEqual("1", try applyRule(rule, to: nil))
+        XCTAssertEqual("1", try JsonFunctions().applyRule(rule, to: nil))
 
         rule =
         """
         {"cat":[1,[false,true]]}
         """
-        XCTAssertEqual("1false,true", try applyRule(rule, to: nil))
+        XCTAssertEqual("1false,true", try JsonFunctions().applyRule(rule, to: nil))
     }
 }

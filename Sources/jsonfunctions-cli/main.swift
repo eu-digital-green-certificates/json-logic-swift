@@ -15,6 +15,6 @@ let data =
 { "name" : "Jon" }
 """
 
-let result: String? = try? applyRule(rule, to: data)
+let result: String? = try? JsonFunctions().applyRule(rule, to: data)
 
 print("result = \(String(describing: result))")

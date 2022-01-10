@@ -16,7 +16,7 @@ final class CertLogic: XCTestCase {
     
     func testEmptyData()
     {
-        XCTAssertFalse(try applyRule("{}"))
+        XCTAssertFalse(try JsonFunctions().applyRule("{}"))
     }
     
     func testCertLogic() {
@@ -57,36 +57,36 @@ final class CertLogic: XCTestCase {
                             
                             switch expectedType {
                             case JSON.ContentType.string:
-                                XCTAssertEqual(try applyRule(c.element["certLogicExpression"],to: a.element["data"]),a.element["expected"].string)
+                                XCTAssertEqual(try JsonFunctions().applyRule(c.element["certLogicExpression"],to: a.element["data"]),a.element["expected"].string)
                             case JSON.ContentType.bool:
-                                XCTAssertEqual(try applyRule(c.element["certLogicExpression"],to: a.element["data"]),a.element["expected"].bool)
+                                XCTAssertEqual(try JsonFunctions().applyRule(c.element["certLogicExpression"],to: a.element["data"]),a.element["expected"].bool)
                             case JSON.ContentType.null:
-                                XCTAssertNil(try applyRule(c.element["certLogicExpression"],to: a.element["data"]))
+                                XCTAssertNil(try JsonFunctions().applyRule(c.element["certLogicExpression"],to: a.element["data"]))
                             case JSON.ContentType.object:
                                     switch name {
                                         case "should work as binary operator":
-                                                XCTAssertEqual(try applyRule(c.element["certLogicExpression"],to: a.element["data"]),a.element["expected"].dictionary)
+                                                XCTAssertEqual(try JsonFunctions().applyRule(c.element["certLogicExpression"],to: a.element["data"]),a.element["expected"].dictionary)
                                     case "should return data context on \"\"":
-                                                XCTAssertEqual(try applyRule(c.element["certLogicExpression"],to: a.element["data"]),["foo": "bar"])
+                                                XCTAssertEqual(try JsonFunctions().applyRule(c.element["certLogicExpression"],to: a.element["data"]),["foo": "bar"])
                                     default:   XCTAssertFalse(true)
                                 }
                             case JSON.ContentType.number:
                                 switch name {
                                 case "should drill into data (1)":
-                                    XCTAssertEqual(try applyRule(c.element["certLogicExpression"],to: a.element["data"]),1)
+                                    XCTAssertEqual(try JsonFunctions().applyRule(c.element["certLogicExpression"],to: a.element["data"]),1)
                                 case "should drill into data (2)":
-                                    XCTAssertEqual(try applyRule(c.element["certLogicExpression"],to: a.element["data"]),1)
+                                    XCTAssertEqual(try JsonFunctions().applyRule(c.element["certLogicExpression"],to: a.element["data"]),1)
                                 case "should drill into data (3)":
-                                    XCTAssertEqual(try applyRule(c.element["certLogicExpression"],to: a.element["data"]),1)
+                                    XCTAssertEqual(try JsonFunctions().applyRule(c.element["certLogicExpression"],to: a.element["data"]),1)
                                 case "var-ing non-existing array elements":
-                                    XCTAssertEqual(try applyRule(c.element["certLogicExpression"],to: a.element["data"]),2)
+                                    XCTAssertEqual(try JsonFunctions().applyRule(c.element["certLogicExpression"],to: a.element["data"]),2)
                                 default:
                                     XCTAssertFalse(true)
                                 }
                             case JSON.ContentType.array:
-                                XCTAssertEqual(try applyRule(c.element["certLogicExpression"],to: a.element["data"]),a.element["expected"])
+                                XCTAssertEqual(try JsonFunctions().applyRule(c.element["certLogicExpression"],to: a.element["data"]),a.element["expected"])
                             default:
-                                XCTAssertEqual(try applyRule(c.element["certLogicExpression"],to: a.element["data"]),a.element["expected"])
+                                XCTAssertEqual(try JsonFunctions().applyRule(c.element["certLogicExpression"],to: a.element["data"]),a.element["expected"])
                             }
                         }
                         else
@@ -96,30 +96,30 @@ final class CertLogic: XCTestCase {
                             
                             switch expectedType {
                             case JSON.ContentType.string:
-                                XCTAssertEqual(try applyRule(a.element["certLogicExpression"],to: a.element["data"]),a.element["expected"].string)
+                                XCTAssertEqual(try JsonFunctions().applyRule(a.element["certLogicExpression"],to: a.element["data"]),a.element["expected"].string)
                             case JSON.ContentType.bool:
-                                XCTAssertEqual(try applyRule(a.element["certLogicExpression"],to: a.element["data"]),a.element["expected"].bool)
+                                XCTAssertEqual(try JsonFunctions().applyRule(a.element["certLogicExpression"],to: a.element["data"]),a.element["expected"].bool)
                             case JSON.ContentType.null:
-                                XCTAssertNil(try applyRule(a.element["certLogicExpression"],to: a.element["data"]))
+                                XCTAssertNil(try JsonFunctions().applyRule(a.element["certLogicExpression"],to: a.element["data"]))
                             case JSON.ContentType.number:
                                 switch name {
                                 case "# Non-rules get passed through":
-                                    XCTAssertEqual(try applyRule(a.element["certLogicExpression"],to: a.element["data"]),17)
+                                    XCTAssertEqual(try JsonFunctions().applyRule(a.element["certLogicExpression"],to: a.element["data"]),17)
                                 case "# Single operator tests":
-                                    XCTAssertEqual(try applyRule(a.element["certLogicExpression"],to: a.element["data"]),3)
+                                    XCTAssertEqual(try JsonFunctions().applyRule(a.element["certLogicExpression"],to: a.element["data"]),3)
                                 case "Truthy and falsy definitions matter in Boolean operations":
-                                    XCTAssertEqual(try applyRule(a.element["certLogicExpression"],to: a.element["data"]),0)
+                                    XCTAssertEqual(try JsonFunctions().applyRule(a.element["certLogicExpression"],to: a.element["data"]),0)
                                 case "# Data-Driven":
-                                    XCTAssertEqual(try applyRule(a.element["certLogicExpression"],to: a.element["data"]),1)
+                                    XCTAssertEqual(try JsonFunctions().applyRule(a.element["certLogicExpression"],to: a.element["data"]),1)
                                 case "Filter, map, all, none, and some":
                                     if(a.element["expected"].int == 10 ){
-                                        XCTAssertEqual(try applyRule(a.element["certLogicExpression"],to: a.element["data"]),10)
+                                        XCTAssertEqual(try JsonFunctions().applyRule(a.element["certLogicExpression"],to: a.element["data"]),10)
                                     }
                                     if(a.element["expected"].int == 0 ){
-                                        XCTAssertEqual(try applyRule(a.element["certLogicExpression"],to: a.element["data"]),0)
+                                        XCTAssertEqual(try JsonFunctions().applyRule(a.element["certLogicExpression"],to: a.element["data"]),0)
                                     }
                                     if(a.element["expected"].int == 6 ){
-                                        XCTAssertEqual(try applyRule(a.element["certLogicExpression"],to: a.element["data"]),6)
+                                        XCTAssertEqual(try JsonFunctions().applyRule(a.element["certLogicExpression"],to: a.element["data"]),6)
                                     }
                                 default:
                                     XCTAssertFalse(true)
@@ -128,14 +128,14 @@ final class CertLogic: XCTestCase {
                             case JSON.ContentType.array:
                                 switch name {
                                 case "# Non-rules get passed through":
-                                  XCTAssertEqual(try applyRule(a.element["certLogicExpression"],to: a.element["data"]),["a","b"])
+                                  XCTAssertEqual(try JsonFunctions().applyRule(a.element["certLogicExpression"],to: a.element["data"]),["a","b"])
                                 case "Truthy and falsy definitions matter in Boolean operations":
-                                    XCTAssertEqual(try applyRule(a.element["certLogicExpression"],to: a.element["data"]),a.element["expected"].array)
+                                    XCTAssertEqual(try JsonFunctions().applyRule(a.element["certLogicExpression"],to: a.element["data"]),a.element["expected"].array)
                                 default:
                                     XCTAssertFalse(true)
                                 }
                             default:
-                                XCTAssertEqual(try applyRule(a.element["certLogicExpression"],to: a.element["data"]),a.element["expected"])
+                                XCTAssertEqual(try JsonFunctions().applyRule(a.element["certLogicExpression"],to: a.element["data"]),a.element["expected"])
                             }
                       }
                     }
@@ -183,11 +183,11 @@ final class CertLogic: XCTestCase {
                           print("Test " + tjsonpath)
                           if(expectedValue.unsafelyUnwrapped)
                           {
-                            XCTAssertTrue(try applyRule(json["Logic"], to: tjson))
+                            XCTAssertTrue(try JsonFunctions().applyRule(json["Logic"], to: tjson))
                           }
                           else
                           {
-                            XCTAssertFalse(try applyRule(json["Logic"], to: tjson))
+                            XCTAssertFalse(try JsonFunctions().applyRule(json["Logic"], to: tjson))
                             
                           }
                         }

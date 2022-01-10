@@ -17,7 +17,7 @@ class NotStrictEquals: XCTestCase {
                     { "!==" : [1, 2] }
                 """
 
-        XCTAssertEqual(true, try applyRule(rule, to: nil))
+        XCTAssertEqual(true, try JsonFunctions().applyRule(rule, to: nil))
     }
 
     func testNot_StrictEquals_withConstants1() {
@@ -26,7 +26,7 @@ class NotStrictEquals: XCTestCase {
                     { "!==" : [1, "1"] }
                 """
 
-        XCTAssertEqual(true, try applyRule(rule, to: nil))
+        XCTAssertEqual(true, try JsonFunctions().applyRule(rule, to: nil))
     }
 
     func testNot_StrictEquals_withConstants2() {
@@ -35,7 +35,7 @@ class NotStrictEquals: XCTestCase {
                     { "!==" : [1, 1] }
                 """
 
-        XCTAssertEqual(false, try applyRule(rule, to: nil))
+        XCTAssertEqual(false, try JsonFunctions().applyRule(rule, to: nil))
     }
 
     func testNot_StrictEquals_withConstants3() {
@@ -44,7 +44,7 @@ class NotStrictEquals: XCTestCase {
                     { "!==" : [1, []] }
                 """
 
-        XCTAssertEqual(true, try applyRule(rule, to: nil))
+        XCTAssertEqual(true, try JsonFunctions().applyRule(rule, to: nil))
     }
 
     func testNotStringEquals_NestedVar() {
@@ -57,7 +57,7 @@ class NotStrictEquals: XCTestCase {
                     { "a" : "b", "b" : "1", "oneNest" : {"one" : "1"} }
                 """
 
-        XCTAssertEqual(false, try applyRule(rule, to: data))
+        XCTAssertEqual(false, try JsonFunctions().applyRule(rule, to: data))
     }
 
     func testLogicalNot_withBooleanConstants() {
@@ -65,25 +65,25 @@ class NotStrictEquals: XCTestCase {
                 """
                     { "!" : [true] }
                 """
-        XCTAssertEqual(false, try applyRule(rule, to: nil))
+        XCTAssertEqual(false, try JsonFunctions().applyRule(rule, to: nil))
 
         rule =
                 """
                     { "!" : [false] }
                 """
-        XCTAssertEqual(true, try applyRule(rule, to: nil))
+        XCTAssertEqual(true, try JsonFunctions().applyRule(rule, to: nil))
 
         rule =
                 """
                     {"!" : true}
                 """
-        XCTAssertEqual(false, try applyRule(rule, to: nil))
+        XCTAssertEqual(false, try JsonFunctions().applyRule(rule, to: nil))
 
         rule =
                 """
                     {"!" : false}
                 """
-        XCTAssertEqual(true, try applyRule(rule, to: nil))
+        XCTAssertEqual(true, try JsonFunctions().applyRule(rule, to: nil))
     }
 
     func testLogicalNot_withArrays() {
@@ -91,13 +91,13 @@ class NotStrictEquals: XCTestCase {
                 """
                     {"!" : []}
                 """
-        XCTAssertEqual(true, try applyRule(rule, to: nil))
+        XCTAssertEqual(true, try JsonFunctions().applyRule(rule, to: nil))
 
         rule =
                 """
                     {"!" : [[]]}
                 """
-        XCTAssertEqual(true, try applyRule(rule, to: nil))
+        XCTAssertEqual(true, try JsonFunctions().applyRule(rule, to: nil))
     }
 
     func testLogicalNot_withNumbers() {
@@ -105,13 +105,13 @@ class NotStrictEquals: XCTestCase {
                 """
                     { "!" : 0 }
                 """
-        XCTAssertEqual(true, try applyRule(rule, to: nil))
+        XCTAssertEqual(true, try JsonFunctions().applyRule(rule, to: nil))
 
         rule =
                 """
                     { "!" : 1 }
                 """
-        XCTAssertEqual(false, try applyRule(rule, to: nil))
+        XCTAssertEqual(false, try JsonFunctions().applyRule(rule, to: nil))
     }
 
     func testLogicalNot_withStrings() {
@@ -119,19 +119,19 @@ class NotStrictEquals: XCTestCase {
                 """
                     {"!" : ""}
                 """
-        XCTAssertEqual(true, try applyRule(rule, to: nil))
+        XCTAssertEqual(true, try JsonFunctions().applyRule(rule, to: nil))
 
         rule =
                 """
                     {"!" : ""}
                 """
-        XCTAssertEqual(true, try applyRule(rule, to: nil))
+        XCTAssertEqual(true, try JsonFunctions().applyRule(rule, to: nil))
 
         rule =
                 """
                     {"!" : "1"}
                 """
-        XCTAssertEqual(false, try applyRule(rule, to: nil))
+        XCTAssertEqual(false, try JsonFunctions().applyRule(rule, to: nil))
     }
 
     func testLogicalNot_withNull() {
@@ -139,7 +139,7 @@ class NotStrictEquals: XCTestCase {
                 """
                     {"!" : null}
                 """
-        XCTAssertEqual(true, try applyRule(rule, to: nil))
+        XCTAssertEqual(true, try JsonFunctions().applyRule(rule, to: nil))
     }
 
     func testLogicalNot_withVariables() {
@@ -152,18 +152,18 @@ class NotStrictEquals: XCTestCase {
                 """
                     { "!" : [ {"var" : ["oneNest.one"] } ] }
                 """
-        XCTAssertEqual(false, try applyRule(rule, to: data ))
+        XCTAssertEqual(false, try JsonFunctions().applyRule(rule, to: data ))
 
         rule =
                 """
                     { "!" : {"var" : ["a"] } }
                 """
-        XCTAssertEqual(false, try applyRule(rule, to: data ))
+        XCTAssertEqual(false, try JsonFunctions().applyRule(rule, to: data ))
 
         rule =
                 """
                     { "!" : {"var" : ["nonExistant"] } }
                 """
-        XCTAssertEqual(true, try applyRule(rule, to: data ))
+        XCTAssertEqual(true, try JsonFunctions().applyRule(rule, to: data ))
     }
 }

@@ -15,30 +15,30 @@ class CompoundTests: XCTestCase {
         """
         {"and":[{">":[3,1]},true]}
         """
-        XCTAssertEqual(true, try applyRule(rule, to: "{}"))
+        XCTAssertEqual(true, try JsonFunctions().applyRule(rule, to: "{}"))
 
         rule =
         """
         {"and":[{">":[3,1]},false]}
         """
-        XCTAssertEqual(false, try applyRule(rule, to: "{}"))
+        XCTAssertEqual(false, try JsonFunctions().applyRule(rule, to: "{}"))
 
         rule =
         """
         {"and":[{">":[3,1]},{"!":true}]}
         """
-        XCTAssertEqual(false, try applyRule(rule, to: "{}"))
+        XCTAssertEqual(false, try JsonFunctions().applyRule(rule, to: "{}"))
 
         rule =
         """
         {"and":[{">":[3,1]},{"<":[1,3]}]}
         """
-        XCTAssertEqual(true, try applyRule(rule, to: "{}"))
+        XCTAssertEqual(true, try JsonFunctions().applyRule(rule, to: "{}"))
 
         rule =
         """
         {"?:":[{">":[3,1]},"visible","hidden"]}
         """
-        XCTAssertEqual("visible", try applyRule(rule, to: "{}"))
+        XCTAssertEqual("visible", try JsonFunctions().applyRule(rule, to: "{}"))
     }
 }
