@@ -1,9 +1,5 @@
 //
-//  JsonLogic.swift
-//  jsonlogic
-//
-//  Created by Christos Koninis on 06/06/2018.
-//  Licensed under MIT
+// json-functions-swift
 //
 
 import Foundation

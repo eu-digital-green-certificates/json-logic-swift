@@ -1,9 +1,5 @@
 //
-//  Min.swift
-//  json-functions-swift
-//
-//  Created by Nick Guendling on 2022-01-07.
-//  Licensed under MIT
+// json-functions-swift
 //
 
 import Foundation

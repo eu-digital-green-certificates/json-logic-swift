@@ -1,9 +1,5 @@
 //
-//  ArrayFilter.swift
-//  json-functions-swift
-//
-//  Created by Nick Guendling on 2022-01-07.
-//  Licensed under MIT
+// json-functions-swift
 //
 
 import Foundation
@@ -23,7 +19,7 @@ struct ArrayFilter: Expression {
 
         let filterOperation = array.expressions[1]
 
-        return .Array(try dataArray.filter({ try filterOperation.evalWithData($0).truthy() }))
+        return .Array(try dataArray.filter { try filterOperation.evalWithData($0).truthy() })
     }
     
 }

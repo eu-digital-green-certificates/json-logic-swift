@@ -1,9 +1,5 @@
 //
-//  Parser.swift
-//  jsonlogic
-//
-//  Created by Christos Koninis on 16/06/2018.
-//  Licensed under MIT
+// json-functions-swift
 //
 
 import Foundation
@@ -170,8 +166,10 @@ class Parser {
             return Trim(expression: try self.parse(json: value))
         default:
             if let customOperation = self.customOperators[key] {
-                return CustomExpression(expression: try self.parse(json: value),
-                                    customOperator: customOperation)
+                return CustomExpression(
+                    expression: try self.parse(json: value),
+                    customOperator: customOperation
+                )
             } else {
                 throw ParseError.UnimplementedExpressionFor(key)
             }
