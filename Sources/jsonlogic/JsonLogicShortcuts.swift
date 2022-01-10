@@ -19,7 +19,7 @@ public func applyRule<T>(_ jsonRule: JSON, to jsonDataOrNil: String? = nil) thro
     return try JsonLogic(jsonRule).applyRule(to: jsonDataOrNil)
 }
 public func applyRule<T>(_ jsonRule: JSON, to jsonOrNil: JSON? = nil) throws -> T {
-    return try JsonLogic(jsonRule).applyRule(to: jsonOrNil)
+    return try JsonLogic(jsonRule).applyRuleInternal(to: jsonOrNil)
 }
 
 public func applyRule<T>(_ jsonRule: JSON, to jsonDataOrNil: String? = nil, customOperators: [String: (JSON?) -> JSON]?) throws -> T {
@@ -27,5 +27,5 @@ public func applyRule<T>(_ jsonRule: JSON, to jsonDataOrNil: String? = nil, cust
 }
 
 public func applyRule<T>(_ jsonRule: JSON, to jsonOrNil: JSON? = nil, customOperators: [String: (JSON?) -> JSON]?) throws -> T {
-    return try JsonLogic(jsonRule, customOperators: customOperators).applyRule(to: jsonOrNil)
+    return try JsonLogic(jsonRule, customOperators: customOperators).applyRuleInternal(to: jsonOrNil)
 }

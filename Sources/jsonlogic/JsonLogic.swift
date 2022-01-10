@@ -84,10 +84,10 @@ public final class JsonLogic {
         if let jsonDataOrNil = jsonDataOrNil {
             jsonData = JSON(string: jsonDataOrNil)
         }
-         return try self.applyRule(to: jsonData)
+         return try self.applyRuleInternal(to: jsonData)
     }
     
-    public func applyRule<T>(to jsonData: JSON? = nil) throws -> T {
+    public func applyRuleInternal<T>(to jsonData: JSON? = nil) throws -> T {
         let result = try parsedRule.evalWithData(jsonData)
 
         let convertedToSwiftStandardType = try result.convertToSwiftTypes()
