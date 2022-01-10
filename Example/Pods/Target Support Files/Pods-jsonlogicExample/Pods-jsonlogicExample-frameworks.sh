@@ -154,11 +154,11 @@ strip_invalid_archs() {
 
 if [[ "$CONFIGURATION" == "Debug" ]]; then
   install_framework "${BUILT_PRODUCTS_DIR}/json-enum/JSON.framework"
-  install_framework "${BUILT_PRODUCTS_DIR}/jsonlogic/jsonlogic.framework"
+  install_framework "${BUILT_PRODUCTS_DIR}/jsonfunctions/jsonfunctions.framework"
 fi
 if [[ "$CONFIGURATION" == "Release" ]]; then
   install_framework "${BUILT_PRODUCTS_DIR}/json-enum/JSON.framework"
-  install_framework "${BUILT_PRODUCTS_DIR}/jsonlogic/jsonlogic.framework"
+  install_framework "${BUILT_PRODUCTS_DIR}/jsonfunctions/jsonfunctions.framework"
 fi
 if [ "${COCOAPODS_PARALLEL_CODE_SIGN}" == "true" ]; then
   wait

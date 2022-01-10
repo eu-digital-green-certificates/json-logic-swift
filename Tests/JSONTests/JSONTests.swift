@@ -174,7 +174,7 @@ class JSONTests: XCTestCase {
         XCTAssertEqual(JSON([1, 1]), JSON.Array([JSON.Int(1), JSON.Int(1)]))
         XCTAssertEqual(JSON([1, 1, 2]), JSON.Array([JSON.Int(1), JSON.Int(1), JSON.Int(2)]))
 
-        // This is different from how original jsonlogic JS implementation works
+        // This is different from how original jsonfunctions JS implementation works
         // since it does not allow comparing dictionaries/arrays
         XCTAssertEqual(JSON(["1": 1]), JSON.Dictionary(["1": 1]))
     }
@@ -282,7 +282,7 @@ class JSONTests: XCTestCase {
     }
 
     func testTruthy() {
-        //https://jsonlogic.com/truthy.html
+        //https://jsonfunctions.com/truthy.html
 
         XCTAssertEqual(JSON.Int(0).truthy(), false)
         XCTAssertEqual(JSON.Int(1).truthy(), true)

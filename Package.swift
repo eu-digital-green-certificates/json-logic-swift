@@ -4,20 +4,20 @@
 import PackageDescription
 
 let package = Package(
-    name: "jsonlogic",
+    name: "jsonfunctions",
     platforms: [
         .macOS(.v10_13), .iOS(.v11), .tvOS(.v9), .watchOS(.v2)
     ],
     products: [
         .library(
-            name: "jsonlogic",
-            targets: ["jsonlogic"]),
+            name: "jsonfunctions",
+            targets: ["jsonfunctions"]),
         .library(
             name: "JSON",
             targets: ["JSON"]),
         .executable(
-            name: "jsonlogic-cli",
-            targets: ["jsonlogic-cli"]),
+            name: "jsonfunctions-cli",
+            targets: ["jsonfunctions-cli"]),
     ],
     dependencies: [
         .package(
@@ -27,17 +27,17 @@ let package = Package(
     ],
     targets: [
         .target(
-            name: "jsonlogic-cli",
-            dependencies: ["jsonlogic"]),
+            name: "jsonfunctions-cli",
+            dependencies: ["jsonfunctions"]),
         .target(
-            name: "jsonlogic",
+            name: "jsonfunctions",
             dependencies: ["JSON"]),
         .target(
             name: "JSON",
             dependencies: []),
         .testTarget(
-            name: "jsonlogicTests",
-            dependencies: ["jsonlogic", "AnyCodable"],
+            name: "jsonfunctionsTests",
+            dependencies: ["jsonfunctions", "AnyCodable"],
             resources: [.process("jfn-common-test-cases.json")]),
         .testTarget(
             name: "JSONTests",
