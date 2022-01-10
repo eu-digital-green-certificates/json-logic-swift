@@ -5,7 +5,7 @@ import JSON
 final class JsonFunctionsTests: XCTestCase {
 
     func testJsonFunctions() {
-        XCTAssertEqual(testCases.count, 751)
+        XCTAssertEqual(testCases.count, 767)
 
         var missingImplementation = 0
         var passed = 0

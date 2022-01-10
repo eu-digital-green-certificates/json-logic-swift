@@ -1,5 +1,5 @@
 {
-  "$comment": "Generated at Tue Jan 04 2022 14:10:09 GMT+0100 (Central European Standard Time)",
+  "$comment": "Generated at Mon Jan 10 2022 09:19:16 GMT+0100 (Central European Standard Time)",
   "testCases": [
     {
       "title": "all - allows to specify the variable name for the current value and to access the outer context",
@@ -16496,6 +16496,557 @@
         ]
       },
       "exp": true
+    },
+    {
+      "title": "sort - allows access to the outer context",
+      "logic": {
+        "sort": [
+          {
+            "var": "elements"
+          },
+          {
+            "if": [
+              {
+                "or": [
+                  {
+                    ">=": [
+                      {
+                        "var": "a.i"
+                      },
+                      {
+                        "var": "offset"
+                      }
+                    ]
+                  },
+                  {
+                    ">=": [
+                      {
+                        "var": "b.i"
+                      },
+                      {
+                        "var": "offset"
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                ">": [
+                  {
+                    "var": "a.i"
+                  },
+                  {
+                    "var": "b.i"
+                  }
+                ]
+              },
+              {
+                ">": [
+                  {
+                    "var": "b.i"
+                  },
+                  {
+                    "var": "a.i"
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      "data": {
+        "elements": [
+          {
+            "i": 6
+          },
+          {
+            "i": 3
+          },
+          {
+            "i": 1
+          },
+          {
+            "i": 2
+          },
+          {
+            "i": 3
+          },
+          {
+            "i": -4
+          },
+          {
+            "i": 5
+          }
+        ],
+        "offset": 3
+      },
+      "exp": [
+        {
+          "i": 2
+        },
+        {
+          "i": 1
+        },
+        {
+          "i": -4
+        },
+        {
+          "i": 3
+        },
+        {
+          "i": 3
+        },
+        {
+          "i": 5
+        },
+        {
+          "i": 6
+        }
+      ]
+    },
+    {
+      "title": "sort - data types - if closure returns a number (negative), leaves the array unchanged",
+      "logic": {
+        "sort": [
+          {
+            "var": "elements"
+          },
+          -1
+        ]
+      },
+      "data": {
+        "elements": [
+          5,
+          3,
+          7
+        ]
+      },
+      "exp": [
+        5,
+        3,
+        7
+      ]
+    },
+    {
+      "title": "sort - data types - if closure returns a number (positive), leaves the array unchanged",
+      "logic": {
+        "sort": [
+          {
+            "var": "elements"
+          },
+          1
+        ]
+      },
+      "data": {
+        "elements": [
+          5,
+          3,
+          7
+        ]
+      },
+      "exp": [
+        5,
+        3,
+        7
+      ]
+    },
+    {
+      "title": "sort - data types - if closure returns a string, leaves the array unchanged",
+      "logic": {
+        "sort": [
+          {
+            "var": "elements"
+          },
+          "unchanged"
+        ]
+      },
+      "data": {
+        "elements": [
+          5,
+          3,
+          7
+        ]
+      },
+      "exp": [
+        5,
+        3,
+        7
+      ]
+    },
+    {
+      "title": "sort - data types - if closure returns an array, leaves the array unchanged",
+      "logic": {
+        "sort": [
+          {
+            "var": "elements"
+          },
+          []
+        ]
+      },
+      "data": {
+        "elements": [
+          5,
+          3,
+          7
+        ]
+      },
+      "exp": [
+        5,
+        3,
+        7
+      ]
+    },
+    {
+      "title": "sort - data types - if closure returns an object, leaves the array unchanged",
+      "logic": {
+        "sort": [
+          {
+            "var": "elements"
+          },
+          {}
+        ]
+      },
+      "data": {
+        "elements": [
+          5,
+          3,
+          7
+        ]
+      },
+      "exp": [
+        5,
+        3,
+        7
+      ]
+    },
+    {
+      "title": "sort - data types - if closure returns null, leaves the array unchanged",
+      "logic": {
+        "sort": [
+          {
+            "var": "elements"
+          },
+          null
+        ]
+      },
+      "data": {
+        "elements": [
+          5,
+          3,
+          7
+        ]
+      },
+      "exp": [
+        5,
+        3,
+        7
+      ]
+    },
+    {
+      "title": "sort - data types - if first parameter is a boolean (false), returns an empty array",
+      "logic": {
+        "sort": [
+          {
+            "var": "elements"
+          },
+          {
+            ">": [
+              {
+                "var": "a"
+              },
+              {
+                "var": "b"
+              }
+            ]
+          }
+        ]
+      },
+      "data": {
+        "elements": false
+      },
+      "exp": []
+    },
+    {
+      "title": "sort - data types - if first parameter is a boolean (true), returns an empty array",
+      "logic": {
+        "sort": [
+          {
+            "var": "elements"
+          },
+          {
+            ">": [
+              {
+                "var": "a"
+              },
+              {
+                "var": "b"
+              }
+            ]
+          }
+        ]
+      },
+      "data": {
+        "elements": true
+      },
+      "exp": []
+    },
+    {
+      "title": "sort - data types - if first parameter is a number, returns an empty array",
+      "logic": {
+        "sort": [
+          {
+            "var": "elements"
+          },
+          {
+            ">": [
+              {
+                "var": "a"
+              },
+              {
+                "var": "b"
+              }
+            ]
+          }
+        ]
+      },
+      "data": {
+        "elements": 5
+      },
+      "exp": []
+    },
+    {
+      "title": "sort - data types - if first parameter is a string, returns an empty array",
+      "logic": {
+        "sort": [
+          {
+            "var": "elements"
+          },
+          {
+            ">": [
+              {
+                "var": "a"
+              },
+              {
+                "var": "b"
+              }
+            ]
+          }
+        ]
+      },
+      "data": {
+        "elements": "not-an-array"
+      },
+      "exp": []
+    },
+    {
+      "title": "sort - data types - if first parameter is an object, returns an empty array",
+      "logic": {
+        "sort": [
+          {
+            "var": "elements"
+          },
+          {
+            ">": [
+              {
+                "var": "a"
+              },
+              {
+                "var": "b"
+              }
+            ]
+          }
+        ]
+      },
+      "data": {
+        "elements": {}
+      },
+      "exp": []
+    },
+    {
+      "title": "sort - sorts the elements according to the logic of the closure (test with ascending order)",
+      "logic": {
+        "sort": [
+          {
+            "var": "elements"
+          },
+          {
+            ">": [
+              {
+                "var": "a"
+              },
+              {
+                "var": "b"
+              }
+            ]
+          }
+        ]
+      },
+      "data": {
+        "elements": [
+          7,
+          4,
+          7,
+          3,
+          1,
+          6,
+          9
+        ]
+      },
+      "exp": [
+        1,
+        3,
+        4,
+        6,
+        7,
+        7,
+        9
+      ]
+    },
+    {
+      "title": "sort - sorts the elements according to the logic of the closure (test with descending order)",
+      "logic": {
+        "sort": [
+          {
+            "var": "elements"
+          },
+          {
+            ">": [
+              {
+                "var": "b"
+              },
+              {
+                "var": "a"
+              }
+            ]
+          }
+        ]
+      },
+      "data": {
+        "elements": [
+          7,
+          4,
+          7,
+          3,
+          1,
+          6,
+          9
+        ]
+      },
+      "exp": [
+        9,
+        7,
+        7,
+        6,
+        4,
+        3,
+        1
+      ]
+    },
+    {
+      "title": "sort - supports sorting of dates",
+      "logic": {
+        "sort": [
+          {
+            "var": "elements"
+          },
+          {
+            "after": [
+              {
+                "var": "a.date"
+              },
+              {
+                "var": "b.date"
+              }
+            ]
+          }
+        ]
+      },
+      "data": {
+        "elements": [
+          {
+            "date": "2022-01-10"
+          },
+          {
+            "date": "2022-01-01"
+          },
+          {
+            "date": "2022-03-04"
+          },
+          {
+            "date": "2022-01-04"
+          },
+          {
+            "date": "2022-02-01"
+          }
+        ]
+      },
+      "exp": [
+        {
+          "date": "2022-01-01"
+        },
+        {
+          "date": "2022-01-04"
+        },
+        {
+          "date": "2022-01-10"
+        },
+        {
+          "date": "2022-02-01"
+        },
+        {
+          "date": "2022-03-04"
+        }
+      ]
+    },
+    {
+      "title": "sort - supports sorting of objects",
+      "logic": {
+        "sort": [
+          {
+            "var": "elements"
+          },
+          {
+            ">": [
+              {
+                "var": "a.i"
+              },
+              {
+                "var": "b.i"
+              }
+            ]
+          }
+        ]
+      },
+      "data": {
+        "elements": [
+          {
+            "i": 3
+          },
+          {
+            "i": 2
+          },
+          {
+            "i": -4
+          },
+          {
+            "i": 5
+          }
+        ]
+      },
+      "exp": [
+        {
+          "i": -4
+        },
+        {
+          "i": 2
+        },
+        {
+          "i": 3
+        },
+        {
+          "i": 5
+        }
+      ]
     },
     {
       "title": "split - data types - if first parameter is a boolean (false), treats it as a string",
