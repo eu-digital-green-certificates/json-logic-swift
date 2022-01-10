@@ -31,7 +31,7 @@ let package = Package(
             dependencies: ["jsonfunctions"]),
         .target(
             name: "jsonfunctions",
-            dependencies: ["JSON"]),
+            dependencies: ["JSON", "AnyCodable"]),
         .target(
             name: "JSON",
             dependencies: []),
