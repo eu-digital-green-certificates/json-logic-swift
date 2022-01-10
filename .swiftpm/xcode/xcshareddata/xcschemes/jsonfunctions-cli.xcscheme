@@ -14,37 +14,9 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "JSON"
-               BuildableName = "JSON"
-               BlueprintName = "JSON"
-               ReferencedContainer = "container:">
-            </BuildableReference>
-         </BuildActionEntry>
-         <BuildActionEntry
-            buildForTesting = "YES"
-            buildForRunning = "YES"
-            buildForProfiling = "YES"
-            buildForArchiving = "YES"
-            buildForAnalyzing = "YES">
-            <BuildableReference
-               BuildableIdentifier = "primary"
-               BlueprintIdentifier = "jsonlogic"
-               BuildableName = "jsonlogic"
-               BlueprintName = "jsonlogic"
-               ReferencedContainer = "container:">
-            </BuildableReference>
-         </BuildActionEntry>
-         <BuildActionEntry
-            buildForTesting = "YES"
-            buildForRunning = "YES"
-            buildForProfiling = "YES"
-            buildForArchiving = "YES"
-            buildForAnalyzing = "YES">
-            <BuildableReference
-               BuildableIdentifier = "primary"
-               BlueprintIdentifier = "jsonlogic-cli"
-               BuildableName = "jsonlogic-cli"
-               BlueprintName = "jsonlogic-cli"
+               BlueprintIdentifier = "jsonfunctions-cli"
+               BuildableName = "jsonfunctions-cli"
+               BlueprintName = "jsonfunctions-cli"
                ReferencedContainer = "container:">
             </BuildableReference>
          </BuildActionEntry>
@@ -56,9 +28,9 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "jsonlogicTests"
-               BuildableName = "jsonlogicTests"
-               BlueprintName = "jsonlogicTests"
+               BlueprintIdentifier = "jsonfunctionsTests"
+               BuildableName = "jsonfunctionsTests"
+               BlueprintName = "jsonfunctionsTests"
                ReferencedContainer = "container:">
             </BuildableReference>
          </BuildActionEntry>
@@ -68,18 +40,9 @@
       buildConfiguration = "Debug"
       selectedDebuggerIdentifier = "Xcode.DebuggerFoundation.Debugger.LLDB"
       selectedLauncherIdentifier = "Xcode.DebuggerFoundation.Launcher.LLDB"
-      shouldUseLaunchSchemeArgsEnv = "YES">
+      shouldUseLaunchSchemeArgsEnv = "YES"
+      codeCoverageEnabled = "YES">
       <Testables>
-         <TestableReference
-            skipped = "NO">
-            <BuildableReference
-               BuildableIdentifier = "primary"
-               BlueprintIdentifier = "jsonlogicTests"
-               BuildableName = "jsonlogicTests"
-               BlueprintName = "jsonlogicTests"
-               ReferencedContainer = "container:">
-            </BuildableReference>
-         </TestableReference>
          <TestableReference
             skipped = "NO">
             <BuildableReference
@@ -102,15 +65,6 @@
       debugDocumentVersioning = "YES"
       debugServiceExtension = "internal"
       allowLocationSimulation = "YES">
-      <MacroExpansion>
-         <BuildableReference
-            BuildableIdentifier = "primary"
-            BlueprintIdentifier = "jsonlogic-cli"
-            BuildableName = "jsonlogic-cli"
-            BlueprintName = "jsonlogic-cli"
-            ReferencedContainer = "container:">
-         </BuildableReference>
-      </MacroExpansion>
    </LaunchAction>
    <ProfileAction
       buildConfiguration = "Release"
@@ -121,9 +75,9 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "jsonlogic-cli"
-            BuildableName = "jsonlogic-cli"
-            BlueprintName = "jsonlogic-cli"
+            BlueprintIdentifier = "jsonfunctions-cli"
+            BuildableName = "jsonfunctions-cli"
+            BlueprintName = "jsonfunctions-cli"
             ReferencedContainer = "container:">
          </BuildableReference>
       </MacroExpansion>
