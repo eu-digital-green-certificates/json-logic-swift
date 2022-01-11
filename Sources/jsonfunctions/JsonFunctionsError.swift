@@ -7,22 +7,18 @@ import JSON
 
 ///  Errors that can be thrown from JsonFunctions methods
 public enum JsonFunctionsError: Error, Equatable {
+
     public static func == (lhs: JsonFunctionsError, rhs: JsonFunctionsError) -> Bool {
-        switch lhs {
-        case let canNotParseJSONData(ltype):
-            if case let canNotParseJSONData(rtype) = rhs {
+        switch (lhs, rhs) {
+        case let (canNotParseJSONData(ltype), canNotParseJSONData(rtype)):
                 return ltype == rtype
-            }
-            return false
-        case let canNotConvertResultToType(ltype):
-            if case let canNotConvertResultToType(rtype) = rhs {
+        case let (canNotConvertResultToType(ltype), canNotConvertResultToType(rtype)):
                 return ltype == rtype
-            }
-            return false
-        case let .canNotParseJSONRule(ltype):
-            if case let canNotParseJSONRule(rtype) = rhs {
+        case let (canNotParseJSONRule(ltype), canNotParseJSONRule(rtype)):
                 return ltype == rtype
-            }
+        case (.noSuchFunction, .noSuchFunction):
+            return true
+        default:
             return false
         }
     }
@@ -35,4 +31,7 @@ public enum JsonFunctionsError: Error, Equatable {
 
     /// Could not convert the result from applying the rule to the expected type
     case canNotConvertResultToType(Any.Type)
+
+    case noSuchFunction
+
 }

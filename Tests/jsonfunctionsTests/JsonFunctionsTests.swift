@@ -7,30 +7,29 @@ final class JsonFunctionsTests: XCTestCase {
     func testJsonFunctions() {
         XCTAssertEqual(testCases.count, 767)
 
-        var missingImplementation = 0
         var passed = 0
         var failed = 0
         var throwsUnexpectedly = 0
 
         for (index, testCase) in testCases.enumerated() {
-//            let jsonFunctions = JsonFunctions()
+            let jsonFunctions = JsonFunctions()
 
             if let functions = testCase.functions {
-                // TODO: register functions
+                functions.forEach {
+                    jsonFunctions.registerFunction(name: $0.name, definition: $0.definition)
+                }
+            }
+
+            if index == 182 {
+                print("")
             }
 
             do {
                 let result: Any
                 if let evaluateFunction = testCase.evaluateFunction {
-                    // TODO: Evaluate function
-                    print("*** ❓ test case \(index) misses implementation - \(testCase.title)")
-                    missingImplementation += 1
+                    result = try jsonFunctions.evaluateFunction(name: evaluateFunction.name, parameters: evaluateFunction.parameters)
                 } else if let logic = testCase.logic, let data = testCase.data {
-                    if index == 182 {
-                        print("")
-                    }
-
-                    result = try JsonFunctions().applyRule(JSON(logic.value), to: JSON(data.value))
+                    result = try jsonFunctions.applyRule(JSON(logic.value), to: JSON(data.value))
 
                     if let exp = testCase.exp {
                         XCTAssert(JSON(result) === JSON(exp.value))
@@ -47,7 +46,7 @@ final class JsonFunctionsTests: XCTestCase {
             } catch {
                 if testCase.throws == nil || testCase.throws == false {
                     print("*** ‼️ test case \(index) throws unexpectedly - \(testCase.title)")
-                    XCTFail("test case \"\(testCase.title)\" throws unexpectedly (\(error)")
+                    XCTFail("test case \"\(testCase.title)\" throws unexpectedly (\(error))")
                     throwsUnexpectedly += 1
                 } else {
                     print("*** ✅ test case \(index) throws expectedly - \(testCase.title)")
@@ -56,7 +55,6 @@ final class JsonFunctionsTests: XCTestCase {
             }
         }
 
-        print("*** missing implementation: \(missingImplementation)/\(testCases.count)")
         print("*** passed: \(passed)/\(testCases.count)")
         print("*** failed: \(failed)/\(testCases.count)")
         print("*** throwsUnexpectedly: \(throwsUnexpectedly)/\(testCases.count)")

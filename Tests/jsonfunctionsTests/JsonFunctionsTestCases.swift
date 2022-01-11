@@ -21,23 +21,9 @@ struct JsonFunctionsTestCase: Decodable {
 
 }
 
-struct JsonFunctionDescriptor: Decodable {
-
-    let name: String
-    let definition: AnyDecodable
-
-}
-
-struct JsonFunctionDefinition: Decodable {
-
-    let parameters: AnyDecodable
-    let logic: AnyDecodable
-
-}
-
 struct JsonFunctionCall: Decodable {
 
     let name: String
-    let parameters: AnyDecodable
+    let parameters: [String: AnyDecodable]
 
 }

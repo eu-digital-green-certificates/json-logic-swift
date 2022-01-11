@@ -4,6 +4,7 @@
 
 import Foundation
 import JSON
+import AnyCodable
 
 /**
     It parses json rule strings and executes the rules on provided data.
@@ -57,7 +58,31 @@ public final class JsonFunctions {
         let parsedRule = try Parser(json: jsonRule, customOperators: customOperators).parse()
         let result = try parsedRule.evalWithData(jsonData)
 
-        let convertedToSwiftStandardType = try result.convertToSwiftTypes()
+        return try convertToSwiftType(result)
+    }
+
+    public func registerFunction(name: String, definition: JsonFunctionDefinition) {
+        registeredFunctions[name] = definition
+    }
+
+    public func evaluateFunction<T>(name: String, parameters: [String: AnyDecodable]) throws -> T {
+        guard let definition = registeredFunctions[name] else {
+            throw JsonFunctionsError.noSuchFunction
+        }
+
+        let data = definition.parameters.reduce(into: [String: JSON]()) {
+            $0[$1.name] = JSON(parameters[$1.name] ?? $1.`default` as Any)
+        }
+
+        return try applyRule(JSON(["script": definition.logic]), to: JSON(data))
+    }
+
+    // MARK: - Private
+
+    private var registeredFunctions = [String: JsonFunctionDefinition]()
+
+    private func convertToSwiftType<T>(_ json: JSON) throws -> T {
+        let convertedToSwiftStandardType = try json.convertToSwiftTypes()
 
         switch convertedToSwiftStandardType {
         case let .some(value):
@@ -85,17 +110,5 @@ public final class JsonFunctions {
             return convertedResult
         }
     }
-
-    public func registerFunction(name: String, definition: JSON) {
-        registeredFunctions[name] = definition
-    }
-
-    public func evaluateFunction(name: String, parameters: JSON) {
-
-    }
-
-    // MARK: - Private
-
-    private var registeredFunctions = [String: JSON]()
 
 }
