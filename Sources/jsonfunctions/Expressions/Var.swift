@@ -19,7 +19,7 @@ struct Var: Expression {
             var partialResult: JSON? = data
             for key in variablePathParts {
                 if partialResult?.type == .array {
-                    if let index = Int(key), let maxElement = partialResult?.array?.count,  index < maxElement, index >= 0  {
+                    if let index = Int(key), let maxElement = partialResult?.array?.count, index < maxElement, index >= 0  {
                         partialResult = partialResult?[index]
                     } else {
                         partialResult = partialResult?[key]

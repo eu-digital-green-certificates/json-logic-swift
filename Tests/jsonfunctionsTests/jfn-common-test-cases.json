@@ -4132,6 +4132,9 @@
             ]
           },
           {
+              "trim": "   asdf    "
+          },
+          {
             "return": [
               {
                 "var": "result"

@@ -37,21 +37,24 @@ class Parser {
             return SingleValueExpression(json: json)
         case let .Array(array):
             var arrayOfExpressions: [Expression] = []
+
             for element in array {
                 arrayOfExpressions.append(try parse(json: element))
             }
+
             return ArrayOfExpressions(expressions: arrayOfExpressions)
         case let .Dictionary(object):
             var arrayOfExpressions: [Expression] = []
+
             for (key, value) in object {
                 arrayOfExpressions.append(try parseExpressionWithKeyword(key, value: value))
             }
             
-            if(arrayOfExpressions.count == 0)
-            {
-              return ArrayOfExpressions(expressions: [])
+            if arrayOfExpressions.count == 0 {
+                return ArrayOfExpressions(expressions: [])
             }
-            //use only the first for now, we should warn or throw error here if array count > 1
+
+            // use only the first for now, we should warn or throw error here if array count > 1
             return arrayOfExpressions.first!
         }
     }
@@ -97,11 +100,13 @@ class Parser {
             guard let array = try self.parse(json: value) as? ArrayOfExpressions else {
                 throw ParseError.GenericError("\(key) statement be followed by an array")
             }
+
             return If(arg: array)
         case "and", "or":
             guard let array = try self.parse(json: value) as? ArrayOfExpressions else {
                 throw ParseError.GenericError("\(key) statement be followed by an array")
             }
+
             return LogicalAndOr(isAnd: key == "and", arg: array)
         case "!!":
             return DoubleNegation(arg: try self.parse(json: value[0]))
@@ -113,11 +118,13 @@ class Parser {
             guard let array = try self.parse(json: value) as? ArrayOfExpressions else {
                 throw ParseError.GenericError("\(key) statement be followed by an array")
             }
+
             if array.expressions.count == 3 {
                 return Substr(stringExpression: array.expressions[0],
                                startExpression: array.expressions[1],
                               lengthExpression: array.expressions[2])
             }
+
             return Substr(stringExpression: array.expressions[0],
                            startExpression: array.expressions[1],
                           lengthExpression: nil)
@@ -164,6 +171,23 @@ class Parser {
             return ToUpperCase(expression: try self.parse(json: value))
         case "trim":
             return Trim(expression: try self.parse(json: value))
+        case "script":
+            guard let array = try self.parse(json: value) as? ArrayOfExpressions else {
+                throw ParseError.GenericError("\(key) statement be followed by an array")
+            }
+
+            return Script(expressions: array.expressions)
+        case "declare":
+            guard let array = try self.parse(json: value) as? ArrayOfExpressions else {
+                throw ParseError.GenericError("\(key) statement be followed by an array")
+            }
+
+            return Declare(
+                identifierExpression: array.expressions[0],
+                valueExpression: array.expressions[1]
+            )
+        case "return":
+            return Return(expression: try self.parse(json: value))
         default:
             if let customOperation = self.customOperators[key] {
                 return CustomExpression(

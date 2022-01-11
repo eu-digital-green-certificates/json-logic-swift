@@ -34,4 +34,6 @@ public enum JsonFunctionsError: Error, Equatable {
 
     case noSuchFunction
 
+    case returnJSON(JSON)
+
 }
