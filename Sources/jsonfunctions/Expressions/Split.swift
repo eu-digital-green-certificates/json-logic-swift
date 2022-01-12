@@ -16,7 +16,7 @@ struct Split: Expression {
               let value = parameters[safe: 0],
               let separator = parameters[safe: 1] else
         {
-            throw ParseError.InvalidParameters
+            throw ParseError.InvalidParameters("Split: Expected two parameters")
         }
 
         let innerValueDescription = try value.innerDescription()

@@ -55,7 +55,11 @@ public final class JsonFunctions {
     }
     
     public func applyRule<T>(_ jsonRule: JSON, to jsonData: JSON? = nil, customOperators: [String: (JSON?) -> JSON]? = nil) throws -> T {
-        let parsedRule = try Parser(json: jsonRule, customOperators: customOperators).parse()
+        let parsedRule = try Parser(
+            json: jsonRule,
+            customOperators: customOperators,
+            registeredFunctions: registeredFunctions
+        ).parse()
         let result = try parsedRule.evalWithData(jsonData)
 
         return try convertToSwiftType(result)
@@ -74,7 +78,11 @@ public final class JsonFunctions {
             $0[$1.name] = JSON(parameters[$1.name] ?? $1.`default` as Any)
         }
 
-        return try applyRule(JSON(["script": definition.logic]), to: JSON(data))
+        guard let logicArray = definition.logic.value as? Array<Any> else {
+            throw ParseError.InvalidParameters("Logic in function definition must be array")
+        }
+
+        return try applyRule(JSON(["script": logicArray]), to: JSON(data))
     }
 
     // MARK: - Private

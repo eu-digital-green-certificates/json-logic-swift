@@ -17,7 +17,7 @@ struct ReplaceAll: Expression {
               let searchValue = parameters[safe: 1],
               let newValue = parameters[safe: 2] else
         {
-            throw ParseError.InvalidParameters
+            throw ParseError.InvalidParameters("ReplaceAll: Expected 3 parameters")
         }
 
         let innerValueDescription = try value.innerDescription()

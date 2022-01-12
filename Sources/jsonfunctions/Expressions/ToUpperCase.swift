@@ -13,7 +13,7 @@ struct ToUpperCase: Expression {
         let result = try expression.evalWithData(data)
 
         guard let value = result.array?.first else {
-            throw ParseError.InvalidParameters
+            throw ParseError.InvalidParameters("ToUpperCase: Expected one parameter")
         }
 
         let uppercasedDescription = try value.innerDescription().uppercased()

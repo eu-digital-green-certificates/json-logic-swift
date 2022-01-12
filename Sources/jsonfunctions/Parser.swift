@@ -9,10 +9,16 @@ class Parser {
 
     private let json: JSON
     private let customOperators: [String: (JSON?) -> JSON]
+    private let registeredFunctions: [String: JsonFunctionDefinition]
 
-    init(json: JSON, customOperators: [String: (JSON?) -> JSON]?) {
+    init(
+        json: JSON,
+        customOperators: [String: (JSON?) -> JSON]? = nil,
+        registeredFunctions: [String: JsonFunctionDefinition] = [:]
+    ) {
         self.json = json
         self.customOperators = customOperators ?? [:]
+        self.registeredFunctions = registeredFunctions
     }
 
     func parse() throws -> Expression {
@@ -186,8 +192,39 @@ class Parser {
                 identifierExpression: array.expressions[0],
                 valueExpression: array.expressions[1]
             )
+        case "evaluate":
+            guard let array = try self.parse(json: value) as? ArrayOfExpressions else {
+                throw ParseError.GenericError("\(key) statement be followed by an array")
+            }
+
+            return Evaluate(
+                expressionExpression: array.expressions[0],
+                parametersExpression: array.expressions[1]
+            )
         case "return":
             return Return(expression: try self.parse(json: value))
+        case "init":
+            guard let array = try self.parse(json: value) as? ArrayOfExpressions else {
+                throw ParseError.GenericError("\(key) statement be followed by an array")
+            }
+
+            return Init(expressions: array.expressions)
+        case "spread":
+            guard let array = try self.parse(json: value) as? ArrayOfExpressions else {
+                throw ParseError.GenericError("\(key) statement be followed by an array")
+            }
+
+            return Spread(expression: array.expressions[0])
+        case "call":
+            guard let array = value.array else {
+                throw ParseError.GenericError("\(key) statement be followed by an array")
+            }
+
+            return Call(
+                functionNameJSON: array[0],
+                parametersJSON: array[safe: 1],
+                registeredFunctions: registeredFunctions
+            )
         default:
             if let customOperation = self.customOperators[key] {
                 return CustomExpression(

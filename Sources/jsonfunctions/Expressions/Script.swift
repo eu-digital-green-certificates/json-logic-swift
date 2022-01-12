@@ -27,7 +27,7 @@ struct Script: Expression {
                 return returnData
             }
         } else {
-            return data ?? .Null
+            return .Null
         }
     }
 

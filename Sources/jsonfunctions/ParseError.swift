@@ -8,6 +8,6 @@ public enum ParseError: Error, Equatable {
 
     case UnimplementedExpressionFor(_ operator: String)
     case GenericError(String)
-    case InvalidParameters
+    case InvalidParameters(String)
 
 }

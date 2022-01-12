@@ -13,7 +13,7 @@ struct Trim: Expression {
         let result = try expression.evalWithData(data)
 
         guard let value = result.array?.first else {
-            throw ParseError.InvalidParameters
+            throw ParseError.InvalidParameters("Trim: Expected one parameter")
         }
 
         let trimmedDescription = try value.innerDescription().trimmingCharacters(in: .whitespacesAndNewlines)

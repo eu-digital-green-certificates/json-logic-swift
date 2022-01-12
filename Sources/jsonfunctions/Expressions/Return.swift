@@ -13,7 +13,7 @@ struct Return: Expression {
         let result = try expression.evalWithData(data)
 
         guard let value = result.array?.first else {
-            throw ParseError.InvalidParameters
+            throw ParseError.InvalidParameters("Return: Expected array with one element")
         }
 
         throw JsonFunctionsError.returnJSON(value)

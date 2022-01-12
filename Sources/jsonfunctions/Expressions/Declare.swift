@@ -14,14 +14,14 @@ struct Declare: Expression {
         let identifierResult = try identifierExpression.evalWithData(data)
 
         guard let identifier = identifierResult.string else {
-            throw ParseError.InvalidParameters
+            throw ParseError.InvalidParameters("Declare: Expected string identifier")
         }
 
         let valueResult = try valueExpression.evalWithData(data)
 
         let newData = data ?? JSON([String: JSON]())
         guard var newDataDictionary = newData.dictionary else {
-            throw ParseError.InvalidParameters
+            throw ParseError.InvalidParameters("Declare: Expected dictionary value")
         }
 
         newDataDictionary[identifier] = valueResult

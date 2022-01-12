@@ -13,7 +13,7 @@ struct ToLowerCase: Expression {
         let result = try expression.evalWithData(data)
 
         guard let value = result.array?.first else {
-            throw ParseError.InvalidParameters
+            throw ParseError.InvalidParameters("ToLowerCase: Expected one parameter")
         }
 
         let lowercasedDescription = try value.innerDescription().lowercased()

@@ -13,7 +13,7 @@ struct Concatenate: Expression {
         let result = try expression.evalWithData(data)
 
         guard let values = result.array else {
-            throw ParseError.InvalidParameters
+            throw ParseError.InvalidParameters("Concatenate: Expected array as parameter")
         }
 
         let joinedDescription = try values.map { try $0.innerDescription() }.joined()
