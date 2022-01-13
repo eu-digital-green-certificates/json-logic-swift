@@ -11,7 +11,7 @@ struct Var: Expression {
 
     func evalWithData(_ data: JSON?) throws -> JSON {
         guard let data = data else {
-            return JSON.Null
+            return .Null
         }
 
         let variablePath = try evaluateVarPathFromData(data)

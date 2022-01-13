@@ -225,6 +225,8 @@ class Parser {
                 parametersJSON: array[safe: 1],
                 registeredFunctions: registeredFunctions
             )
+        case "assign":
+            return Assign(expression: try self.parse(json: value))
         default:
             if let customOperation = self.customOperators[key] {
                 return CustomExpression(
