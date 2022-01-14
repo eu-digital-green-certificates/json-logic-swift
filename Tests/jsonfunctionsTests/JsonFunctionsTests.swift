@@ -14,7 +14,7 @@ final class JsonFunctionsTests: XCTestCase {
         for (index, testCase) in testCases.enumerated() {
             let jsonFunctions = JsonFunctions()
 
-//            if index != 14 {
+//            if index != 426 {
 //                continue
 //            }
 
@@ -40,8 +40,8 @@ final class JsonFunctionsTests: XCTestCase {
                         failed += 1
                     }
 
-                } else if let logic = testCase.logic, let data = testCase.data {
-                    result = try jsonFunctions.applyRule(JSON(logic.value), to: JSON(data.value))
+                } else {
+                    result = try jsonFunctions.applyRule(JSON(testCase.logic?.value as Any), to: JSON(testCase.data?.value as Any))
 
                     let exp = JSON(testCase.exp?.value as Any)
                     XCTAssert(JSON(result) === exp)
