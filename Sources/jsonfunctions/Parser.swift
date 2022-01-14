@@ -157,12 +157,22 @@ class Parser {
             return ArraySome(expression: try self.parse(json: value))
         case "merge":
             return ArrayMerge(expression: try self.parse(json: value))
+        case "count":
+            return ArrayCount(expression: try self.parse(json: value))
+        case "find":
+            return ArrayFind(expression: try self.parse(json: value))
+        case "push":
+            return ArrayPush(expression: try self.parse(json: value))
+        case "sort":
+            return ArraySort(expression: try self.parse(json: value))
         case "log":
             return Log(expression: try self.parse(json: value))
         case "plusTime":
             return PlusTime(expression: try self.parse(json: value))
         case "minusTime":
             return MinusTime(expression: try self.parse(json: value))
+        case "diffTime":
+            return DiffTime(expression: try self.parse(json: value))
         case "extractFromUVCI":
             return ExtractFromUVCI(expression: try self.parse(json: value))
         case "concatenate":

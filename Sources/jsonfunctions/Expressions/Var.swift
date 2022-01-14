@@ -28,7 +28,7 @@ struct Var: Expression {
                     partialResult = partialResult?[key]
                 }
             }
-            return partialResult ?? JSON.Null
+            return partialResult ?? .Null
         }
 
         return .Null
