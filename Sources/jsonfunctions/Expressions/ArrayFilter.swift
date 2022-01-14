@@ -19,7 +19,24 @@ struct ArrayFilter: Expression {
 
         let filterOperation = array.expressions[1]
 
-        return .Array(try dataArray.filter { try filterOperation.evalWithData($0).truthy() })
+        if let elementKeyJSON = try array.expressions[safe: 2]?.evalWithData(data), var dataDictionary = data?.dictionary {
+            guard let elementKey = elementKeyJSON.string else {
+                throw ParseError.InvalidParameters("ArrayFilter: Expected key to be string")
+            }
+
+            let filteredArray = try dataArray.filter {
+                dataDictionary[elementKey] = $0
+                return try filterOperation.evalWithData(JSON(dataDictionary)).truthy()
+            }
+
+            return JSON(filteredArray)
+        } else {
+            let filteredArray = try dataArray.filter {
+                try filterOperation.evalWithData($0).truthy()
+            }
+
+            return JSON(filteredArray)
+        }
     }
     
 }

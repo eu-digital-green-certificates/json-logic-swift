@@ -75,7 +75,7 @@ public final class JsonFunctions {
         }
 
         let data = definition.parameters.reduce(into: [String: JSON]()) {
-            $0[$1.name] = JSON(parameters[$1.name] ?? $1.`default` as Any)
+            $0[$1.name] = JSON(parameters[$1.name]?.value ?? $1.`default`?.value as Any)
         }
 
         guard let logicArray = definition.logic.value as? Array<Any> else {

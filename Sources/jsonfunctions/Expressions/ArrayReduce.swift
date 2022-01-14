@@ -9,13 +9,13 @@ struct ArrayReduce: Expression {
     let expression: Expression
 
     func evalWithData(_ data: JSON?) throws -> JSON {
-
         guard let array = self.expression as? ArrayOfExpressions,
               array.expressions.count >= 3,
               let intoValue: JSON = try? array.expressions[2].evalWithData(data)
                 else {
             return .Null
         }
+
         guard case let .Array(dataArray) = try array.expressions[0].evalWithData(data) else {
             return intoValue
         }
