@@ -599,7 +599,7 @@ extension Date {
         return Date.shortFormatter.string(from: self)
     }
 
-    var fullFormatted: String {
+    public var fullFormatted: String {
         return Date.fullFormatter.string(from: self)
     }
 }

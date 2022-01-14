@@ -35,7 +35,7 @@ struct Call: Expression {
         }
 
         let data = functionDefinition.parameters.reduce(into: [String: JSON]()) {
-            $0[$1.name] = parametersDictionary[$1.name] ?? JSON($1.`default` as Any)
+            $0[$1.name] = parametersDictionary[$1.name] ?? JSON($1.`default`?.value as Any)
         }
 
         guard let logicArray = functionDefinition.logic.value as? Array<Any> else {
