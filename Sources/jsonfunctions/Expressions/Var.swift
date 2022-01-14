@@ -10,11 +10,26 @@ struct Var: Expression {
     let expression: Expression
 
     func evalWithData(_ data: JSON?) throws -> JSON {
-        guard let data = data else {
-            return .Null
+        let variablePath: String?
+        let defaultValue: JSON
+        let variablePathAsJSON = try self.expression.evalWithData(data)
+
+        switch variablePathAsJSON {
+        case let .String(string):
+            variablePath = string
+            defaultValue = .Null
+        case let .Array(array):
+            variablePath = array.first?.string
+            defaultValue = array[safe: 1] ?? .Null
+        default:
+            variablePath = nil
+            defaultValue = .Null
         }
 
-        let variablePath = try evaluateVarPathFromData(data)
+        guard let data = data, data !== .Null else {
+            return defaultValue
+        }
+
         if let variablePathParts = variablePath?.split(separator: ".").map({String($0)}) {
             var partialResult: JSON? = data
             for key in variablePathParts {
@@ -28,23 +43,15 @@ struct Var: Expression {
                     partialResult = partialResult?[key]
                 }
             }
-            return partialResult ?? .Null
+
+            if let partialResult = partialResult, partialResult !== .Null {
+                return partialResult
+            } else {
+                return defaultValue
+            }
         }
 
-        return .Null
-    }
-
-    func evaluateVarPathFromData(_ data: JSON) throws -> String? {
-        let variablePathAsJSON = try self.expression.evalWithData(data)
-
-        switch variablePathAsJSON {
-        case let .String(string):
-            return string
-        case let .Array(array):
-            return array.first?.string
-        default:
-            return nil
-        }
+        return defaultValue
     }
     
 }
