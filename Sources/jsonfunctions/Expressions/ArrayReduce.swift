@@ -6,6 +6,7 @@ import Foundation
 import JSON
 
 struct ArrayReduce: Expression {
+
     let expression: Expression
 
     func eval(with data: inout JSON) throws -> JSON {
@@ -20,12 +21,18 @@ struct ArrayReduce: Expression {
             return intoValue
         }
 
+        var scopedData = data
         let reduceOperation = array.expressions[1]
 
-        return try dataArray.reduce(into: intoValue) { (result: inout JSON, value: JSON) in
-            var reduceContext = JSON(["accumulator": result, "current": value])
-            result = try reduceOperation.eval(with: &reduceContext)
-        }
-
+        return try dataArray
+            .enumerated()
+            .reduce(into: intoValue) { (result: inout JSON, value: (Int, JSON)) in
+                scopedData["data"] = data
+                scopedData["accumulator"] = result
+                scopedData["current"] = value.1
+                scopedData["__index__"] = JSON(value.0)
+                result = try reduceOperation.eval(with: &scopedData)
+            }
     }
+
 }
