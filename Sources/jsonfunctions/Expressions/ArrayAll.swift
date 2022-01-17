@@ -12,7 +12,8 @@ struct ArrayAll: Expression {
     func eval(with data: inout JSON) throws -> JSON {
         guard let array = self.expression as? ArrayOfExpressions,
               array.expressions.count >= 2,
-              case let .Array(dataArray) = try array.expressions[0].eval(with: &data)
+              case let .Array(dataArray) = try array.expressions[0].eval(with: &data),
+              !dataArray.isEmpty
                 else {
             return false
         }
