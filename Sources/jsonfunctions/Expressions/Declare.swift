@@ -10,23 +10,18 @@ struct Declare: Expression {
     let identifierExpression: Expression
     let valueExpression: Expression
 
-    func evalWithData(_ data: JSON?) throws -> JSON {
-        let identifierResult = try identifierExpression.evalWithData(data)
+    func eval(with data: inout JSON) throws -> JSON {
+        let identifierResult = try identifierExpression.eval(with: &data)
 
         guard let identifier = identifierResult.string else {
             throw ParseError.InvalidParameters("Declare: Expected string identifier")
         }
 
-        let valueResult = try valueExpression.evalWithData(data)
+        let valueResult = try valueExpression.eval(with: &data)
 
-        let newData = data ?? JSON([String: JSON]())
-        guard var newDataDictionary = newData.dictionary else {
-            throw ParseError.InvalidParameters("Declare: Expected dictionary value")
-        }
+        data[identifier] = valueResult
 
-        newDataDictionary[identifier] = valueResult
-
-        return JSON(newDataDictionary)
+        return .Null
     }
 
 }

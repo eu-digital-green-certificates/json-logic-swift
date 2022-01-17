@@ -10,8 +10,8 @@ struct Comparison: Expression {
     let arg: Expression
     let operation: (JSON, JSON) -> Bool
 
-    func evalWithData(_ data: JSON?) throws -> JSON {
-        let result = try arg.evalWithData(data)
+    func eval(with data: inout JSON) throws -> JSON {
+        let result = try arg.eval(with: &data)
         switch result {
         case let .Array(array) where array.count == 2:
             if case .String(_) = array[0],

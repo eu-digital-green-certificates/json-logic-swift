@@ -12,7 +12,7 @@ struct Call: Expression {
 
     let registeredFunctions: [String: JsonFunctionDefinition]
 
-    func evalWithData(_ data: JSON?) throws -> JSON {
+    func eval(with data: inout JSON) throws -> JSON {
         guard let functionName = functionNameJSON.string else {
             throw ParseError.InvalidParameters("Call: Function name must be a string")
         }
@@ -41,7 +41,7 @@ struct Call: Expression {
                         registeredFunctions: registeredFunctions
                     )
                     .parse()
-                    .evalWithData(data)
+                    .eval(with: &data)
             } else {
                 $0[$1.name] = JSON($1.`default`?.value as Any)
             }
@@ -60,7 +60,7 @@ struct Call: Expression {
             throw ParseError.InvalidParameters("Call: Function definition logic must be array")
         }
 
-        return try Script(expressions: scriptExpressions).evalWithData(JSON(data))
+        return try Script(expressions: scriptExpressions).eval(with: JSON(data))
     }
 
 }

@@ -9,9 +9,9 @@ struct ArrayCount: Expression {
 
     let expression: Expression
 
-    func evalWithData(_ data: JSON?) throws -> JSON {
+    func eval(with data: inout JSON) throws -> JSON {
         guard let array = self.expression as? ArrayOfExpressions,
-              case let .Array(dataArray) = try array.expressions[0].evalWithData(data)
+              case let .Array(dataArray) = try array.expressions[0].eval(with: &data)
                 else {
             return 0
         }

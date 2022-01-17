@@ -9,7 +9,7 @@ struct SingleValueExpression: Expression {
     
     let json: JSON
 
-    func evalWithData(_ data: JSON?) throws -> JSON {
+    func eval(with data: inout JSON) throws -> JSON {
         return json
     }
 

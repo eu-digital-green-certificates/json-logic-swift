@@ -9,8 +9,8 @@ struct Modulo: Expression {
 
     let arg: Expression
 
-    func evalWithData(_ data: JSON?) throws -> JSON {
-        let result = try arg.evalWithData(data)
+    func eval(with data: inout JSON) throws -> JSON {
+        let result = try arg.eval(with: &data)
         
         switch result {
         case let .Array(array) where array.count == 2:

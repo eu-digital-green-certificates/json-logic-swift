@@ -9,8 +9,8 @@ struct Concatenate: Expression {
 
     let expression: Expression
 
-    func evalWithData(_ data: JSON?) throws -> JSON {
-        let result = try expression.evalWithData(data)
+    func eval(with data: inout JSON) throws -> JSON {
+        let result = try expression.eval(with: &data)
 
         guard let values = result.array else {
             throw ParseError.InvalidParameters("Concatenate: Expected array as parameter")

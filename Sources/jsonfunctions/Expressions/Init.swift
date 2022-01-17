@@ -9,25 +9,25 @@ struct Init: Expression {
 
     let expressions: [Expression]
 
-    func evalWithData(_ data: JSON?) throws -> JSON {
-        guard let result = try expressions.first?.evalWithData(data) else {
+    func eval(with data: inout JSON) throws -> JSON {
+        guard let result = try expressions.first?.eval(with: &data) else {
             throw ParseError.InvalidParameters("Init: Expected at least two parameters, got none")
         }
 
         switch result.string {
         case "literal":
-            return try evalLiteralWithData(data)
+            return try evalLiteral(with: &data)
         case "object":
-            return try evalDictionaryWithData(data)
+            return try evalDictionary(with: &data)
         case "array":
-            return try evalArrayWithData(data)
+            return try evalArray(with: &data)
         default:
             throw ParseError.InvalidParameters("Init: Unsupported type")
         }
     }
 
-    func evalLiteralWithData(_ data: JSON?) throws -> JSON {
-        guard let result = try expressions[safe: 1]?.evalWithData(data) else {
+    func evalLiteral(with data: inout JSON) throws -> JSON {
+        guard let result = try expressions[safe: 1]?.eval(with: &data) else {
             throw ParseError.InvalidParameters("Init: Expected at least two parameters, got only one")
         }
 
@@ -38,13 +38,13 @@ struct Init: Expression {
         return result
     }
 
-    func evalDictionaryWithData(_ data: JSON?) throws -> JSON {
+    func evalDictionary(with data: inout JSON) throws -> JSON {
         var targetDictionary = [String: JSON]()
         let expressions = Array(expressions.dropFirst())
 
         var i = 0
         while i < expressions.count {
-            let result = try expressions[i].evalWithData(data)
+            let result = try expressions[i].eval(with: &data)
 
             if expressions[i] is Spread {
                 if let resultDictionary = result.dictionary {
@@ -63,7 +63,7 @@ struct Init: Expression {
             } else {
                 let key = try result.keyDescription()
 
-                guard let valueResult = try expressions[safe: i + 1]?.evalWithData(data) else {
+                guard let valueResult = try expressions[safe: i + 1]?.eval(with: &data) else {
                     throw ParseError.InvalidParameters("Init: No value for key \"\(key)\"")
                 }
 
@@ -76,12 +76,12 @@ struct Init: Expression {
         return JSON(targetDictionary)
     }
 
-    func evalArrayWithData(_ data: JSON?) throws -> JSON {
+    func evalArray(with data: inout JSON) throws -> JSON {
         var targetArray = [JSON]()
         let expressions = expressions.dropFirst()
 
         for expression in expressions {
-            let result = try expression.evalWithData(data)
+            let result = try expression.eval(with: &data)
 
             if expression is Spread {
                 guard let resultArray = result.array else {

@@ -10,21 +10,21 @@ struct If: Expression {
 
     let arg: ArrayOfExpressions
 
-    func evalWithData(_ data: JSON?) throws -> JSON {
-        return try IfWithExpressions(arg.expressions, andData: data)
+    func eval(with data: inout JSON) throws -> JSON {
+        return try IfWithExpressions(arg.expressions, and: &data)
     }
 
-    func IfWithExpressions(_ expressions: [Expression], andData data: JSON?) throws -> JSON {
+    func IfWithExpressions(_ expressions: [Expression], and data: inout JSON) throws -> JSON {
         if expressions.isEmpty {
             return .Null
         } else if expressions.count == 1 {
-            return try expressions[0].evalWithData(data)
-        } else if try expressions[0].evalWithData(data).truthy() {
-            return try expressions[1].evalWithData(data)
+            return try expressions[0].eval(with: &data)
+        } else if try expressions[0].eval(with: &data).truthy() {
+            return try expressions[1].eval(with: &data)
         } else if arg.expressions.count == 3 {
-            return try expressions[2].evalWithData(data)
+            return try expressions[2].eval(with: &data)
         } else {
-            return try IfWithExpressions(Array(expressions.dropFirst(2)), andData: data)
+            return try IfWithExpressions(Array(expressions.dropFirst(2)), and: &data)
         }
     }
     

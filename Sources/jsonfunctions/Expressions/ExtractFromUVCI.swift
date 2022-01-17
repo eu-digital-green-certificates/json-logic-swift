@@ -11,10 +11,8 @@ struct ExtractFromUVCI: Expression {
 
     let expression: Expression
     
-    func evalWithData(_ data: JSON?) throws -> JSON {
-        guard let data = data else { return JSON.Null }
-
-        let result = try expression.evalWithData(data)
+    func eval(with data: inout JSON) throws -> JSON {
+        let result = try expression.eval(with: &data)
 
         if let arr = result.array,
            let uvci = arr[0]["data"].string,
@@ -39,19 +37,6 @@ struct ExtractFromUVCI: Expression {
         }
         
         return .Null
-    }
-
-    func evaluateVarPathFromData(_ data: JSON) throws -> String? {
-        let variablePathAsJSON = try self.expression.evalWithData(data)
-
-        switch variablePathAsJSON {
-        case let .String(string):
-            return string
-        case let .Array(array):
-            return array.first?.string
-        default:
-            return nil
-        }
     }
 
 }

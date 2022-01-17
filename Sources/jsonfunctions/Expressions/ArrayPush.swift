@@ -9,15 +9,15 @@ struct ArrayPush: Expression {
 
     let expression: Expression
 
-    func evalWithData(_ data: JSON?) throws -> JSON {
+    func eval(with data: inout JSON) throws -> JSON {
         guard let array = self.expression as? ArrayOfExpressions,
-              case var .Array(targetArray) = try array.expressions[0].evalWithData(data)
+              case var .Array(targetArray) = try array.expressions[0].eval(with: &data)
             else {
                 throw ParseError.InvalidParameters("ArrayPush: Expected array as first parameter")
         }
 
         for expression in array.expressions.dropFirst() {
-            let result = try expression.evalWithData(data)
+            let result = try expression.eval(with: &data)
             targetArray.append(result)
         }
 

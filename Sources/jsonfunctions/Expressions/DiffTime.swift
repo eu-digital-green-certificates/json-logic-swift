@@ -9,8 +9,8 @@ struct DiffTime: Expression {
 
     let expression: Expression
     
-    func evalWithData(_ data: JSON?) throws -> JSON {
-        let result = try expression.evalWithData(data)
+    func eval(with data: inout JSON) throws -> JSON {
+        let result = try expression.eval(with: &data)
         
         if let arr = result.array,
            let lhs = arr[0].date,

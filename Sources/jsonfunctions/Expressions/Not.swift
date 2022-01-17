@@ -9,8 +9,8 @@ struct Not: Expression {
 
     let lhs: Expression
 
-    func evalWithData(_ data: JSON?) throws -> JSON {
-        let lhsBool = try lhs.evalWithData(data)
+    func eval(with data: inout JSON) throws -> JSON {
+        let lhsBool = try lhs.eval(with: &data)
         if let array = lhsBool.array
         {
             if(array.count == 0)

@@ -5,7 +5,7 @@ import JSON
 final class JsonFunctionsTests: XCTestCase {
 
     func testJsonFunctions() {
-        XCTAssertEqual(testCases.count, 767)
+        XCTAssertEqual(testCases.count, 769)
 
         var passed = 0
         var failed = 0
@@ -14,7 +14,7 @@ final class JsonFunctionsTests: XCTestCase {
         for (index, testCase) in testCases.enumerated() {
             let jsonFunctions = JsonFunctions()
 
-//            if index != 426 {
+//            if index != 14 {
 //                continue
 //            }
 
@@ -39,7 +39,6 @@ final class JsonFunctionsTests: XCTestCase {
                         print("*** ❌ test case \(index) \"\(result)\" does not equal expected value \"\(String(describing: testCase.exp?.value))\" - \(testCase.title)")
                         failed += 1
                     }
-
                 } else {
                     result = try jsonFunctions.applyRule(JSON(testCase.logic?.value as Any), to: JSON(testCase.data?.value as Any))
 

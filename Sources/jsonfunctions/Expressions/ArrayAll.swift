@@ -9,26 +9,26 @@ struct ArrayAll: Expression {
 
     let expression: Expression
 
-    func evalWithData(_ data: JSON?) throws -> JSON {
+    func eval(with data: inout JSON) throws -> JSON {
         guard let array = self.expression as? ArrayOfExpressions,
               array.expressions.count >= 2,
-              case let .Array(dataArray) = try array.expressions[0].evalWithData(data)
+              case let .Array(dataArray) = try array.expressions[0].eval(with: &data)
                 else {
             return false
         }
 
         let operation = array.expressions[1]
 
-        if let elementKey = try array.expressions[safe: 2]?.evalWithData(data).string, var dataDictionary = data?.dictionary {
+        if let elementKey = try array.expressions[safe: 2]?.eval(with: &data).string, data.type == .object {
             let allSatisfy = try dataArray.allSatisfy {
-                dataDictionary[elementKey] = $0
-                return try operation.evalWithData(JSON(dataDictionary)).truthy()
+                data[elementKey] = $0
+                return try operation.eval(with: &data).truthy()
             }
 
             return JSON(allSatisfy)
         } else {
             let allSatisfy = try dataArray.allSatisfy {
-                try operation.evalWithData($0).truthy()
+                try operation.eval(with: $0).truthy()
             }
 
             return JSON(allSatisfy)

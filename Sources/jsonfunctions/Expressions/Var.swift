@@ -9,10 +9,10 @@ struct Var: Expression {
 
     let expression: Expression
 
-    func evalWithData(_ data: JSON?) throws -> JSON {
+    func eval(with data: inout JSON) throws -> JSON {
         let variablePath: String?
         let defaultValue: JSON
-        let variablePathAsJSON = try self.expression.evalWithData(data)
+        let variablePathAsJSON = try self.expression.eval(with: &data)
 
         switch variablePathAsJSON {
         case let .String(string):
@@ -26,7 +26,7 @@ struct Var: Expression {
             defaultValue = .Null
         }
 
-        guard let data = data, data !== .Null else {
+        guard data !== .Null else {
             return defaultValue
         }
 

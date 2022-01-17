@@ -9,8 +9,8 @@ struct Log: Expression {
 
     let expression: Expression
 
-    func evalWithData(_ data: JSON?) throws -> JSON {
-        let result = try expression.evalWithData(data)
+    func eval(with data: inout JSON) throws -> JSON {
+        let result = try expression.eval(with: &data)
         print("\(String(describing: try result.convertToSwiftTypes()))")
         return result
     }

@@ -9,11 +9,7 @@ struct Assign: Expression {
 
     let expression: Expression
 
-    func evalWithData(_ data: JSON?) throws -> JSON {
-        guard let data = data else {
-            return .Null
-        }
-
+    func eval(with data: inout JSON) throws -> JSON {
         guard let arrayExpression = expression as? ArrayOfExpressions,
               let identifierExpression = arrayExpression.expressions[safe: 0],
               let valueExpression = arrayExpression.expressions[safe: 1]
@@ -21,17 +17,19 @@ struct Assign: Expression {
             throw ParseError.InvalidParameters("Assign: Expected two parameters")
         }
 
-        guard let identifier = try identifierExpression.evalWithData(data).string else {
+        guard let identifier = try identifierExpression.eval(with: &data).string else {
             throw ParseError.InvalidParameters("Assign: Expected string for first parameter")
         }
 
-        let value = try valueExpression.evalWithData(data)
+        let value = try valueExpression.eval(with: &data)
 
         let variablePathParts = Array(
             identifier.split(separator: ".").map({ String($0) }).reversed()
         )
 
-        return set(value: value, at: variablePathParts, in: data)
+        data = set(value: value, at: variablePathParts, in: data)
+
+        return .Null
     }
 
     private func set(value: JSON, at variablePathParts: [String], in data: JSON) -> JSON {

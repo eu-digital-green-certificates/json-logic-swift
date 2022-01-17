@@ -9,14 +9,14 @@ struct Missing: Expression {
 
     let expression: Expression
 
-    func evalWithData(_ data: JSON?) throws -> JSON {
+    func eval(with data: inout JSON) throws -> JSON {
         let keys = try evaluateVarPathFromData(data)
         let missingKeys = keys.filter({ valueForKey($0, in: data) == .Null })
 
         return .Array(missingKeys.map { .String($0) })
     }
 
-    func valueForKey(_ key: String, in data: JSON?) -> JSON? {
+    func valueForKey(_ key: String, in data: JSON) -> JSON {
         let variablePathParts = key.split(separator: ".").map({String($0)})
         var partialResult: JSON? = data
         
@@ -35,8 +35,8 @@ struct Missing: Expression {
         return result
     }
 
-    func evaluateVarPathFromData(_ data: JSON?) throws -> [String] {
-        let variablePathAsJSON = try self.expression.evalWithData(data)
+    func evaluateVarPathFromData(_ data: JSON) throws -> [String] {
+        let variablePathAsJSON = try self.expression.eval(with: data)
 
         switch variablePathAsJSON {
         case let .String(string):

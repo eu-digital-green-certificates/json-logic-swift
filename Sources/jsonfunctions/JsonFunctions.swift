@@ -60,7 +60,9 @@ public final class JsonFunctions {
             customOperators: customOperators,
             registeredFunctions: registeredFunctions
         ).parse()
-        let result = try parsedRule.evalWithData(jsonData)
+
+        let data = jsonData ?? .Null
+        let result = try parsedRule.eval(with: data)
 
         return try convertToSwiftType(result)
     }

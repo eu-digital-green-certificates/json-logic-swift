@@ -9,26 +9,17 @@ struct Script: Expression {
 
     let expressions: [Expression]
 
-    func evalWithData(_ data: JSON?) throws -> JSON {
-        return try evalExpressionsWithData(expressions: expressions, data)
-    }
-
-    func evalExpressionsWithData(expressions: [Expression], _ data: JSON?) throws -> JSON {
-        var expressions = expressions
-
-        if let expression = expressions.first {
-            do {
-                let result = try expression.evalWithData(data)
-
-                expressions.remove(at: 0)
-
-                return try evalExpressionsWithData(expressions: expressions, result)
-            } catch JsonFunctionsError.returnJSON(let returnData) {
-                return returnData
+    func eval(with data: inout JSON) throws -> JSON {
+        var scopedData = data
+        do {
+            try expressions.forEach {
+                _ = try $0.eval(with: &scopedData)
             }
-        } else {
-            return .Null
+        } catch JsonFunctionsError.returnJSON(let returnData) {
+            return returnData
         }
+
+        return .Null
     }
 
 }

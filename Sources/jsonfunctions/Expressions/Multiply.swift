@@ -9,9 +9,9 @@ struct Multiply: Expression {
 
     let arg: Expression
 
-    func evalWithData(_ data: JSON?) throws -> JSON {
+    func eval(with data: inout JSON) throws -> JSON {
         let total = JSON(1)
-        let result = try arg.evalWithData(data)
+        let result = try arg.eval(with: &data)
 
         switch result {
         case let .Array(array):

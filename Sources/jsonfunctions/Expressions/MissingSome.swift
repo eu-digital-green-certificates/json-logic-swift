@@ -9,8 +9,8 @@ struct MissingSome: Expression {
 
     let expression: Expression
 
-    func evalWithData(_ data: JSON?) throws -> JSON {
-        let arg = try expression.evalWithData(data)
+    func eval(with data: inout JSON) throws -> JSON {
+        let arg = try expression.eval(with: &data)
 
         guard case let JSON.Array(array) = arg,
               array.count >= 2,

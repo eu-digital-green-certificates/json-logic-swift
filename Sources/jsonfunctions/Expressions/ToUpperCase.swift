@@ -9,8 +9,8 @@ struct ToUpperCase: Expression {
 
     let expression: Expression
 
-    func evalWithData(_ data: JSON?) throws -> JSON {
-        let result = try expression.evalWithData(data)
+    func eval(with data: inout JSON) throws -> JSON {
+        let result = try expression.eval(with: &data)
 
         guard let value = result.array?.first else {
             throw ParseError.InvalidParameters("ToUpperCase: Expected one parameter")

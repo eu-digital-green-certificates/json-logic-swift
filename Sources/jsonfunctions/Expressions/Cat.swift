@@ -9,10 +9,10 @@ struct Cat: Expression {
 
     let arg: Expression
 
-    func evalWithData(_ data: JSON?) throws -> JSON {
+    func eval(with data: inout JSON) throws -> JSON {
         var result = ""
 
-        let evaluation = try arg.evalWithData(data)
+        let evaluation = try arg.eval(with: &data)
         switch evaluation {
         case let .Array(array):
             result = array.reduce(into: "") { (result, element) in
