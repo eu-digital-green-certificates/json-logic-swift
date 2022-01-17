@@ -12,19 +12,28 @@ struct Var: Expression {
     func eval(with data: inout JSON) throws -> JSON {
         let variablePath: String?
         let defaultValue: JSON
-        let variablePathAsJSON = try self.expression.eval(with: &data)
+        var parameters = try self.expression.eval(with: &data)
 
-        switch variablePathAsJSON {
+        if parameters.type != .array {
+            parameters = JSON([parameters])
+        }
+
+        switch parameters.array?[safe: 0] {
+        case let .String(string) where string.isEmpty:
+            return data
+        case let .Array(array) where array.isEmpty:
+            return data
         case let .String(string):
             variablePath = string
-            defaultValue = .Null
-        case let .Array(array):
-            variablePath = array.first?.string
-            defaultValue = array[safe: 1] ?? .Null
+        case let .Int(int):
+            variablePath = String(int)
+        case .Null,  nil:
+            return data
         default:
             variablePath = nil
-            defaultValue = .Null
         }
+
+        defaultValue = parameters.array?[safe: 1] ?? .Null
 
         guard data !== .Null else {
             return defaultValue
