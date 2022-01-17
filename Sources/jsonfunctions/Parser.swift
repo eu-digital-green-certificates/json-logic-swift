@@ -50,18 +50,13 @@ class Parser {
 
             return ArrayOfExpressions(expressions: arrayOfExpressions)
         case let .Dictionary(object):
-            var arrayOfExpressions: [Expression] = []
-
-            for (key, value) in object {
-                arrayOfExpressions.append(try parseExpressionWithKeyword(key, value: value))
-            }
-            
-            if arrayOfExpressions.count == 0 {
+            if object.count == 0 {
                 return ArrayOfExpressions(expressions: [])
+            } else if object.count == 1, let key = object.keys.first, let value = object[key] {
+                return try parseExpressionWithKeyword(key, value: value)
+            } else {
+                return SingleValueExpression(json: json)
             }
-
-            // use only the first for now, we should warn or throw error here if array count > 1
-            return arrayOfExpressions.first!
         }
     }
 
