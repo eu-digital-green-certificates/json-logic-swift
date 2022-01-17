@@ -1,5 +1,5 @@
 {
-  "$comment": "Generated at Mon Jan 10 2022 09:19:16 GMT+0100 (Central European Standard Time)",
+  "$comment": "Generated at Sat Jan 15 2022 18:28:29 GMT+0100 (Central European Standard Time)",
   "testCases": [
     {
       "title": "all - allows to specify the variable name for the current value and to access the outer context",
@@ -14859,23 +14859,20 @@
       "exp": "2021-12-12T01:00:00Z"
     },
     {
-      "title": "push - adds an element to the end of an array",
+      "title": "push - adds an element to the end of an array and returns it",
       "logic": {
         "script": [
           {
-            "push": [
-              {
-                "var": "arr"
-              },
-              {
-                "var": "value"
-              }
-            ]
-          },
-          {
             "return": [
               {
-                "var": "arr"
+                "push": [
+                  {
+                    "var": "arr"
+                  },
+                  {
+                    "var": "value"
+                  }
+                ]
               }
             ]
           }
@@ -14901,19 +14898,16 @@
       "logic": {
         "script": [
           {
-            "push": [
-              {
-                "var": "arr"
-              },
-              {
-                "var": "value"
-              }
-            ]
-          },
-          {
             "return": [
               {
-                "var": "arr"
+                "push": [
+                  {
+                    "var": "arr"
+                  },
+                  {
+                    "var": "value"
+                  }
+                ]
               }
             ]
           }
@@ -14930,19 +14924,16 @@
       "logic": {
         "script": [
           {
-            "push": [
-              {
-                "var": "arr"
-              },
-              {
-                "var": "value"
-              }
-            ]
-          },
-          {
             "return": [
               {
-                "var": "arr"
+                "push": [
+                  {
+                    "var": "arr"
+                  },
+                  {
+                    "var": "value"
+                  }
+                ]
               }
             ]
           }
@@ -14959,19 +14950,16 @@
       "logic": {
         "script": [
           {
-            "push": [
-              {
-                "var": "arr"
-              },
-              {
-                "var": "value"
-              }
-            ]
-          },
-          {
             "return": [
               {
-                "var": "arr"
+                "push": [
+                  {
+                    "var": "arr"
+                  },
+                  {
+                    "var": "value"
+                  }
+                ]
               }
             ]
           }
@@ -14988,19 +14976,16 @@
       "logic": {
         "script": [
           {
-            "push": [
-              {
-                "var": "arr"
-              },
-              {
-                "var": "value"
-              }
-            ]
-          },
-          {
             "return": [
               {
-                "var": "arr"
+                "push": [
+                  {
+                    "var": "arr"
+                  },
+                  {
+                    "var": "value"
+                  }
+                ]
               }
             ]
           }
@@ -15017,19 +15002,16 @@
       "logic": {
         "script": [
           {
-            "push": [
-              {
-                "var": "arr"
-              },
-              {
-                "var": "value"
-              }
-            ]
-          },
-          {
             "return": [
               {
-                "var": "arr"
+                "push": [
+                  {
+                    "var": "arr"
+                  },
+                  {
+                    "var": "value"
+                  }
+                ]
               }
             ]
           }
@@ -15046,19 +15028,16 @@
       "logic": {
         "script": [
           {
-            "push": [
-              {
-                "var": "arr"
-              },
-              {
-                "var": "value"
-              }
-            ]
-          },
-          {
             "return": [
               {
-                "var": "arr"
+                "push": [
+                  {
+                    "var": "arr"
+                  },
+                  {
+                    "var": "value"
+                  }
+                ]
               }
             ]
           }
@@ -15075,19 +15054,16 @@
       "logic": {
         "script": [
           {
-            "push": [
-              {
-                "var": "arr"
-              },
-              {
-                "var": "value"
-              }
-            ]
-          },
-          {
             "return": [
               {
-                "var": "arr"
+                "push": [
+                  {
+                    "var": "arr"
+                  },
+                  {
+                    "var": "value"
+                  }
+                ]
               }
             ]
           }
@@ -15106,19 +15082,16 @@
       "logic": {
         "script": [
           {
-            "push": [
-              {
-                "var": "arr"
-              },
-              {
-                "var": "value"
-              }
-            ]
-          },
-          {
             "return": [
               {
-                "var": "arr"
+                "push": [
+                  {
+                    "var": "arr"
+                  },
+                  {
+                    "var": "value"
+                  }
+                ]
               }
             ]
           }
@@ -15137,19 +15110,16 @@
       "logic": {
         "script": [
           {
-            "push": [
-              {
-                "var": "arr"
-              },
-              {
-                "var": "value"
-              }
-            ]
-          },
-          {
             "return": [
               {
-                "var": "arr"
+                "push": [
+                  {
+                    "var": "arr"
+                  },
+                  {
+                    "var": "value"
+                  }
+                ]
               }
             ]
           }
@@ -15168,19 +15138,16 @@
       "logic": {
         "script": [
           {
-            "push": [
-              {
-                "var": "arr"
-              },
-              {
-                "var": "value"
-              }
-            ]
-          },
-          {
             "return": [
               {
-                "var": "arr"
+                "push": [
+                  {
+                    "var": "arr"
+                  },
+                  {
+                    "var": "value"
+                  }
+                ]
               }
             ]
           }
@@ -15199,19 +15166,16 @@
       "logic": {
         "script": [
           {
-            "push": [
-              {
-                "var": "arr"
-              },
-              {
-                "var": "value"
-              }
-            ]
-          },
-          {
             "return": [
               {
-                "var": "arr"
+                "push": [
+                  {
+                    "var": "arr"
+                  },
+                  {
+                    "var": "value"
+                  }
+                ]
               }
             ]
           }
@@ -15238,19 +15202,16 @@
       "logic": {
         "script": [
           {
-            "push": [
-              {
-                "var": "arr"
-              },
-              {
-                "var": "value"
-              }
-            ]
-          },
-          {
             "return": [
               {
-                "var": "arr"
+                "push": [
+                  {
+                    "var": "arr"
+                  },
+                  {
+                    "var": "value"
+                  }
+                ]
               }
             ]
           }
@@ -15273,19 +15234,16 @@
       "logic": {
         "script": [
           {
-            "push": [
-              {
-                "var": "arr"
-              },
-              {
-                "var": "value"
-              }
-            ]
-          },
-          {
             "return": [
               {
-                "var": "arr"
+                "push": [
+                  {
+                    "var": "arr"
+                  },
+                  {
+                    "var": "value"
+                  }
+                ]
               }
             ]
           }
@@ -15304,25 +15262,22 @@
       "logic": {
         "script": [
           {
-            "push": [
-              {
-                "var": "arr"
-              },
-              {
-                "var": "value"
-              },
-              {
-                "var": "value2"
-              },
-              6,
-              7,
-              8
-            ]
-          },
-          {
             "return": [
               {
-                "var": "arr"
+                "push": [
+                  {
+                    "var": "arr"
+                  },
+                  {
+                    "var": "value"
+                  },
+                  {
+                    "var": "value2"
+                  },
+                  6,
+                  7,
+                  8
+                ]
               }
             ]
           }
@@ -15353,29 +15308,26 @@
       "logic": {
         "script": [
           {
-            "push": [
-              {
-                "var": "arr"
-              },
-              "hello",
-              1,
-              true,
-              false,
-              [
-                1,
-                2,
-                3
-              ],
-              {
-                "var": "obj"
-              },
-              null
-            ]
-          },
-          {
             "return": [
               {
-                "var": "arr"
+                "push": [
+                  {
+                    "var": "arr"
+                  },
+                  "hello",
+                  1,
+                  true,
+                  false,
+                  [
+                    1,
+                    2,
+                    3
+                  ],
+                  {
+                    "var": "obj"
+                  },
+                  null
+                ]
               }
             ]
           }
@@ -15401,6 +15353,97 @@
           "hello": "world"
         },
         null
+      ]
+    },
+    {
+      "title": "push - using it in an if statement requires assign",
+      "logic": {
+        "script": [
+          {
+            "if": [
+              {
+                "var": "someConditionA"
+              },
+              {
+                "assign": [
+                  "arr",
+                  {
+                    "push": [
+                      {
+                        "var": "arr"
+                      },
+                      "a"
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "if": [
+              {
+                "var": "someConditionB"
+              },
+              {
+                "assign": [
+                  "arr",
+                  {
+                    "push": [
+                      {
+                        "var": "arr"
+                      },
+                      "b"
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "if": [
+              {
+                "var": "someConditionC"
+              },
+              {
+                "assign": [
+                  "arr",
+                  {
+                    "push": [
+                      {
+                        "var": "arr"
+                      },
+                      "c"
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "return": [
+              {
+                "var": "arr"
+              }
+            ]
+          }
+        ]
+      },
+      "data": {
+        "arr": [
+          1,
+          2,
+          3
+        ],
+        "someConditionA": true,
+        "someConditionB": false,
+        "someConditionC": true
+      },
+      "exp": [
+        1,
+        2,
+        3,
+        "a",
+        "c"
       ]
     },
     {
@@ -16320,6 +16363,63 @@
       },
       "data": {},
       "exp": null
+    },
+    {
+      "title": "script - restricts the scope of variable declarations",
+      "logic": {
+        "script": [
+          {
+            "declare": [
+              "offset",
+              5
+            ]
+          },
+          {
+            "declare": [
+              "multiplier",
+              6
+            ]
+          },
+          {
+            "script": [
+              {
+                "declare": [
+                  "offset",
+                  50
+                ]
+              },
+              {
+                "declare": [
+                  "multiplier",
+                  60
+                ]
+              }
+            ]
+          },
+          {
+            "return": [
+              {
+                "init": [
+                  "object",
+                  "offset",
+                  {
+                    "var": "offset"
+                  },
+                  "multiplier",
+                  {
+                    "var": "multiplier"
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      "data": {},
+      "exp": {
+        "offset": 5,
+        "multiplier": 6
+      }
     },
     {
       "title": "some - allows to specify the variable name for the current value and to access the outer context",
