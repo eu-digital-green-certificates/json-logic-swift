@@ -109,12 +109,12 @@ class NoneTests: XCTestCase {
                 """
                 {"none":[{"var":"integers"}]}
                 """
-        XCTAssertNil(try JsonFunctions().applyRule(rule))
+        XCTAssertTrue(try JsonFunctions().applyRule(rule))
 
         rule =
                 """
                 {"none":[]}
                 """
-        XCTAssertNil(try JsonFunctions().applyRule(rule))
+        XCTAssertTrue(try JsonFunctions().applyRule(rule))
     }
 }

@@ -101,6 +101,6 @@ class AllTests: XCTestCase {
                 """
                  {"all":[]}
                 """
-        XCTAssertNil(try JsonFunctions().applyRule(rule))
+        XCTAssertFalse(try JsonFunctions().applyRule(rule))
     }
 }

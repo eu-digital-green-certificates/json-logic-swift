@@ -97,7 +97,7 @@ public final class JsonFunctions {
         switch convertedToSwiftStandardType {
         case let .some(value):
             guard let convertedResult = value as? T else {
-                print(" canNotConvertResultToType \(T.self) from \(type(of: value))")
+                print("canNotConvertResultToType \(T.self) from \(type(of: value))")
                 throw JsonFunctionsError.canNotConvertResultToType(T.self)
             }
 

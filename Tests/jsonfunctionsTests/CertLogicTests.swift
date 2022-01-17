@@ -14,13 +14,8 @@ import JSON
 
 final class CertLogic: XCTestCase {
     
-    func testEmptyData()
-    {
-        XCTAssertFalse(try JsonFunctions().applyRule("{}"))
-    }
-    
     func testCertLogic() {
-        
+
 
         let fm = FileManager.default
         let path =  Bundle.main.resourcePath! + "/dgc-business-rules/certlogic/specification/testSuite"

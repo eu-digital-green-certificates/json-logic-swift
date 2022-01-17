@@ -14,10 +14,6 @@ final class JsonFunctionsTests: XCTestCase {
         for (index, testCase) in testCases.enumerated() {
             let jsonFunctions = JsonFunctions()
 
-//            if index != 14 {
-//                continue
-//            }
-
             if let functions = testCase.functions {
                 functions.forEach {
                     jsonFunctions.registerFunction(name: $0.name, definition: $0.definition)

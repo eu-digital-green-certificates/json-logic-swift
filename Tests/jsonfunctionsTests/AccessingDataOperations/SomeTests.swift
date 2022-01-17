@@ -99,12 +99,12 @@ class SomeTests: XCTestCase {
                 """
                 {"some":[{"var":"integers"}]}
                 """
-        XCTAssertNil(try JsonFunctions().applyRule(rule))
+        XCTAssertFalse(try JsonFunctions().applyRule(rule))
 
         rule =
                 """
                 {"some":[]}
                 """
-        XCTAssertNil(try JsonFunctions().applyRule(rule))
+        XCTAssertFalse(try JsonFunctions().applyRule(rule))
     }
 }

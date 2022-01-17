@@ -13,13 +13,13 @@ class SubstringTests: XCTestCase {
     func testSubstring() {
         var rule =
                 """
-                {"substr":["jsonfunctions", 4]}
+                {"substr":["jsonlogic", 4]}
                 """
         XCTAssertEqual("logic", try JsonFunctions().applyRule(rule, to: nil))
 
         rule =
                 """
-                {"substr":["jsonfunctions", -5]}
+                {"substr":["jsonlogic", -5]}
                 """
         XCTAssertEqual("logic", try JsonFunctions().applyRule(rule, to: nil))
     }
@@ -27,37 +27,37 @@ class SubstringTests: XCTestCase {
     func testSubstring_withRange() {
         var rule =
                 """
-                {"substr":["jsonfunctions", 0, 1]}
+                {"substr":["jsonlogic", 0, 1]}
                 """
         XCTAssertEqual("j", try JsonFunctions().applyRule(rule, to: nil))
 
         rule =
                 """
-                {"substr":["jsonfunctions", -1, 1]}
+                {"substr":["jsonlogic", -1, 1]}
                 """
         XCTAssertEqual("c", try JsonFunctions().applyRule(rule, to: nil))
 
         rule =
                 """
-                {"substr":["jsonfunctions", 4, 5]}
+                {"substr":["jsonlogic", 4, 5]}
                 """
         XCTAssertEqual("logic", try JsonFunctions().applyRule(rule, to: nil))
 
         rule =
                 """
-                {"substr":["jsonfunctions", -5, 5]}
+                {"substr":["jsonlogic", -5, 5]}
                 """
         XCTAssertEqual("logic", try JsonFunctions().applyRule(rule, to: nil))
 
         rule =
                 """
-                {"substr":["jsonfunctions", -5, -2]}
+                {"substr":["jsonlogic", -5, -2]}
                 """
         XCTAssertEqual("log", try JsonFunctions().applyRule(rule, to: nil))
 
         rule =
                 """
-                {"substr":["jsonfunctions", 1, -5]}
+                {"substr":["jsonlogic", 1, -5]}
                 """
         XCTAssertEqual("son", try JsonFunctions().applyRule(rule, to: nil))
     }
