@@ -7,9 +7,13 @@ import JSON
 
 struct Script: Expression {
 
-    let expressions: [Expression]
+    let expression: Expression
 
     func eval(with data: inout JSON) throws -> JSON {
+        guard let expressions = (expression as? ArrayOfExpressions)?.expressions else {
+            throw ParseError.InvalidParameters("Script: Expected array of parameters")
+        }
+
         var scopedData = data
         do {
             try expressions.forEach {

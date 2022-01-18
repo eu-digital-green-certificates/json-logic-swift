@@ -7,27 +7,31 @@ import JSON
 
 struct Init: Expression {
 
-    let expressions: [Expression]
+    let expression: Expression
 
     func eval(with data: inout JSON) throws -> JSON {
-        guard let result = try expressions.first?.eval(with: &data) else {
-            throw ParseError.InvalidParameters("Init: Expected at least two parameters, got none")
+        guard let arrayExpression = expression as? ArrayOfExpressions,
+              let firstResult = try arrayExpression.expressions.first?.eval(with: &data)
+        else {
+            throw ParseError.InvalidParameters("Init: Expected at least one parameter")
         }
 
-        switch result.string {
+        let expressions = Array(arrayExpression.expressions.dropFirst())
+
+        switch firstResult.string {
         case "literal":
-            return try evalLiteral(with: &data)
+            return try evalLiteral(expressions: expressions, with: &data)
         case "object":
-            return try evalDictionary(with: &data)
+            return try evalDictionary(expressions: expressions, with: &data)
         case "array":
-            return try evalArray(with: &data)
+            return try evalArray(expressions: expressions, with: &data)
         default:
             throw ParseError.InvalidParameters("Init: Unsupported type")
         }
     }
 
-    func evalLiteral(with data: inout JSON) throws -> JSON {
-        guard let result = try expressions[safe: 1]?.eval(with: &data) else {
+    func evalLiteral(expressions: [Expression], with data: inout JSON) throws -> JSON {
+        guard let result = try expressions.first?.eval(with: &data) else {
             throw ParseError.InvalidParameters("Init: Expected at least two parameters, got only one")
         }
 
@@ -38,9 +42,8 @@ struct Init: Expression {
         return result
     }
 
-    func evalDictionary(with data: inout JSON) throws -> JSON {
+    func evalDictionary(expressions: [Expression], with data: inout JSON) throws -> JSON {
         var targetDictionary = [String: JSON]()
-        let expressions = Array(expressions.dropFirst())
 
         var i = 0
         while i < expressions.count {
@@ -76,9 +79,8 @@ struct Init: Expression {
         return JSON(targetDictionary)
     }
 
-    func evalArray(with data: inout JSON) throws -> JSON {
+    func evalArray(expressions: [Expression], with data: inout JSON) throws -> JSON {
         var targetArray = [JSON]()
-        let expressions = expressions.dropFirst()
 
         for expression in expressions {
             let result = try expression.eval(with: &data)

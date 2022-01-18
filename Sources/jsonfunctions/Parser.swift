@@ -66,17 +66,29 @@ class Parser {
         case "var":
             return Var(expression: try self.parse(json: value))
         case "===":
-            return StrictEquals(lhs: try self.parse(json: value[0]),
-                                rhs: try self.parse(json: value[1]))
+            return StrictEquals(
+                lhs: try self.parse(json: value[0]),
+                rhs: try self.parse(json: value[1])
+            )
         case "!==":
-            return Not(lhs: StrictEquals(lhs: try parse(json: value[0]),
-                                         rhs: try parse(json: value[1])))
+            return Not(
+                lhs: StrictEquals(
+                    lhs: try parse(json: value[0]),
+                    rhs: try parse(json: value[1])
+                )
+            )
         case "==":
-            return Equals(lhs: try self.parse(json: value[0]),
-                          rhs: try self.parse(json: value[1]))
+            return Equals(
+                lhs: try self.parse(json: value[0]),
+                rhs: try self.parse(json: value[1])
+            )
         case "!=":
-            return Not(lhs: Equals(lhs: try self.parse(json: value[0]),
-                                   rhs: try self.parse(json: value[1])))
+            return Not(
+                lhs: Equals(
+                    lhs: try self.parse(json: value[0]),
+                    rhs: try self.parse(json: value[1])
+                )
+            )
         case "!":
             return Not(lhs: try self.parse(json: value))
         case "+":
@@ -121,17 +133,23 @@ class Parser {
             }
 
             if array.expressions.count == 3 {
-                return Substr(stringExpression: array.expressions[0],
-                               startExpression: array.expressions[1],
-                              lengthExpression: array.expressions[2])
+                return Substr(
+                    stringExpression: array.expressions[0],
+                    startExpression: array.expressions[1],
+                    lengthExpression: array.expressions[2]
+                )
             }
 
-            return Substr(stringExpression: array.expressions[0],
-                           startExpression: array.expressions[1],
-                          lengthExpression: nil)
+            return Substr(
+                stringExpression: array.expressions[0],
+                startExpression: array.expressions[1],
+                lengthExpression: nil
+            )
         case "in":
-            return In(stringExpression: try self.parse(json: value[0]),
-                  collectionExpression: try self.parse(json: value[1]))
+            return In(
+                stringExpression: try self.parse(json: value[0]),
+                collectionExpression: try self.parse(json: value[1])
+            )
         case "cat":
             return Cat(arg: try self.parse(json: value))
         case "missing":
@@ -183,51 +201,20 @@ class Parser {
         case "trim":
             return Trim(expression: try self.parse(json: value))
         case "script":
-            guard let array = try self.parse(json: value) as? ArrayOfExpressions else {
-                throw ParseError.GenericError("\(key) statement be followed by an array")
-            }
-
-            return Script(expressions: array.expressions)
+            return Script(expression: try self.parse(json: value))
         case "declare":
-            guard let array = try self.parse(json: value) as? ArrayOfExpressions else {
-                throw ParseError.GenericError("\(key) statement be followed by an array")
-            }
-
-            return Declare(
-                identifierExpression: array.expressions[0],
-                valueExpression: array.expressions[1]
-            )
+            return Declare(expression: try self.parse(json: value))
         case "evaluate":
-            guard let array = try self.parse(json: value) as? ArrayOfExpressions else {
-                throw ParseError.GenericError("\(key) statement be followed by an array")
-            }
-
-            return Evaluate(
-                expressionExpression: array.expressions[0],
-                parametersExpression: array.expressions[1]
-            )
+            return Evaluate(expression: try self.parse(json: value))
         case "return":
             return Return(expression: try self.parse(json: value))
         case "init":
-            guard let array = try self.parse(json: value) as? ArrayOfExpressions else {
-                throw ParseError.GenericError("\(key) statement be followed by an array")
-            }
-
-            return Init(expressions: array.expressions)
+            return Init(expression: try self.parse(json: value))
         case "spread":
-            guard let array = try self.parse(json: value) as? ArrayOfExpressions else {
-                throw ParseError.GenericError("\(key) statement be followed by an array")
-            }
-
-            return Spread(expression: array.expressions[0])
+            return Spread(expression: try self.parse(json: value))
         case "call":
-            guard let array = value.array else {
-                throw ParseError.GenericError("\(key) statement be followed by an array")
-            }
-
             return Call(
-                functionNameJSON: array[0],
-                parametersJSON: array[safe: 1],
+                json: value,
                 registeredFunctions: registeredFunctions
             )
         case "assign":

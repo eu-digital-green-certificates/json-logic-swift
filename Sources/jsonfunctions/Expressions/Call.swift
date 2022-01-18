@@ -7,12 +7,17 @@ import JSON
 
 struct Call: Expression {
 
-    let functionNameJSON: JSON
-    let parametersJSON: JSON?
+    let json: JSON
 
     let registeredFunctions: [String: JsonFunctionDefinition]
 
     func eval(with data: inout JSON) throws -> JSON {
+        guard let jsonArray = json.array,
+              let functionNameJSON = jsonArray[safe: 0]
+        else {
+            throw ParseError.InvalidParameters("Call: Expected at least one parameter")
+        }
+
         guard let functionName = functionNameJSON.string else {
             throw ParseError.InvalidParameters("Call: Function name must be a string")
         }
@@ -22,7 +27,7 @@ struct Call: Expression {
         }
 
         let parametersDictionary: [String: JSON]
-        if let parametersJSON = parametersJSON {
+        if let parametersJSON = jsonArray[safe: 1] {
             if case .Dictionary(let dict) = parametersJSON {
                 parametersDictionary = dict
             } else if case .Null = parametersJSON {
@@ -51,16 +56,13 @@ struct Call: Expression {
             throw ParseError.InvalidParameters("Logic in function definition must be array")
         }
 
-        let logicExpressions = try Parser(json: JSON(logicArray)).parse()
-
-        let scriptExpressions: [Expression]
-        if let arrayOfExpressions = logicExpressions as? ArrayOfExpressions {
-            scriptExpressions = arrayOfExpressions.expressions
+        if let arrayOfExpressions = try Parser(json: JSON(logicArray)).parse() as? ArrayOfExpressions {
+            return try Script(expression: arrayOfExpressions).eval(with: JSON(data))
         } else {
             throw ParseError.InvalidParameters("Call: Function definition logic must be array")
         }
 
-        return try Script(expressions: scriptExpressions).eval(with: JSON(data))
+
     }
 
 }
