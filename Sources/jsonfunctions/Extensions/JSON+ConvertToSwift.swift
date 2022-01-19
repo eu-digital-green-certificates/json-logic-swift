@@ -6,6 +6,7 @@ import Foundation
 import JSON
 
 extension JSON {
+
     func convertToSwiftTypes() throws -> Any? {
         switch self {
         case .Error:
@@ -22,13 +23,20 @@ extension JSON {
             return self.string
         case .Date:
             return self.date
-        case let JSON.Array(array):
+        case let .Array(array):
             return try array.map { try $0.convertToSwiftTypes() }
-        case .Dictionary:
-            let o = self.dictionary!
-            return try o.mapValues {
+        case let .Dictionary(dict):
+            return try dict.mapValues {
                 try $0.convertToSwiftTypes()
             }
         }
     }
+
+    func decoded<T: Decodable>(to: T.Type) throws -> T {
+        let convertedToSwiftStandardType = try convertToSwiftTypes()
+
+        let jsonData = try JSONSerialization.data(withJSONObject: convertedToSwiftStandardType as Any, options: [.fragmentsAllowed])
+        return try JSONDecoder().decode(T.self, from: jsonData)
+    }
+
 }

@@ -40,7 +40,51 @@ public final class JsonFunctions {
      - `JsonFunctionsError.canNotParseJSONData(String)` :
      If `jsonDataOrNil` is not valid json
     */
-    public func applyRule<T>(_ jsonRule: String, to jsonDataOrNil: String? = nil, customOperators: [String: (JSON?) -> JSON]? = nil) throws -> T {
+    public func applyRule<T>(_ jsonRule: String, to jsonData: String? = nil, customOperators: [String: (JSON?) -> JSON]? = nil) throws -> T {
+        let result = try applyRule(jsonRule, to: jsonData, customOperators: customOperators)
+
+        return try convertToSwiftType(result)
+    }
+
+    public func applyRule<T: Decodable>(_ jsonRule: String, to jsonData: String? = nil, customOperators: [String: (JSON?) -> JSON]? = nil) throws -> T {
+        let result = try applyRule(jsonRule, to: jsonData, customOperators: customOperators)
+
+        return try result.decoded(to: T.self)
+    }
+
+    public func applyRule<T>(_ jsonRule: JSON, to jsonData: JSON? = nil, customOperators: [String: (JSON?) -> JSON]? = nil) throws -> T {
+        let result = try applyRule(jsonRule, to: jsonData, customOperators: customOperators)
+
+        return try convertToSwiftType(result)
+    }
+
+    public func applyRule<T: Decodable>(_ jsonRule: JSON, to jsonData: JSON? = nil, customOperators: [String: (JSON?) -> JSON]? = nil) throws -> T {
+        let result = try applyRule(jsonRule, to: jsonData, customOperators: customOperators)
+
+        return try result.decoded(to: T.self)
+    }
+
+    public func registerFunction(name: String, definition: JsonFunctionDefinition) {
+        registeredFunctions[name] = definition
+    }
+
+    public func evaluateFunction<T>(name: String, parameters: [String: AnyDecodable]) throws -> T {
+        let result = try evaluateFunction(name: name, parameters: parameters)
+
+        return try convertToSwiftType(result)
+    }
+
+    public func evaluateFunction<T: Decodable>(name: String, parameters: [String: AnyDecodable]) throws -> T {
+        let result = try evaluateFunction(name: name, parameters: parameters)
+
+        return try result.decoded(to: T.self)
+    }
+
+    // MARK: - Private
+
+    private var registeredFunctions = [String: JsonFunctionDefinition]()
+
+    private func applyRule(_ jsonRule: String, to jsonDataOrNil: String? = nil, customOperators: [String: (JSON?) -> JSON]? = nil) throws -> JSON {
         guard let rule = JSON(string: jsonRule) else {
             throw JsonFunctionsError.canNotParseJSONRule("Not valid JSON object")
         }
@@ -53,8 +97,8 @@ public final class JsonFunctions {
 
         return try self.applyRule(rule, to: jsonData, customOperators: customOperators)
     }
-    
-    public func applyRule<T>(_ jsonRule: JSON, to jsonData: JSON? = nil, customOperators: [String: (JSON?) -> JSON]? = nil) throws -> T {
+
+    private func applyRule(_ jsonRule: JSON, to jsonData: JSON? = nil, customOperators: [String: (JSON?) -> JSON]? = nil) throws -> JSON {
         let parsedRule = try Parser(
             json: jsonRule,
             customOperators: customOperators,
@@ -62,16 +106,11 @@ public final class JsonFunctions {
         ).parse()
 
         let data = jsonData ?? .Null
-        let result = try parsedRule.eval(with: data)
 
-        return try convertToSwiftType(result)
+        return try parsedRule.eval(with: data)
     }
 
-    public func registerFunction(name: String, definition: JsonFunctionDefinition) {
-        registeredFunctions[name] = definition
-    }
-
-    public func evaluateFunction<T>(name: String, parameters: [String: AnyDecodable]) throws -> T {
+    private func evaluateFunction(name: String, parameters: [String: AnyDecodable]) throws -> JSON {
         guard let definition = registeredFunctions[name] else {
             throw JsonFunctionsError.noSuchFunction
         }
@@ -86,10 +125,6 @@ public final class JsonFunctions {
 
         return try applyRule(JSON(["script": logicArray]), to: JSON(data))
     }
-
-    // MARK: - Private
-
-    private var registeredFunctions = [String: JsonFunctionDefinition]()
 
     private func convertToSwiftType<T>(_ json: JSON) throws -> T {
         let convertedToSwiftStandardType = try json.convertToSwiftTypes()

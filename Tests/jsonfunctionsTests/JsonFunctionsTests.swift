@@ -66,6 +66,66 @@ final class JsonFunctionsTests: XCTestCase {
         print("*** throwsUnexpectedly: \(throwsUnexpectedly)/\(testCases.count)")
     }
 
+    func testDecodableReturnValue() throws {
+        struct TestStruct: Decodable, Equatable {
+            struct SubTestStruct: Decodable, Equatable {
+                let f: String
+                let g: Int
+                let h: Double
+                let i: [String]
+                let j: [String: Int]
+            }
+
+            let a: String
+            let b: Int
+            let c: Double
+            let d: [String]
+            let e: [String: Int]
+            let subStruct: SubTestStruct
+        }
+
+        let data =
+                """
+                {
+                    "struct": {
+                        "a": "valueA",
+                        "b": 5,
+                        "c": 2.4,
+                        "d": ["valueD1", "valueD2", "valueD3"],
+                        "e": {"valueE1": 0, "valueE2": 1, "valueE3": -17},
+                        "subStruct": {
+                            "f": "valueF",
+                            "g": -6947,
+                            "h": -453451.7534,
+                            "i": ["valueI1", "valueI2", "valueI3"],
+                            "j": {"valueJ1": 0, "valueJ2": 1, "valueJ3": -17}
+                        }
+                    }
+                }
+                """
+
+        let logic = "{ \"var\": \"struct\" }"
+
+        let result: TestStruct = try JsonFunctions().applyRule(logic, to: data)
+
+        let expectedResult = TestStruct(
+            a: "valueA",
+            b: 5,
+            c: 2.4,
+            d: ["valueD1", "valueD2", "valueD3"],
+            e: ["valueE1": 0, "valueE2": 1, "valueE3": -17],
+            subStruct: TestStruct.SubTestStruct(
+                f: "valueF",
+                g: -6947,
+                h: -453451.7534,
+                i: ["valueI1", "valueI2", "valueI3"],
+                j: ["valueJ1": 0, "valueJ2": 1, "valueJ3": -17]
+            )
+        )
+
+        XCTAssertEqual(result, expectedResult)
+    }
+
     // MARK: - Private
 
     private lazy var testCases: [JsonFunctionsTestCase] = {
