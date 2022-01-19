@@ -19,14 +19,13 @@ final class CertLogic: XCTestCase {
 
         let fm = FileManager.default
         let path =  Bundle.main.resourcePath! + "/dgc-business-rules/certlogic/specification/testSuite"
-        var output = "";
         do {
             let rulefiles = fm.enumerator(atPath: path)
             while let rulefile = rulefiles?.nextObject() {
                let rPath = rulefile as! String
                let jsonPath = path + "/" + rPath
                let data = try Data(contentsOf: URL(fileURLWithPath: jsonPath), options: .mappedIfSafe)
-               let json = try JSON.init(data)
+               let json = JSON.init(data)
                 
                let cases = json["cases"].array
                 
@@ -43,8 +42,8 @@ final class CertLogic: XCTestCase {
                     for a in asserts!.enumerated() {
                         counter = counter + 1
                         print(name + " Assertion : \(counter)")
-                        let aLogic = try a.element["certLogicExpression"]
-                        let clogic = try c.element["certLogicExpression"]
+                        _ = a.element["certLogicExpression"]
+                        let clogic = c.element["certLogicExpression"]
               
                         if(clogic.truthy())
                         {
@@ -152,13 +151,13 @@ final class CertLogic: XCTestCase {
             while let rulefile = rulefiles?.nextObject() {
       
                 let rulepath = rulefile as? NSString
-                output = rulepath as! String
+                output = rulepath! as String
                 if (rulepath?.contains("rule.json") == true)
                 {
-                    let rpath = rulepath as! String
+                    let rpath = rulepath! as String
                     let jsonpath =  path + "/" + rpath
                     let data = try Data(contentsOf: URL(fileURLWithPath: jsonpath), options: .mappedIfSafe)
-                    let json = try JSON.init(data)
+                    let json = JSON.init(data)
                     
                     let components = rulepath!.pathComponents
                     
@@ -167,10 +166,10 @@ final class CertLogic: XCTestCase {
                     
                     while let testfile = testfiles?.nextObject() {
                         let testpath = testfile as? NSString
-                        let tpath = testpath as! String
+                        let tpath = testpath! as String
                         let tjsonpath =  testfpath + "/" + tpath
                         let tdata = try Data(contentsOf: URL(fileURLWithPath: tjsonpath), options: .mappedIfSafe)
-                        let tjson = try JSON.init(tdata)
+                        let tjson = JSON.init(tdata)
                         let expectedValue = tjson["expected"].bool
                         
                         if(expectedValue != nil)

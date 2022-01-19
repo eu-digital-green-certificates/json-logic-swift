@@ -22,15 +22,15 @@ class DoubleNegationTests: XCTestCase {
     }
 
     func testDoubleNegation_withObject() {
-        XCTAssertEqual(true, try applyRule("""
+        XCTAssertEqual(true, try JsonFunctions().applyRule("""
             { "!!" : true }
             """, to: nil))
 
-        XCTAssertEqual(false, try applyRule("""
+        XCTAssertEqual(false, try JsonFunctions().applyRule("""
             { "!!" : false }
             """, to: nil))
 
-        XCTAssertEqual(true, try applyRule("""
+        XCTAssertEqual(true, try JsonFunctions().applyRule("""
             { "!!" : "0" }
             """, to: nil))
     }

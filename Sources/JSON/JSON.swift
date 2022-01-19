@@ -578,7 +578,7 @@ extension Date {
         // Since we use a DateFormatter with a fixed format we only need
         // to attempt parsing a date when we have a string with the exact length
         let trimmedString = string.trimmingCharacters(in: .whitespaces)
-        guard trimmedString.count == 10 else { return nil }
+        guard trimmedString.count == 10 else { return nil }
         // and additionally if the fifth character is a dash
         guard trimmedString[trimmedString.index(string.startIndex, offsetBy: 4)] == "-" else { return nil }
 
