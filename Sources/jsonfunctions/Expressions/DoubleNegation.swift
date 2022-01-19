@@ -10,7 +10,14 @@ struct DoubleNegation: Expression {
     let arg: Expression
 
     func eval(with data: inout JSON) throws -> JSON {
-        return .Bool(try arg.eval(with: &data).truthy())
+        let data = try arg.evalWithData(data)
+        guard case let JSON.Array(array) = data else {
+            return JSON.Bool(data.truthy())
+        }
+        if let firstItem = array.first {
+            return JSON.Bool(firstItem.truthy())
+        }
+        return JSON.Bool(false)
     }
     
 }
