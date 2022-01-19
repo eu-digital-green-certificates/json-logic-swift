@@ -21,14 +21,14 @@ final class JsonFunctionsTests: XCTestCase {
             }
 
             do {
-                let result: Any
+                let result: JSON
                 if let evaluateFunction = testCase.evaluateFunction {
                     result = try jsonFunctions.evaluateFunction(name: evaluateFunction.name, parameters: evaluateFunction.parameters)
 
                     let exp = JSON(testCase.exp?.value as Any)
-                    XCTAssert(JSON(result) === exp)
+                    XCTAssert(result === exp)
 
-                    if JSON(result) === exp {
+                    if result === exp {
                         print("*** ✅ test case \(index) equals expected value - \(testCase.title)")
                         passed += 1
                     } else {
@@ -39,9 +39,9 @@ final class JsonFunctionsTests: XCTestCase {
                     result = try jsonFunctions.applyRule(JSON(testCase.logic?.value as Any), to: JSON(testCase.data?.value as Any))
 
                     let exp = JSON(testCase.exp?.value as Any)
-                    XCTAssert(JSON(result) === exp)
+                    XCTAssert(result === exp)
 
-                    if JSON(result) === exp {
+                    if result === exp {
                         print("*** ✅ test case \(index) equals expected value - \(testCase.title)")
                         passed += 1
                     } else {

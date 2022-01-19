@@ -7,7 +7,7 @@ import JSON
 import AnyCodable
 
 /**
-    It parses json rule strings and executes the rules on provided data.
+    Parses json functions strings and executes the rules on provided data.
 */
 public final class JsonFunctions {
 
@@ -18,7 +18,7 @@ public final class JsonFunctions {
     // MARK: - Public
 
     /**
-     It parses the string containing a json rule and applies that rule, you can optionally pass data to be used for the rule.
+     Parses the string containing a json rule and applies that rule, you can optionally pass data to be used for the rule.
 
     - parameters:
          - jsonRule: A valid json rule string
@@ -30,9 +30,11 @@ public final class JsonFunctions {
      If The jsonRule could not be parsed, possible the syntax is invalid
      - `ParseError.UnimplementedExpressionFor(_ operator: String)` :
      If you pass an json logic operation that is not currently implemented
+     - `ParseError.InvalidParameters(String)` :
+     An expression was called with invalid parameters
      - `ParseError.GenericError(String)` :
      An error occurred during parsing of the rule
-      - `JsonFunctionsError.canNotConvertResultToType(Any.Type)` :
+     - `JsonFunctionsError.canNotConvertResultToType(Any.Type)` :
             When the result from the calculation can not be converted to the return type
 
             // This throws JsonFunctionsError.canNotConvertResultToType(Double)
@@ -46,45 +48,111 @@ public final class JsonFunctions {
         return try convertToSwiftType(result)
     }
 
+    /**
+     Parses the string containing a json rule and applies that rule, you can optionally pass data to be used for the rule.
+
+    - parameters:
+         - jsonRule: A valid json rule string
+         - jsonDataOrNil: Data for the rule to operate on
+         - customOperators: custom operations that will be used during evalution
+
+    - throws:
+     - `JsonFunctionsError.canNotParseJSONRule`
+     If The jsonRule could not be parsed, possible the syntax is invalid
+     - `ParseError.UnimplementedExpressionFor(_ operator: String)` :
+     If you pass an json logic operation that is not currently implemented
+     - `ParseError.InvalidParameters(String)` :
+     An expression was called with invalid parameters
+     - `ParseError.GenericError(String)` :
+     An error occurred during parsing of the rule
+     - `JsonFunctionsError.canNotConvertResultToType(Any.Type)` :
+            When the result from the calculation can not be converted to the return type
+
+            // This throws JsonFunctionsError.canNotConvertResultToType(Double)
+            let r: Double = JsonFunctions("{ "===" : [1, 1] }").applyRule()
+     - `JsonFunctionsError.canNotParseJSONData(String)` :
+     If `jsonDataOrNil` is not valid json
+    */
     public func applyRule<T: Decodable>(_ jsonRule: String, to jsonData: String? = nil, customOperators: [String: (JSON?) -> JSON]? = nil) throws -> T {
         let result = try applyRule(jsonRule, to: jsonData, customOperators: customOperators)
 
         return try result.decoded(to: T.self)
     }
 
-    public func applyRule<T>(_ jsonRule: JSON, to jsonData: JSON? = nil, customOperators: [String: (JSON?) -> JSON]? = nil) throws -> T {
-        let result = try applyRule(jsonRule, to: jsonData, customOperators: customOperators)
+    /**
+     Registers a function so that it can be called using `evaluateFunction` or using the `call` expression.
 
-        return try convertToSwiftType(result)
-    }
-
-    public func applyRule<T: Decodable>(_ jsonRule: JSON, to jsonData: JSON? = nil, customOperators: [String: (JSON?) -> JSON]? = nil) throws -> T {
-        let result = try applyRule(jsonRule, to: jsonData, customOperators: customOperators)
-
-        return try result.decoded(to: T.self)
-    }
-
+    - parameters:
+         - name: Name of the function
+         - definition: parameters and logic of the function
+    */
     public func registerFunction(name: String, definition: JsonFunctionDefinition) {
         registeredFunctions[name] = definition
     }
 
+    /**
+     Evaluates a function with the given parameters.
+
+    - parameters:
+         - name: Name of the function
+         - parameters: Parameters passed to the function
+
+    - throws:
+     - `JsonFunctionsError.canNotParseJSONRule`
+     If The jsonRule could not be parsed, possible the syntax is invalid
+     - `ParseError.UnimplementedExpressionFor(_ operator: String)` :
+     If you pass an json logic operation that is not currently implemented
+     - `ParseError.InvalidParameters(String)` :
+     An expression was called with invalid parameters
+     - `ParseError.GenericError(String)` :
+     An error occurred during parsing of the rule
+     - `JsonFunctionsError.canNotConvertResultToType(Any.Type)` :
+    When the result from the calculation can not be converted to the return type
+
+    // This throws JsonFunctionsError.canNotConvertResultToType(Double)
+    let r: Double = JsonFunctions("{ "===" : [1, 1] }").applyRule()
+     - `JsonFunctionsError.canNotParseJSONData(String)` :
+     If `jsonDataOrNil` is not valid json
+    */
     public func evaluateFunction<T>(name: String, parameters: [String: AnyDecodable]) throws -> T {
         let result = try evaluateFunction(name: name, parameters: parameters)
 
         return try convertToSwiftType(result)
     }
 
+    /**
+     Evaluates a function with the given parameters.
+
+    - parameters:
+         - name: Name of the function
+         - parameters: Parameters passed to the function
+
+    - throws:
+     - `JsonFunctionsError.canNotParseJSONRule`
+     If The jsonRule could not be parsed, possible the syntax is invalid
+     - `ParseError.UnimplementedExpressionFor(_ operator: String)` :
+     If you pass an json logic operation that is not currently implemented
+     - `ParseError.InvalidParameters(String)` :
+     An expression was called with invalid parameters
+     - `ParseError.GenericError(String)` :
+     An error occurred during parsing of the rule
+     - `JsonFunctionsError.canNotConvertResultToType(Any.Type)` :
+            When the result from the calculation can not be converted to the return type
+
+            // This throws JsonFunctionsError.canNotConvertResultToType(Double)
+            let r: Double = JsonFunctions("{ "===" : [1, 1] }").applyRule()
+     - `JsonFunctionsError.canNotParseJSONData(String)` :
+     If `jsonDataOrNil` is not valid json
+    */
     public func evaluateFunction<T: Decodable>(name: String, parameters: [String: AnyDecodable]) throws -> T {
         let result = try evaluateFunction(name: name, parameters: parameters)
 
         return try result.decoded(to: T.self)
     }
 
-    // MARK: - Private
+    // MARK: - Internal
 
-    private var registeredFunctions = [String: JsonFunctionDefinition]()
-
-    private func applyRule(_ jsonRule: String, to jsonDataOrNil: String? = nil, customOperators: [String: (JSON?) -> JSON]? = nil) throws -> JSON {
+    internal func applyRule(_ jsonRule: String, to jsonDataOrNil: String? = nil, customOperators: [String: (JSON?) -> JSON]? = nil) throws -> JSON {
         guard let rule = JSON(string: jsonRule) else {
             throw JsonFunctionsError.canNotParseJSONRule("Not valid JSON object")
         }
@@ -98,7 +166,7 @@ public final class JsonFunctions {
         return try self.applyRule(rule, to: jsonData, customOperators: customOperators)
     }
 
-    private func applyRule(_ jsonRule: JSON, to jsonData: JSON? = nil, customOperators: [String: (JSON?) -> JSON]? = nil) throws -> JSON {
+    internal func applyRule(_ jsonRule: JSON, to jsonData: JSON? = nil, customOperators: [String: (JSON?) -> JSON]? = nil) throws -> JSON {
         let parsedRule = try Parser(
             json: jsonRule,
             customOperators: customOperators,
@@ -110,7 +178,7 @@ public final class JsonFunctions {
         return try parsedRule.eval(with: data)
     }
 
-    private func evaluateFunction(name: String, parameters: [String: AnyDecodable]) throws -> JSON {
+    internal func evaluateFunction(name: String, parameters: [String: AnyDecodable]) throws -> JSON {
         guard let definition = registeredFunctions[name] else {
             throw JsonFunctionsError.noSuchFunction
         }
@@ -125,6 +193,22 @@ public final class JsonFunctions {
 
         return try applyRule(JSON(["script": logicArray]), to: JSON(data))
     }
+
+    internal func applyRule<T>(_ jsonRule: JSON, to jsonData: JSON? = nil, customOperators: [String: (JSON?) -> JSON]? = nil) throws -> T {
+        let result = try applyRule(jsonRule, to: jsonData, customOperators: customOperators)
+
+        return try convertToSwiftType(result)
+    }
+
+    internal func applyRule<T: Decodable>(_ jsonRule: JSON, to jsonData: JSON? = nil, customOperators: [String: (JSON?) -> JSON]? = nil) throws -> T {
+        let result = try applyRule(jsonRule, to: jsonData, customOperators: customOperators)
+
+        return try result.decoded(to: T.self)
+    }
+
+    // MARK: - Private
+
+    private var registeredFunctions = [String: JsonFunctionDefinition]()
 
     private func convertToSwiftType<T>(_ json: JSON) throws -> T {
         let convertedToSwiftStandardType = try json.convertToSwiftTypes()
