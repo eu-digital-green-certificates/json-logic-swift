@@ -145,13 +145,11 @@ final class CertLogic: XCTestCase {
     func testRunner() {
         let fm = FileManager.default
         let path =  Bundle.main.resourcePath! + "/dgc-business-rules-testdata"
-        var output = "";
         do {
             let rulefiles = fm.enumerator(atPath: path)
             while let rulefile = rulefiles?.nextObject() {
       
                 let rulepath = rulefile as? NSString
-                output = rulepath! as String
                 if (rulepath?.contains("rule.json") == true)
                 {
                     let rpath = rulepath! as String
