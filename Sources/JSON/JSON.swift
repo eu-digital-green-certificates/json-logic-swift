@@ -136,6 +136,8 @@ public enum JSON: Equatable {
             return x == y
         case let (.String(lhsString), .String(rhsString)):
             return lhsString == rhsString
+        case let (.Date(lhs), .Date(rhs)):
+            return lhs == rhs
         case let (.Dictionary(lhs), .Dictionary(rhs)):
             let lhsKeys = lhs.keys
             let rhsKeys = rhs.keys
