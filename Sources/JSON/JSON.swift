@@ -131,8 +131,6 @@ public enum JSON: Equatable {
             return x == y
         case let (.String(lhsString), .String(rhsString)):
             return lhsString == rhsString
-        case let (.Date(lhs), .Date(rhs)):
-            return lhs == rhs
         case let (.Dictionary(lhs), .Dictionary(rhs)):
             let lhsKeys = lhs.keys
             let rhsKeys = rhs.keys
@@ -599,7 +597,7 @@ extension Date {
         return Date.shortFormatter.string(from: self)
     }
 
-    public var fullFormatted: String {
+    var fullFormatted: String {
         return Date.fullFormatter.string(from: self)
     }
 }
