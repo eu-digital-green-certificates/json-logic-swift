@@ -1,9 +1,5 @@
 //
-//  JSON.swift
-//  JSON
-//
-//  Created by Christos Koninis on 09/03/2019.
-//  Licensed under MIT
+// json-functions-swift
 //
 
 import Foundation
@@ -140,6 +136,8 @@ public enum JSON: Equatable {
             return x == y
         case let (.String(lhsString), .String(rhsString)):
             return lhsString == rhsString
+        case let (.Date(lhs), .Date(rhs)):
+            return lhs == rhs
         case let (.Dictionary(lhs), .Dictionary(rhs)):
             let lhsKeys = lhs.keys
             let rhsKeys = rhs.keys
@@ -582,7 +580,7 @@ extension Date {
         // Since we use a DateFormatter with a fixed format we only need
         // to attempt parsing a date when we have a string with the exact length
         let trimmedString = string.trimmingCharacters(in: .whitespaces)
-        guard trimmedString.count == 10 else { return nil }
+        guard trimmedString.count == 10 else { return nil }
         // and additionally if the fifth character is a dash
         guard trimmedString[trimmedString.index(string.startIndex, offsetBy: 4)] == "-" else { return nil }
 

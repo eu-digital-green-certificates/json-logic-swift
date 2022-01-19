@@ -1,5 +1,5 @@
 #import <Foundation/Foundation.h>
-@interface PodsDummy_jsonlogic : NSObject
+@interface PodsDummy_jsonfunctions : NSObject
 @end
-@implementation PodsDummy_jsonlogic
+@implementation PodsDummy_jsonfunctions
 @end
