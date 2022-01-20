@@ -1,0 +1,17 @@
+name: ci-pull-request
+on:
+  pull_request:
+    types:
+    - opened
+    - synchronize
+    - reopened
+jobs:
+  unit_test:
+    runs-on: macos-latest
+    steps: 
+    - name: Checkout the code
+      uses: actions/checkout@v2
+    - name: Build
+      run: swift build -v
+    - name: Test
+      run: swift test --enable-code-coverage
