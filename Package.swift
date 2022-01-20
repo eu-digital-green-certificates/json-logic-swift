@@ -11,13 +11,7 @@ let package = Package(
     products: [
         .library(
             name: "jsonfunctions",
-            targets: ["jsonfunctions"]),
-        .library(
-            name: "JSON",
-            targets: ["JSON"]),
-        .executable(
-            name: "jsonfunctions-cli",
-            targets: ["jsonfunctions-cli"]),
+            targets: ["jsonfunctions"])
     ],
     dependencies: [
         .package(
@@ -26,9 +20,6 @@ let package = Package(
         ),
     ],
     targets: [
-        .target(
-            name: "jsonfunctions-cli",
-            dependencies: ["jsonfunctions"]),
         .target(
             name: "jsonfunctions",
             dependencies: ["JSON", "AnyCodable"]),
