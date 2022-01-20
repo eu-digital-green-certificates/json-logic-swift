@@ -1,0 +1,5 @@
+#!/usr/bin/env groovy
+
+@Library(['piper-lib', 'cwa-remote-pipelines']) _
+
+cwaJsonFunctionsSwiftPipeline script: this, customDefaults: ['cwa-mobile-clients-defaults.yml', 'jsonFunctionsSwift/json-functions-swift-config.yml']
