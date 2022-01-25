@@ -23,16 +23,10 @@ let package = Package(
         .target(
             name: "jsonfunctions",
             dependencies: ["JSON", "AnyCodable"]),
-        .target(
-            name: "JSON",
-            dependencies: []),
         .testTarget(
             name: "jsonfunctionsTests",
             dependencies: ["jsonfunctions", "AnyCodable"],
-            resources: [.process("jfn-common-test-cases.json")]),
-        .testTarget(
-            name: "JSONTests",
-            dependencies: ["JSON"])
+            resources: [.process("jfn-common-test-cases.json")])
     ],
     swiftLanguageVersions: [.v5, .v4_2, .v4]
 )
