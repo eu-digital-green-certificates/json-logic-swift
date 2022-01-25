@@ -22,7 +22,7 @@ let package = Package(
     targets: [
         .target(
             name: "jsonfunctions",
-            dependencies: ["JSON", "AnyCodable"]),
+            dependencies: ["AnyCodable"]),
         .testTarget(
             name: "jsonfunctionsTests",
             dependencies: ["jsonfunctions", "AnyCodable"],
