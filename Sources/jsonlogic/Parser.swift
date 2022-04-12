@@ -655,25 +655,6 @@ struct dccDateOfBirth: Expression {
             }
             
             throw ParseError.GenericError("can't parse EU DCC date-of-birth")
-            
-           /*
-              if (str.match(/^\d{4}$/)) {
-                  return new Date(`${Number(str)+1}-01-01${timeSuffix}`)
-              }
-              if (str.match(/^\d{4}-\d{2}$/)) {
-                  const date = new Date(`${str}-01${timeSuffix}`)
-                  date.setUTCMonth(date.getUTCMonth() + 1)
-                  date.setUTCDate(1)
-                  return date
-              }
-              if (str.match(/^\d{4}-\d{2}-\d{2}$/)) {
-                  return new Date(`${str}${timeSuffix}`)
-              }
-
-              throw new Error(`can't parse "${str}" as an EU DCC date-of-birth`)*/
-            
-            
-            
         }
         return JSON.Null
     }
