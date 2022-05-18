@@ -626,39 +626,43 @@ struct dccDateOfBirth: Expression {
         }
         
         if arr[0].type == JSON.ContentType.string {
-            let timeSuffix = "T00:00:00.000Z"
-            let regex1 = "^\\d{4}$"
-            let regex2 = "^\\d{4}-\\d{2}$"
-            let regex3 = "^\\d{4}-\\d{2}-\\d{2}$"
             let date = arr[0].string!
-            
-            if date.range(of: regex1, options:.regularExpression) != nil {
-                let newDate = date+"-12-31"+timeSuffix
-                return JSON(newDate)
-            }
-            
-            if date.range(of: regex2, options:.regularExpression) != nil {
-                let newDate = date + "-01" + timeSuffix
-                var date = JSON(newDate).date!
-                var dateComponent = DateComponents()
-                dateComponent.month = 1
-                dateComponent.day = -1
-                guard let futureDate = Calendar.current.date(byAdding: dateComponent, to: date) else {
-                    return JSON.Null
-                }
-                return JSON(futureDate)
-            }
-            
-            if date.range(of: regex3, options:.regularExpression) != nil {
-                let newDate = date + timeSuffix
-                return JSON(newDate)
-            }
-            
-            throw ParseError.GenericError("can't parse EU DCC date-of-birth")
+            return try roundUpPartialDate(date: date)
         }
         return JSON.Null
     }
     
+}
+
+func roundUpPartialDate(date: String)throws -> JSON {
+    let timeSuffix = "T00:00:00.000Z"
+    let regex1 = "^\\d{4}$"
+    let regex2 = "^\\d{4}-\\d{2}$"
+    let regex3 = "^\\d{4}-\\d{2}-\\d{2}$"
+    
+    if date.range(of: regex1, options:.regularExpression) != nil {
+        let newDate = date+"-12-31"+timeSuffix
+        return JSON(newDate)
+    }
+    
+    if date.range(of: regex2, options:.regularExpression) != nil {
+        let newDate = date + "-01" + timeSuffix
+        var date = JSON(newDate).date!
+        var dateComponent = DateComponents()
+        dateComponent.month = 1
+        dateComponent.day = -1
+        guard let futureDate = Calendar.current.date(byAdding: dateComponent, to: date) else {
+            return JSON.Null
+        }
+        return JSON(futureDate)
+    }
+    
+    if date.range(of: regex3, options:.regularExpression) != nil {
+        let newDate = date + timeSuffix
+        return JSON(newDate)
+    }
+    
+    throw ParseError.GenericError("can't parse EU DCC date-of-birth")
 }
 
 struct ExtractFromUVCI: Expression {
@@ -721,11 +725,24 @@ struct PlusTime: Expression {
     func evalWithData(_ data: JSON?) throws -> JSON {
         let result = try expression.evalWithData(data)
         if let arr = result.array,
-           let time = arr[0].date,
+           let time =  arr[0].date,
            let amount = arr[1].int,
            let unit = arr[2].string
            {
             return addTime(Int(amount), as: unit, to: time)
+        }
+        else
+        {
+            if let arr = result.array,
+               let time =  arr[0].string,
+               let amount = arr[1].int,
+               let unit = arr[2].string
+               {
+                
+                let rounded = try roundUpPartialDate(date: time)
+                
+                return addTime(Int(amount), as: unit, to: rounded.date!)
+            }
         }
         return JSON.Null
     }

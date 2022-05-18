@@ -23,7 +23,7 @@ final class CertLogic: XCTestCase {
         
 
         let fm = FileManager.default
-        let path =  Bundle.main.resourcePath! + "/dgc-business-rules/certlogic/specification/testSuite"
+        let path =  Bundle.main.resourcePath! + "/eu-dcc-business-rules/certlogic/specification/testSuite"
         var output = "";
         do {
             let rulefiles = fm.enumerator(atPath: path)
@@ -135,6 +135,14 @@ final class CertLogic: XCTestCase {
                                   XCTAssertEqual(try applyRule(a.element["certLogicExpression"],to: a.element["data"]),["a","b"])
                                 case "Truthy and falsy definitions matter in Boolean operations":
                                     XCTAssertEqual(try applyRule(a.element["certLogicExpression"],to: a.element["data"]),a.element["expected"].array)
+                                case "Arrays with logic": do {
+                                    if counter == 1 {
+                                        XCTAssertEqual(try applyRule(a.element["certLogicExpression"],to: a.element["data"]),[1,2,3])
+                                    }
+                                    if counter == 2 {
+                                        XCTAssertEqual(try applyRule(a.element["certLogicExpression"],to: a.element["data"]),[42])
+                                    }
+                                }
                                 default:
                                     XCTAssertFalse(true)
                                 }
