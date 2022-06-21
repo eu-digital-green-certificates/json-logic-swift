@@ -616,16 +616,16 @@ struct dccDateOfBirth: Expression {
     let expression: Expression
     
     func evalWithData(_ data: JSON?) throws -> JSON {
-      guard let data = data else { return JSON.Null }
-      let result = try expression.evalWithData(data)
-      let arr = result.array!
-                
+        guard let data = data else { return JSON.Null }
+        let result = try expression.evalWithData(data)
+        guard let arr = result.array else { return JSON.Null }
+
         if arr[0].type == JSON.ContentType.date {
             return JSON(arr[0])
         }
         
-        if arr[0].type == JSON.ContentType.string {
-            let date = arr[0].string!
+        if arr[0].type == JSON.ContentType.string
+            let date = arr[0].string {
             return try roundUpPartialDate(date: date)
         }
         return JSON.Null
@@ -646,7 +646,9 @@ func roundUpPartialDate(date: String)throws -> JSON {
     
     if date.range(of: regex2, options:.regularExpression) != nil {
         let newDate = date + "-01" + timeSuffix
-        let date = JSON(newDate).date!
+        guard let date = JSON(newDate).date else {
+            return JSON.Null
+        }
         var dateComponent = DateComponents()
         dateComponent.month = 1
         dateComponent.day = -1
@@ -739,8 +741,9 @@ struct PlusTime: Expression {
                {
                 
                 let rounded = try roundUpPartialDate(date: time)
-                
-                return addTime(Int(amount), as: unit, to: rounded.date!)
+                if let date = rounded.date {
+                    return addTime(Int(amount), as: unit, to: date)
+                }
             }
         }
         return JSON.Null
