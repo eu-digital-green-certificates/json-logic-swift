@@ -624,7 +624,7 @@ struct dccDateOfBirth: Expression {
             return JSON(arr[0])
         }
         
-        if arr[0].type == JSON.ContentType.string
+        if arr[0].type == JSON.ContentType.string,
             let date = arr[0].string {
             return try roundUpPartialDate(date: date)
         }
@@ -647,13 +647,13 @@ func roundUpPartialDate(date: String)throws -> JSON {
     if date.range(of: regex2, options:.regularExpression) != nil {
         let newDate = date + "-01" + timeSuffix
         guard let date = JSON(newDate).date else {
-            return JSON.Null
+            throw ParseError.GenericError("can't parse EU DCC date-of-birth")
         }
         var dateComponent = DateComponents()
         dateComponent.month = 1
         dateComponent.day = -1
         guard let futureDate = Calendar.current.date(byAdding: dateComponent, to: date) else {
-            return JSON.Null
+            throw ParseError.GenericError("can't parse EU DCC date-of-birth")
         }
         return JSON(futureDate)
     }
@@ -670,7 +670,9 @@ struct ExtractFromUVCI: Expression {
     let expression: Expression
     
     func evalWithData(_ data: JSON?) throws -> JSON {
-      guard let data = data else { return JSON.Null }
+        guard let data = data else {
+            throw ParseError.GenericError("can't parse date")
+        }
       
         let result = try expression.evalWithData(data)
         if let arr = result.array,
@@ -687,7 +689,7 @@ struct ExtractFromUVCI: Expression {
         guard let extractedUVCI = fromUVCI(uvci: uvci, index: Int(index)) else { return JSON.Null}
         return JSON(extractedUVCI)
       }
-        return JSON.Null
+        throw ParseError.GenericError("can't parse date")
     }
   
   func evaluateVarPathFromData(_ data: JSON) throws -> String? {
