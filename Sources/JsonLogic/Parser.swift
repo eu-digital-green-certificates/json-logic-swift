@@ -670,9 +670,7 @@ struct ExtractFromUVCI: Expression {
     let expression: Expression
     
     func evalWithData(_ data: JSON?) throws -> JSON {
-        guard let data = data else {
-            throw ParseError.GenericError("can't parse date")
-        }
+        guard let data = data else { return JSON.Null }
       
         let result = try expression.evalWithData(data)
         if let arr = result.array,
