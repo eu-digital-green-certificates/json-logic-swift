@@ -687,7 +687,7 @@ struct ExtractFromUVCI: Expression {
         guard let extractedUVCI = fromUVCI(uvci: uvci, index: Int(index)) else { return JSON.Null}
         return JSON(extractedUVCI)
       }
-        throw ParseError.GenericError("can't parse date")
+       return JSON.Null
     }
   
   func evaluateVarPathFromData(_ data: JSON) throws -> String? {
